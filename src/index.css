@@ -80,7 +80,7 @@ body {
 
 /* headings inside the tool cards */
 .tool-card h2 {
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
   font-size: 1.25rem !important;
   font-weight: 800 !important;
   text-align: center !important;
