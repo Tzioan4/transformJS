@@ -34,36 +34,12 @@ export default function Home({ searchTerm }) {
   };
 
   return (
-    <div style={gridStyle}>
-      {/* loop through the filtered list to show cards */}
+    <div className="tools-grid">
       {filteredTools.map((tool) => (
-        <Link
-          key={tool.name}
-          to={tool.path}
-          style={cardStyle}
-          // make the card move up a bit when hovering
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "translateY(-10px)";
-          }}
-          // reset position when mouse leaves
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "translateY(0)";
-          }}
-        >
-          {/* icon container */}
-          <div style={{ marginBottom: "15px", opacity: 0.9 }}>{tool.icon}</div>
-
-          {/* tool title */}
-          <h2
-            style={{
-              fontSize: "1.1rem",
-              fontWeight: "600",
-              margin: 0,
-              textAlign: "center",
-            }}
-          >
-            {tool.name}
-          </h2>
+        <Link key={tool.name} to={tool.path} className="tool-card">
+          <div className="tool-icon">{tool.icon}</div>
+          <h2>{tool.name}</h2>
+          <p>{tool.description}</p>
         </Link>
       ))}
     </div>

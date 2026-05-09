@@ -1,100 +1,370 @@
-/* reset all default browser spacing */
+ /* import fonts for ui and code styling */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* base html setup for mobile stability and full height layout */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+  height: 100%;
+  background: #0b0e14;
+}
+
+/* global body styling with dark theme and font smoothing */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0b0e14;
+  color: #e2e8f0;
+  line-height: 1.5;
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* fix input zoom issues on ios and keep consistent font sizing */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+  line-height: normal;
+  -webkit-appearance: none;
+  appearance: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* remove focus jump and keep layout stable */
+textarea:focus,
+input:focus {
+  outline: none;
+  transform: none !important;
+}
+
+/* reset spacing and enable consistent box model */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box !important;
+  box-sizing: border-box;
 }
 
-/* general body settings like font and main background color */
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #dadada; 
-  color: rgb(0, 0, 0);
-  overflow-x: hidden;
+/* prevent layout shift on mobile keyboard */
+.tool-container {
+  transform: translateZ(0);
 }
 
-/* sticky bar at the top of the screen */
+/* fixed navbar with blur background */
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 70px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
-  background: #dbdbdb;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  z-index: 1000;
+  padding: 0 2rem;
+  background: rgba(11, 14, 20, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1e293b;
+  z-index: 100;
 }
 
-/* branding style for the logo */
+/* logo styling using mono font for dev feel */
 .nav-logo {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #000000;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #6366f1;
   text-decoration: none;
+  letter-spacing: -1px;
 }
 
-/* styling for the search box in the header */
+/* search input styling for navbar */
 .search-input {
-  background: #ffffff;
-  border: 1px solid #ffffff;
-  padding: 8px 15px;
-  border-radius: 10px;
-  color: rgb(0, 0, 0);
-  width: 250px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  width: 300px;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* mobile navbar layout */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+    height: auto;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+
+  .nav-logo {
+    margin: 10px 0;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* responsive grid for tool cards */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 2rem 40px;
+}
+
+/* card design for tools */
+.tool-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tool-card:hover {
+  border-color: #4f46e5;
+  background: #161e2e;
+  transform: translateY(-4px);
+}
+
+/* icon inside tool card */
+.tool-card .tool-icon {
+  color: #818cf8;
+  margin-bottom: 0.5rem;
+}
+
+/* title inside tool card */
+.tool-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+/* description inside tool card */
+.tool-card p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* main tool page container */
+.tool-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 120px 2rem 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* tool page header */
+.tool-header h1 {
+  font-family: 'JetBrains Mono', monospace;
+  color: #6366f1;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-header p {
+  color: #94a3b8;
+}
+
+/* main editor layout (two columns) */
+.tool-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout paint;
+}
+
+.tool-workspace > * {
+  min-width: 0;
+}
+
+/* editor textarea styling */
+.tool-textarea {
+  width: 100%;
+  height: 400px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  resize: vertical;
   outline: none;
 }
 
-/* automatic grid for the tool cards */
-.tools-grid {
-  display: grid !important;
-  grid-template-cols: repeat(auto-fit, minmax(250px, 1fr)) !important;
-  gap: 25px !important;
-  width: 100% !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 120px 20px 40px !important; 
+.tool-textarea:focus {
+  border-color: #6366f1;
 }
 
-/* individual card shape and centering */
-.tool-card {
-  aspect-ratio: 1 / 1 !important; 
-  border-radius: 20px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-decoration: none !important;
-  padding: 20px !important;
+/* button row */
+.tool-actions {
+  display: flex;
+  gap: 1rem;
 }
 
-/* animation when the user hovers over a tool */
-.tool-card:hover {
-  transform: translateY(-8px) scale(1.02) !important;
-  box-shadow: 0 15px 40px rgba(6, 9, 189, 0.4) !important;
-  filter: brightness(1.1);
+/* base button style */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
 }
 
-/* headings inside the tool cards */
-.tool-card h2 {
-  color: rgb(0, 0, 0) !important;
-  font-size: 1.25rem !important;
-  font-weight: 800 !important;
-  text-align: center !important;
-  margin-top: 15px !important;
-  line-height: 1.2 !important;
+.btn:hover {
+  opacity: 0.9;
 }
 
-/* hide description text on the main page grid */
-.tool-card p {
-  display: none !important;
+/* button variants */
+.btn-primary { background: #6366f1; color: white; }
+.btn-secondary { background: #334155; color: white; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-copy { background: #475569; color: white; }
+.btn-success { background: #22c55e !important; color: white; }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* styling for the icon inside each card */
-.tool-card div {
-  font-size: 2.5rem !important;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+/* error message styling */
+.error-badge {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* footer layout */
+.site-footer {
+  width: 100%;
+  padding: 2rem 0;
+  margin-top: auto;
+  border-top: 1px solid #1e293b;
+  background: #0b0e14;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #6366f1;
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.footer-links a:hover {
+  color: #6366f1;
+}
+
+/* legal pages styling */
+.policy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 2rem 60px;
+}
+
+.policy-container h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  color: #6366f1;
+}
+
+.policy-container h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: #f8fafc;
+}
+
+.policy-container p {
+  color: #94a3b8;
+  line-height: 1.8;
+}
+
+/* image tool fix for layout stability */
+.image-controls {
+  transform: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+.image-controls:hover {
+  transform: none !important;
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+}
+
+/* mobile responsive layout */
+@media (max-width: 800px) {
+  .tool-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-textarea {
+    height: 300px;
+  }
+
+  .tool-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -1,68 +1,68 @@
 import { useState } from "react";
 
-export default function Base64Tool() {
-  // input state for user text or base64 string
-  const [input, setInput] = useState("");
+export default function URLEncode() {
+  // input text from user
+  const [text, setText] = useState("");
 
-  // output state for encoded or decoded result
-  const [output, setOutput] = useState("");
+  // encoded or decoded result
+  const [result, setResult] = useState("");
 
   // mode state to switch between encode and decode
   const [mode, setMode] = useState("encode");
 
-  // state to show copy feedback
+  // copy feedback state
   const [copied, setCopied] = useState(false);
 
-  // state for error handling
+  // error state for invalid input
   const [error, setError] = useState(null);
 
-  // function to encode or decode based on current mode
+  // handle encode or decode process
   const handleProcess = () => {
     setError(null);
 
     try {
       if (mode === "encode") {
-        // convert text to base64
-        setOutput(btoa(input));
+        // convert text to url safe format
+        setResult(encodeURIComponent(text));
       } else {
-        // convert base64 back to text
-        setOutput(atob(input));
+        // decode url encoded string
+        setResult(decodeURIComponent(text));
       }
-    } catch (err) {
+    } catch (e) {
       // handle invalid input error
       setError("Invalid input for " + mode);
-      setOutput("");
+      setResult("");
     }
   };
 
-  // copy output to clipboard
+  // copy result to clipboard
   const handleCopy = () => {
-    if (!output) return;
+    if (!result) return;
 
-    navigator.clipboard.writeText(output);
+    navigator.clipboard.writeText(result);
 
-    // show copied feedback
+    // show copied state
     setCopied(true);
 
-    // reset copied state after 2 seconds
-    setTimeout(() => setCopied(false), 2000);
+    // reset copied state after short delay
+    setTimeout(() => setCopied(false), 1200);
   };
 
-  // clear input, output and errors
+  // clear input and output
   const handleClear = () => {
-    setInput("");
-    setOutput("");
+    setText("");
+    setResult("");
     setError(null);
   };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
-        <h1>Base64 {mode === "encode" ? "Encoder" : "Decoder"}</h1>
-        <p>Convert text to Base64 format and vice versa instantly.</p>
+        <h1>URL Encoder / Decoder</h1>
+        <p>convert text to url safe format and back</p>
       </div>
 
-      {/* mode selection buttons */}
+      {/* mode switch buttons */}
       <div className="tool-actions">
         <button
           className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
@@ -85,26 +85,27 @@ export default function Base64Tool() {
         </button>
       </div>
 
-      {/* error message display */}
+      {/* error display */}
       {error && <div className="error-badge">{error}</div>}
 
-      {/* input and output side by side */}
       <div className="tool-workspace">
-        {/* user input area */}
+        {/* input field */}
         <textarea
           className="tool-textarea"
           placeholder={
-            mode === "encode" ? "Enter plain text..." : "Enter base64 string..."
+            mode === "encode"
+              ? "enter text to encode..."
+              : "enter url encoded string..."
           }
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
 
-        {/* result output area */}
+        {/* output field */}
         <textarea
           className="tool-textarea"
-          placeholder="Result will appear here..."
-          value={output}
+          placeholder="result will appear here..."
+          value={result}
           readOnly
         />
       </div>

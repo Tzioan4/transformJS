@@ -1,3 +1,4 @@
+import { Link } from "lucide-react";
 import {
   FileJson,
   Hash,
@@ -41,5 +42,12 @@ export const tools = [
     description: "Convert Markdown into HTML preview",
     tags: ["markdown", "md", "preview", "text"],
     icon: <FileText size={40} strokeWidth={1.5} />,
+  },
+  {
+    name: "URL Encoder / Decoder",
+    path: "/url-encode",
+    description: "Encode and decode URLs safely",
+    tags: ["url", "encode", "decode", "web"],
+    icon: <Link size={40} strokeWidth={1.5} />,
   },
 ];
