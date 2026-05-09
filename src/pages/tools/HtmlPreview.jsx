@@ -1,26 +1,38 @@
 import { useState } from "react";
 
 export default function HtmlPreview() {
-  // state to store html code input from user
   const [code, setCode] = useState(
     "<h1>Hello World</h1>\n<p style='color: #6366f1'>Start coding...</p>",
   );
 
-  // state for copy feedback button
   const [copied, setCopied] = useState(false);
 
-  // copy html code to clipboard
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!code) return;
 
-    navigator.clipboard.writeText(code);
+    try {
+      await navigator.clipboard.writeText(code);
 
-    // show copied state for a short time
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      // fallback for iOS/mobile browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
   };
 
-  // clear editor content
   const handleClear = () => {
     setCode("");
   };
@@ -29,22 +41,22 @@ export default function HtmlPreview() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>HTML Preview</h1>
-        <p>write html and css and see live preview</p>
+        <p>Write HTML and CSS and see live preview</p>
       </div>
 
       <div className="tool-workspace">
-        {/* text area for writing html */}
+        {/*input */}
         <textarea
           className="tool-textarea"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="write your html here..."
+          placeholder="Write your HTML here..."
         />
 
-        {/* live preview using iframe */}
+        {/* preview*/}
         <div
           style={{
-            background: "white",
+            background: "#ffffff",
             borderRadius: "8px",
             overflow: "hidden",
             height: "400px",
@@ -54,15 +66,20 @@ export default function HtmlPreview() {
           <iframe
             title="preview"
             srcDoc={code}
-            style={{ width: "100%", height: "100%", border: "none" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+            }}
           />
         </div>
       </div>
 
+      {/*actions */}
       <div className="tool-actions">
         <button
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
           onClick={handleCopy}
+          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
           {copied ? "Copied!" : "Copy HTML"}
         </button>

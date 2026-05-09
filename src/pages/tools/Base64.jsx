@@ -1,54 +1,52 @@
 import { useState } from "react";
 
 export default function Base64Tool() {
-  // input state for user text or base64 string
   const [input, setInput] = useState("");
-
-  // output state for encoded or decoded result
   const [output, setOutput] = useState("");
-
-  // mode state to switch between encode and decode
   const [mode, setMode] = useState("encode");
-
-  // state to show copy feedback
   const [copied, setCopied] = useState(false);
-
-  // state for error handling
   const [error, setError] = useState(null);
 
-  // function to encode or decode based on current mode
   const handleProcess = () => {
     setError(null);
 
     try {
       if (mode === "encode") {
-        // convert text to base64
-        setOutput(btoa(input));
+        setOutput(btoa(unescape(encodeURIComponent(input))));
       } else {
-        // convert base64 back to text
-        setOutput(atob(input));
+        setOutput(decodeURIComponent(escape(atob(input))));
       }
     } catch (err) {
-      // handle invalid input error
       setError("Invalid input for " + mode);
       setOutput("");
     }
   };
 
-  // copy output to clipboard
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!output) return;
 
-    navigator.clipboard.writeText(output);
+    try {
+      await navigator.clipboard.writeText(output);
 
-    // show copied feedback
-    setCopied(true);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      // fallback for iOS/mobile
+      const textarea = document.createElement("textarea");
+      textarea.value = output;
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
 
-    // reset copied state after 2 seconds
-    setTimeout(() => setCopied(false), 2000);
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
   };
 
-  // clear input, output and errors
   const handleClear = () => {
     setInput("");
     setOutput("");
@@ -62,7 +60,7 @@ export default function Base64Tool() {
         <p>Convert text to Base64 format and vice versa instantly.</p>
       </div>
 
-      {/* mode selection buttons */}
+      {/* mode switch*/}
       <div className="tool-actions">
         <button
           className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
@@ -85,22 +83,22 @@ export default function Base64Tool() {
         </button>
       </div>
 
-      {/* error message display */}
+      {/*error */}
       {error && <div className="error-badge">{error}</div>}
 
-      {/* input and output side by side */}
+      {/* workspace*/}
       <div className="tool-workspace">
-        {/* user input area */}
+        {/*input */}
         <textarea
           className="tool-textarea"
           placeholder={
-            mode === "encode" ? "Enter plain text..." : "Enter base64 string..."
+            mode === "encode" ? "Enter plain text..." : "Enter Base64 string..."
           }
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
 
-        {/* result output area */}
+        {/* output*/}
         <textarea
           className="tool-textarea"
           placeholder="Result will appear here..."
@@ -109,7 +107,7 @@ export default function Base64Tool() {
         />
       </div>
 
-      {/* action buttons */}
+      {/* actions */}
       <div className="tool-actions">
         <button onClick={handleProcess} className="btn btn-primary">
           Run
@@ -119,7 +117,7 @@ export default function Base64Tool() {
           onClick={handleCopy}
           className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? "✓ Copied" : "Copy"}
         </button>
 
         <button onClick={handleClear} className="btn btn-danger">

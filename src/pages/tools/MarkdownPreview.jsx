@@ -2,27 +2,39 @@ import { useState } from "react";
 import { marked } from "marked";
 
 export default function MarkdownPreview() {
-  // markdown input from user
   const [md, setMd] = useState(
     "# Markdown Title\n\n**Bold text** and [links](https://transformjs.com)",
   );
 
-  // copy feedback state
   const [copied, setCopied] = useState(false);
 
-  // copy rendered html to clipboard
-  const handleCopy = () => {
-    // convert markdown to html and copy it
-    navigator.clipboard.writeText(marked(md));
+  const htmlOutput = marked(md);
 
-    // show copied feedback
-    setCopied(true);
+  const handleCopy = async () => {
+    if (!md) return;
 
-    // reset copied state after short delay
-    setTimeout(() => setCopied(false), 1500);
+    try {
+      await navigator.clipboard.writeText(htmlOutput);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      // fallback for iOS
+      const textarea = document.createElement("textarea");
+      textarea.value = htmlOutput;
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
   };
 
-  // clear markdown input
   const handleClear = () => {
     setMd("");
   };
@@ -31,20 +43,20 @@ export default function MarkdownPreview() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>Markdown Preview</h1>
-        <p>convert markdown into html preview</p>
+        <p>Convert Markdown into live HTML preview</p>
       </div>
 
       <div className="tool-workspace">
-        {/* markdown input area */}
+        {/* input*/}
         <textarea
           className="tool-textarea"
           value={md}
           onChange={(e) => setMd(e.target.value)}
+          placeholder="Write markdown here..."
         />
 
-        {/* rendered markdown preview */}
+        {/* preview*/}
         <div
-          className="markdown-body"
           style={{
             textAlign: "left",
             padding: "20px",
@@ -55,20 +67,19 @@ export default function MarkdownPreview() {
             overflowY: "auto",
             border: "1px solid #1f2937",
           }}
-          dangerouslySetInnerHTML={{ __html: marked(md) }}
+          dangerouslySetInnerHTML={{ __html: htmlOutput }}
         />
       </div>
 
+      {/*actions*/}
       <div className="tool-actions">
-        {/* copy html output */}
         <button
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
           onClick={handleCopy}
+          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? "✓ Copied HTML" : "Copy HTML"}
         </button>
 
-        {/* clear markdown */}
         <button className="btn btn-danger" onClick={handleClear}>
           Clear
         </button>

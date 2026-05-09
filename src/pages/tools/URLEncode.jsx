@@ -1,22 +1,12 @@
 import { useState } from "react";
 
-export default function URLEncode() {
-  // input text from user
+export default function UrlEncode() {
   const [text, setText] = useState("");
-
-  // encoded or decoded result
   const [result, setResult] = useState("");
-
-  // mode state to switch between encode and decode
   const [mode, setMode] = useState("encode");
-
-  // copy feedback state
   const [copied, setCopied] = useState(false);
-
-  // error state for invalid input
   const [error, setError] = useState(null);
 
-  // handle encode or decode process
   const handleProcess = () => {
     setError(null);
 
@@ -28,28 +18,41 @@ export default function URLEncode() {
         // decode url encoded string
         setResult(decodeURIComponent(text));
       }
-    } catch (e) {
+    } catch (err) {
       // handle invalid input error
-      setError("Invalid input for " + mode);
+      setError("invalid input for " + mode);
       setResult("");
     }
   };
 
-  // copy result to clipboard
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!result) return;
 
-    navigator.clipboard.writeText(result);
+    try {
+      // copy result using clipboard api
+      await navigator.clipboard.writeText(result);
 
-    // show copied state
-    setCopied(true);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      // fallback copy method for mobile browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = result;
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
 
-    // reset copied state after short delay
-    setTimeout(() => setCopied(false), 1200);
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    }
   };
 
-  // clear input and output
   const handleClear = () => {
+    // reset all states
     setText("");
     setResult("");
     setError(null);
@@ -58,15 +61,15 @@ export default function URLEncode() {
   return (
     <div className="tool-container">
       <div className="tool-header">
-        <h1>URL Encoder / Decoder</h1>
+        <h1>url encoder decoder</h1>
         <p>convert text to url safe format and back</p>
       </div>
 
-      {/* mode switch buttons */}
       <div className="tool-actions">
         <button
           className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
+            // set encode mode
             setMode("encode");
             setError(null);
           }}
@@ -77,6 +80,7 @@ export default function URLEncode() {
         <button
           className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
+            // set decode mode
             setMode("decode");
             setError(null);
           }}
@@ -85,32 +89,28 @@ export default function URLEncode() {
         </button>
       </div>
 
-      {/* error display */}
       {error && <div className="error-badge">{error}</div>}
 
       <div className="tool-workspace">
-        {/* input field */}
         <textarea
           className="tool-textarea"
           placeholder={
             mode === "encode"
-              ? "enter text to encode..."
-              : "enter url encoded string..."
+              ? "enter text to encode"
+              : "enter url encoded string"
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
 
-        {/* output field */}
         <textarea
           className="tool-textarea"
-          placeholder="result will appear here..."
+          placeholder="result will appear here"
           value={result}
           readOnly
         />
       </div>
 
-      {/* action buttons */}
       <div className="tool-actions">
         <button onClick={handleProcess} className="btn btn-primary">
           Run
@@ -120,7 +120,7 @@ export default function URLEncode() {
           onClick={handleCopy}
           className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? "Copied" : "Copy"}
         </button>
 
         <button onClick={handleClear} className="btn btn-danger">
