@@ -7,12 +7,12 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 
 // tool pages imports
-import JsonFormatter from "./pages/tools/JsonFormatter";
-import Base64Tool from "./pages/tools/Base64";
-import ImageResizer from "./pages/tools/ImageResize";
-import HtmlPreview from "./pages/tools/HtmlPreview";
-import MarkdownPreview from "./pages/tools/MarkdownPreview";
-import URLEncode from "./pages/tools/URLEncode";
+import JsonFormatter from "./tools/data/JsonFormatter";
+import Base64Tool from "./tools/security/Base64Tool";
+import ImageResizer from "./tools/media/ImageResizer";
+import HtmlPreview from "./tools/code/HtmlPreview";
+import MarkdownPreview from "./tools/code/MarkdownPreview";
+import UrlEncoderDecoder from "./tools/security/UrlEncoderDecoder";
 
 // helper component to reset scroll and search on route change
 function ScrollToTop({ setSearchTerm }) {
@@ -60,7 +60,7 @@ export default function App() {
             <Route path="/image-resize" element={<ImageResizer />} />
             <Route path="/html-preview" element={<HtmlPreview />} />
             <Route path="/markdown" element={<MarkdownPreview />} />
-            <Route path="/url-encode" element={<URLEncode />} />
+            <Route path="/url-encode" element={<UrlEncoderDecoder />} />
 
             {/* legal pages */}
             <Route path="/privacy" element={<Privacy />} />

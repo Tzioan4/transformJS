@@ -1,25 +1,27 @@
 import { useState } from "react";
+import { marked } from "marked";
 
-export default function HtmlPreview() {
-  const [code, setCode] = useState(
-    "<h1>Hello World</h1>\n<p style='color: #6366f1'>Start coding...</p>",
+export default function MarkdownPreview() {
+  const [md, setMd] = useState(
+    "# Markdown Title\n\n**Bold text** and [links](https://transformjs.com)",
   );
 
   const [copied, setCopied] = useState(false);
 
+  const htmlOutput = marked(md);
+
   const handleCopy = async () => {
-    if (!code) return;
+    if (!md) return;
 
     try {
-      await navigator.clipboard.writeText(code);
+      await navigator.clipboard.writeText(htmlOutput);
 
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     } catch (err) {
-      // fallback for iOS/mobile browsers
+      // fallback for iOS
       const textarea = document.createElement("textarea");
-      textarea.value = code;
-      textarea.setAttribute("readonly", "");
+      textarea.value = htmlOutput;
       textarea.style.position = "absolute";
       textarea.style.left = "-9999px";
 
@@ -34,54 +36,48 @@ export default function HtmlPreview() {
   };
 
   const handleClear = () => {
-    setCode("");
+    setMd("");
   };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
-        <h1>HTML Preview</h1>
-        <p>Write HTML and CSS and see live preview</p>
+        <h1>Markdown Preview</h1>
+        <p>Convert Markdown into live HTML preview.</p>
       </div>
 
       <div className="tool-workspace">
-        {/*input */}
+        {/* input*/}
         <textarea
           className="tool-textarea"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Write your HTML here..."
+          value={md}
+          onChange={(e) => setMd(e.target.value)}
+          placeholder="Write markdown here..."
         />
 
         {/* preview*/}
         <div
           style={{
-            background: "#ffffff",
+            textAlign: "left",
+            padding: "20px",
+            background: "#f8fafc",
+            color: "#1e293b",
             borderRadius: "8px",
-            overflow: "hidden",
             height: "400px",
+            overflowY: "auto",
             border: "1px solid #1f2937",
           }}
-        >
-          <iframe
-            title="preview"
-            srcDoc={code}
-            style={{
-              width: "100%",
-              height: "100%",
-              border: "none",
-            }}
-          />
-        </div>
+          dangerouslySetInnerHTML={{ __html: htmlOutput }}
+        />
       </div>
 
-      {/*actions */}
+      {/*actions*/}
       <div className="tool-actions">
         <button
           onClick={handleCopy}
           className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "Copied!" : "Copy HTML"}
+          {copied ? "Copied" : "Copy"}
         </button>
 
         <button className="btn btn-danger" onClick={handleClear}>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { tools } from "../data/tools";
+import { tools } from "../tools";
 
 export default function Home({ searchTerm }) {
   // filter the tools based on what the user types in search

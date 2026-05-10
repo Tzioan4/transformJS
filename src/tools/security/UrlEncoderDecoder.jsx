@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export default function Base64Tool() {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
+export default function UrlEncode() {
+  const [text, setText] = useState("");
+  const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(null);
@@ -12,28 +12,32 @@ export default function Base64Tool() {
 
     try {
       if (mode === "encode") {
-        setOutput(btoa(unescape(encodeURIComponent(input))));
+        // convert text to url safe format
+        setResult(encodeURIComponent(text));
       } else {
-        setOutput(decodeURIComponent(escape(atob(input))));
+        // decode url encoded string
+        setResult(decodeURIComponent(text));
       }
     } catch (err) {
-      setError("Invalid input for " + mode);
-      setOutput("");
+      // handle invalid input error
+      setError("invalid input for " + mode);
+      setResult("");
     }
   };
 
   const handleCopy = async () => {
-    if (!output) return;
+    if (!result) return;
 
     try {
-      await navigator.clipboard.writeText(output);
+      // copy result using clipboard api
+      await navigator.clipboard.writeText(result);
 
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     } catch (err) {
-      // fallback for iOS/mobile
+      // fallback copy method for mobile browsers
       const textarea = document.createElement("textarea");
-      textarea.value = output;
+      textarea.value = result;
       textarea.style.position = "absolute";
       textarea.style.left = "-9999px";
 
@@ -48,23 +52,24 @@ export default function Base64Tool() {
   };
 
   const handleClear = () => {
-    setInput("");
-    setOutput("");
+    // reset all states
+    setText("");
+    setResult("");
     setError(null);
   };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
-        <h1>Base64 {mode === "encode" ? "Encoder" : "Decoder"}</h1>
-        <p>Convert text to Base64 format and vice versa instantly.</p>
+        <h1>URL Encoder/Decoder</h1>
+        <p>Convert text to URL safe format and vice versa.</p>
       </div>
 
-      {/* mode switch*/}
       <div className="tool-actions">
         <button
           className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
+            // set encode mode
             setMode("encode");
             setError(null);
           }}
@@ -75,6 +80,7 @@ export default function Base64Tool() {
         <button
           className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
+            // set decode mode
             setMode("decode");
             setError(null);
           }}
@@ -83,31 +89,28 @@ export default function Base64Tool() {
         </button>
       </div>
 
-      {/*error */}
       {error && <div className="error-badge">{error}</div>}
 
-      {/* workspace*/}
       <div className="tool-workspace">
-        {/*input */}
         <textarea
           className="tool-textarea"
           placeholder={
-            mode === "encode" ? "Enter plain text..." : "Enter Base64 string..."
+            mode === "encode"
+              ? "enter text to encode"
+              : "enter url encoded string"
           }
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
 
-        {/* output*/}
         <textarea
           className="tool-textarea"
-          placeholder="Result will appear here..."
-          value={output}
+          placeholder="result will appear here"
+          value={result}
           readOnly
         />
       </div>
 
-      {/* actions */}
       <div className="tool-actions">
         <button onClick={handleProcess} className="btn btn-primary">
           Run
@@ -117,7 +120,7 @@ export default function Base64Tool() {
           onClick={handleCopy}
           className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "✓ Copied" : "Copy"}
+          {copied ? "Copied" : "Copy"}
         </button>
 
         <button onClick={handleClear} className="btn btn-danger">
