@@ -46,17 +46,35 @@ export default function JsonFormatter() {
     }
   };
 
-  // copy output to clipboard
-  const handleCopy = () => {
+  // copy output to clipboard 
+  const handleCopy = async () => {
     if (!output) return;
 
-    navigator.clipboard.writeText(output);
+    try {
+      // modern clipboard api
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(output);
+      } else {
+        // fallback for mobile / safari
+        const textArea = document.createElement("textarea");
+        textArea.value = output;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        textArea.style.top = "-9999px";
 
-    // show copied feedback
-    setCopied(true);
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
 
-    // reset copied state after delay
-    setTimeout(() => setCopied(false), 2000);
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.log("copy failed:", err);
+    }
   };
 
   // clear input and output
@@ -70,7 +88,7 @@ export default function JsonFormatter() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>JSON Formatter</h1>
-        <p>format or minify json data easily</p>
+        <p>Format or minify JSON data easily</p>
       </div>
 
       {/* show error if json is invalid */}
@@ -110,7 +128,7 @@ export default function JsonFormatter() {
           onClick={handleCopy}
           className={`btn ${copied ? "btn-success" : "btn-copy"}`}
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? "Copied" : "Copy"}
         </button>
 
         {/* clear all button */}

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export default function UrlEncode() {
-  const [text, setText] = useState("");
-  const [result, setResult] = useState("");
+export default function Base64Tool() {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(null);
@@ -12,32 +12,28 @@ export default function UrlEncode() {
 
     try {
       if (mode === "encode") {
-        // convert text to url safe format
-        setResult(encodeURIComponent(text));
+        setOutput(btoa(unescape(encodeURIComponent(input))));
       } else {
-        // decode url encoded string
-        setResult(decodeURIComponent(text));
+        setOutput(decodeURIComponent(escape(atob(input))));
       }
     } catch (err) {
-      // handle invalid input error
-      setError("invalid input for " + mode);
-      setResult("");
+      setError("Invalid input for " + mode);
+      setOutput("");
     }
   };
 
   const handleCopy = async () => {
-    if (!result) return;
+    if (!output) return;
 
     try {
-      // copy result using clipboard api
-      await navigator.clipboard.writeText(result);
+      await navigator.clipboard.writeText(output);
 
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     } catch (err) {
-      // fallback copy method for mobile browsers
+      // fallback for iOS/mobile
       const textarea = document.createElement("textarea");
-      textarea.value = result;
+      textarea.value = output;
       textarea.style.position = "absolute";
       textarea.style.left = "-9999px";
 
@@ -52,24 +48,23 @@ export default function UrlEncode() {
   };
 
   const handleClear = () => {
-    // reset all states
-    setText("");
-    setResult("");
+    setInput("");
+    setOutput("");
     setError(null);
   };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
-        <h1>url encoder decoder</h1>
-        <p>convert text to url safe format and back</p>
+        <h1>Base64 {mode === "encode" ? "Encoder" : "Decoder"}</h1>
+        <p>Convert text to Base64 format and vice versa instantly</p>
       </div>
 
+      {/* mode switch*/}
       <div className="tool-actions">
         <button
           className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
-            // set encode mode
             setMode("encode");
             setError(null);
           }}
@@ -80,7 +75,6 @@ export default function UrlEncode() {
         <button
           className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
           onClick={() => {
-            // set decode mode
             setMode("decode");
             setError(null);
           }}
@@ -89,28 +83,31 @@ export default function UrlEncode() {
         </button>
       </div>
 
+      {/*error */}
       {error && <div className="error-badge">{error}</div>}
 
+      {/* workspace*/}
       <div className="tool-workspace">
+        {/*input */}
         <textarea
           className="tool-textarea"
           placeholder={
-            mode === "encode"
-              ? "enter text to encode"
-              : "enter url encoded string"
+            mode === "encode" ? "Enter plain text..." : "Enter Base64 string..."
           }
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
 
+        {/* output*/}
         <textarea
           className="tool-textarea"
-          placeholder="result will appear here"
-          value={result}
+          placeholder="Result will appear here..."
+          value={output}
           readOnly
         />
       </div>
 
+      {/* actions */}
       <div className="tool-actions">
         <button onClick={handleProcess} className="btn btn-primary">
           Run
