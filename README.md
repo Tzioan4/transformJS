@@ -1,16 +1,81 @@
-# React + Vite
+# DevConvert
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A collection of fast and useful developer tools for daily workflows.
 
-Currently, two official plugins are available:
+Built with React + Vite and deployed on Vercel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## Live Demo
+https://transformjs-ashy.vercel.app/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## About the Project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+DevConvert is a lightweight web application that provides essential developer utilities in one place.
+
+It is designed for speed, simplicity, and productivity with a clean and scalable structure.
+
+## Features
+
+- JSON Formatter & Minifier  
+- Base64 Encoder / Decoder  
+- URL Encoder / Decoder  
+- Image Resizer  
+- HTML Live Preview  
+- Markdown Preview  
+- More tools coming soon  
+
+## Tech Stack
+
+- React  
+- Vite  
+- React Router  
+- CSS (custom styling)  
+- Vercel (deployment)  
+
+
+## Project Structure
+
+- modular tool-based architecture  
+- each tool is isolated as a component  
+- centralized routing system  
+- scalable folder structure for future tools  
+
+
+## Branching Strategy
+
+- main → production (live site)  
+- refactor/tool-architecture → development branch  
+
+
+## Deployment
+
+Automatically deployed via Vercel on push to main.
+
+---
+
+## Purpose
+
+This project was built as a learning and portfolio project to demonstrate:
+
+- React architecture  
+- routing systems  
+- reusable components  
+- Git workflow (branches and merges)  
+- deployment pipeline  
+
+---
+
+## Future Improvements
+
+- backend integration for tools  
+- user accounts  
+- save history  
+- API-based tools  
+- performance optimizations (lazy loading)  
+
+---
+
+## License
+
+MIT
