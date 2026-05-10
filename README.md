@@ -1,4 +1,4 @@
-# DevConvert
+# transformJS
 
 A collection of fast and useful developer tools for daily workflows.
 
@@ -11,7 +11,7 @@ https://transformjs-ashy.vercel.app/
 
 ## About the Project
 
-DevConvert is a lightweight web application that provides essential developer utilities in one place.
+transformJS is a lightweight web application that provides essential developer utilities in one place.
 
 It is designed for speed, simplicity, and productivity with a clean and scalable structure.
 
