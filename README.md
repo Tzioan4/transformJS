@@ -53,9 +53,9 @@ It is designed for speed, simplicity, and productivity with a clean and scalable
 
 ## Installation
 
-git clone https://github.com/Tzioan4/transformJS.git
-cd transformJS
-npm install
+- git clone https://github.com/Tzioan4/transformJS.git
+- cd transformJS
+- npm install
 
 ---
 
