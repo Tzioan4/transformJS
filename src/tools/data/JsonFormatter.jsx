@@ -88,7 +88,7 @@ export default function JsonFormatter() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>JSON Formatter</h1>
-        <p>Format or minify JSON data easily</p>
+        <p>Format or minify JSON data easily.</p>
       </div>
 
       {/* show error if json is invalid */}
