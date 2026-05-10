@@ -12,7 +12,11 @@ export default function Footer() {
 
         {/* right side: simple links */}
         <div className="footer-links">
-          <a href="https://github.com/Tzioan4" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/Tzioan4/transformJS"
+            target="_blank"
+            rel="noreferrer"
+          >
             github
           </a>
           <Link to="/privacy">privacy</Link>

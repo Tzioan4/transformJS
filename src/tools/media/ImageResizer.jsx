@@ -118,7 +118,7 @@ export default function ImageResizer() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>Image Resizer</h1>
-        <p>custom aspect ratio and resizing tool</p>
+        <p>Custom aspect ratio and resizing tool.</p>
       </div>
 
       {/* file upload button */}

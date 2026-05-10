@@ -57,7 +57,7 @@ export default function Base64Tool() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>Base64 {mode === "encode" ? "Encoder" : "Decoder"}</h1>
-        <p>Convert text to Base64 format and vice versa instantly</p>
+        <p>Convert text to Base64 format and vice versa instantly.</p>
       </div>
 
       {/* mode switch*/}
