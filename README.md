@@ -4,16 +4,21 @@ A collection of fast and useful developer tools for daily workflows.
 
 Built with React + Vite and deployed on Vercel.
 
+---
 
 ## Live Demo
+
 https://transformjs-ashy.vercel.app/
 
+---
 
 ## About the Project
 
 transformJS is a lightweight web application that provides essential developer utilities in one place.
 
 It is designed for speed, simplicity, and productivity with a clean and scalable structure.
+
+---
 
 ## Features
 
@@ -25,6 +30,8 @@ It is designed for speed, simplicity, and productivity with a clean and scalable
 - Markdown Preview  
 - More tools coming soon  
 
+---
+
 ## Tech Stack
 
 - React  
@@ -33,6 +40,7 @@ It is designed for speed, simplicity, and productivity with a clean and scalable
 - CSS (custom styling)  
 - Vercel (deployment)  
 
+---
 
 ## Project Structure
 
@@ -41,41 +49,49 @@ It is designed for speed, simplicity, and productivity with a clean and scalable
 - centralized routing system  
 - scalable folder structure for future tools  
 
+---
 
-## Branching Strategy
+## Installation
 
-- main → production (live site)  
-- refactor/tool-architecture → development branch  
+git clone https://github.com/Tzioan4/transformJS.git
+cd transformJS
+npm install
 
+---
 
-## Deployment
+## Run Locally
 
-Automatically deployed via Vercel on push to main.
+npm run dev
+
+---
+
+## Build
+
+npm run build
+
+---
+
+## Contribution
+
+Contributions are welcome.
+To contribute:
+- Fork the repository
+- Create a new branch
+- Make your changes
+- Commit and push
+- Open a pull request
 
 ---
 
 ## Purpose
-
 This project was built as a learning and portfolio project to demonstrate:
-
-- React architecture  
-- routing systems  
-- reusable components  
-- Git workflow (branches and merges)  
-- deployment pipeline  
-
----
-
-## Future Improvements
-
-- backend integration for tools  
-- user accounts  
-- save history  
-- API-based tools  
-- performance optimizations (lazy loading)  
+- React architecture
+- routing systems
+- reusable components
+- Git workflow (branches and merges)
+- deployment pipeline
 
 ---
 
 ## License
-
-MIT
+This project is licensed under the MIT License.
