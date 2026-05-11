@@ -2,6 +2,8 @@ import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import useCopy from "../../hooks/useCopy";
 
+import { encodeBase64, decodeBase64 } from "../../utils/base64";
+
 export default function Base64Tool() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -15,12 +17,12 @@ export default function Base64Tool() {
 
     try {
       if (mode === "encode") {
-        setOutput(btoa(unescape(encodeURIComponent(input))));
+        setOutput(encodeBase64(input));
       } else {
-        setOutput(decodeURIComponent(escape(atob(input))));
+        setOutput(decodeBase64(input));
       }
     } catch (err) {
-      setError("invalid input for " + mode);
+      setError("Invalid input for " + mode);
       setOutput("");
     }
   };
@@ -35,8 +37,8 @@ export default function Base64Tool() {
     <ToolLayout
       header={
         <div>
-          <h1>Base64 {mode === "encode" ? "encoder" : "decoder"}</h1>
-          <p>Convert text to base64 and back.</p>
+          <h1>Base64 Tool</h1>
+          <p>Encode and decode text using Base64.</p>
 
           {error && <div className="error-badge">{error}</div>}
         </div>
@@ -44,9 +46,7 @@ export default function Base64Tool() {
       input={
         <textarea
           className="tool-textarea"
-          placeholder={
-            mode === "encode" ? "Enter plain text..." : "Enter base64 string..."
-          }
+          placeholder={mode === "encode" ? "Enter text..." : "Enter Base64..."}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
@@ -62,21 +62,21 @@ export default function Base64Tool() {
       actions={
         <div className="tool-actions">
           <button
-            className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
             onClick={() => {
               setMode("encode");
               setError(null);
             }}
+            className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
           >
             Encode
           </button>
 
           <button
-            className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
             onClick={() => {
               setMode("decode");
               setError(null);
             }}
+            className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
           >
             Decode
           </button>
@@ -87,7 +87,7 @@ export default function Base64Tool() {
 
           <button
             onClick={() => copy(output)}
-            className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
           >
             {copied ? "Copied" : "Copy"}
           </button>

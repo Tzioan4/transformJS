@@ -2,6 +2,8 @@ import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import useCopy from "../../hooks/useCopy";
 
+import { formatJson, minifyJson } from "../../utils/json";
+
 export default function JsonFormatter() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -11,8 +13,7 @@ export default function JsonFormatter() {
 
   const handleFormat = () => {
     try {
-      const parsed = JSON.parse(input);
-      setOutput(JSON.stringify(parsed, null, 2));
+      setOutput(formatJson(input));
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);
@@ -22,8 +23,7 @@ export default function JsonFormatter() {
 
   const handleMinify = () => {
     try {
-      const parsed = JSON.parse(input);
-      setOutput(JSON.stringify(parsed));
+      setOutput(minifyJson(input));
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);

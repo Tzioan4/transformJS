@@ -2,7 +2,9 @@ import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import useCopy from "../../hooks/useCopy";
 
-export default function UrlEncode() {
+import { encodeUrl, decodeUrl } from "../../utils/url";
+
+export default function UrlEncoderDecoder() {
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
@@ -15,12 +17,12 @@ export default function UrlEncode() {
 
     try {
       if (mode === "encode") {
-        setResult(encodeURIComponent(text));
+        setResult(encodeUrl(text));
       } else {
-        setResult(decodeURIComponent(text));
+        setResult(decodeUrl(text));
       }
     } catch (err) {
-      setError("invalid input for " + mode);
+      setError("Invalid input for " + mode);
       setResult("");
     }
   };
@@ -36,7 +38,7 @@ export default function UrlEncode() {
       header={
         <div>
           <h1>URL Encoder / Decoder</h1>
-          <p>Convert text to url safe format and back.</p>
+          <p>Convert text to URL safe format and back.</p>
 
           {error && <div className="error-badge">{error}</div>}
         </div>
@@ -45,9 +47,7 @@ export default function UrlEncode() {
         <textarea
           className="tool-textarea"
           placeholder={
-            mode === "encode"
-              ? "Enter text to encode"
-              : "enter url encoded string"
+            mode === "encode" ? "Enter text..." : "Enter URL encoded text..."
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -56,7 +56,7 @@ export default function UrlEncode() {
       output={
         <textarea
           className="tool-textarea"
-          placeholder="Result will appear here"
+          placeholder="Result will appear here..."
           value={result}
           readOnly
         />
@@ -89,7 +89,7 @@ export default function UrlEncode() {
 
           <button
             onClick={() => copy(result)}
-            className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
           >
             {copied ? "Copied" : "Copy"}
           </button>
