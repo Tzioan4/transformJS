@@ -5,6 +5,7 @@ import {
   Layout,
   FileText,
   Link,
+  Lock,
 } from "lucide-react";
 
 // code tools
@@ -20,6 +21,7 @@ import ImageResizer from "./media/ImageResizer";
 // security tools
 import Base64Tool from "./security/Base64Tool";
 import UrlEncoderDecoder from "./security/UrlEncoderDecoder";
+import JWTDebugger from "./security/JWTDebugger";
 
 export const tools = [
   {
@@ -69,5 +71,13 @@ export const tools = [
     description: "Resize images easily",
     tags: ["image", "resize", "photo"],
     icon: <ImageIcon size={40} strokeWidth={1.5} />,
+  },
+  {
+    name: "JWT Debugger",
+    path: "/jwt",
+    component: JWTDebugger,
+    description: "Decode and verify JWT tokens",
+    tags: ["jwt", "auth", "security", "decode"],
+    icon: <Lock size={40} strokeWidth={1.5} />,
   },
 ];
