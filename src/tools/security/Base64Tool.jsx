@@ -1,49 +1,29 @@
 import { useState } from "react";
+import ToolLayout from "../../layouts/ToolLayout";
+import useCopy from "../../hooks/useCopy";
+
+import { encodeBase64, decodeBase64 } from "../../utils/base64";
 
 export default function Base64Tool() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
-  const [copied, setCopied] = useState(false);
   const [error, setError] = useState(null);
+
+  const { copied, copy } = useCopy();
 
   const handleProcess = () => {
     setError(null);
 
     try {
       if (mode === "encode") {
-        setOutput(btoa(unescape(encodeURIComponent(input))));
+        setOutput(encodeBase64(input));
       } else {
-        setOutput(decodeURIComponent(escape(atob(input))));
+        setOutput(decodeBase64(input));
       }
     } catch (err) {
       setError("Invalid input for " + mode);
       setOutput("");
-    }
-  };
-
-  const handleCopy = async () => {
-    if (!output) return;
-
-    try {
-      await navigator.clipboard.writeText(output);
-
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch (err) {
-      // fallback for iOS/mobile
-      const textarea = document.createElement("textarea");
-      textarea.value = output;
-      textarea.style.position = "absolute";
-      textarea.style.left = "-9999px";
-
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
     }
   };
 
@@ -54,76 +34,69 @@ export default function Base64Tool() {
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <h1>Base64 {mode === "encode" ? "Encoder" : "Decoder"}</h1>
-        <p>Convert text to Base64 format and vice versa instantly.</p>
-      </div>
+    <ToolLayout
+      header={
+        <div>
+          <h1>Base64 Tool</h1>
+          <p>Encode and decode text using Base64.</p>
 
-      {/* mode switch*/}
-      <div className="tool-actions">
-        <button
-          className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
-          onClick={() => {
-            setMode("encode");
-            setError(null);
-          }}
-        >
-          Encode
-        </button>
-
-        <button
-          className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
-          onClick={() => {
-            setMode("decode");
-            setError(null);
-          }}
-        >
-          Decode
-        </button>
-      </div>
-
-      {/*error */}
-      {error && <div className="error-badge">{error}</div>}
-
-      {/* workspace*/}
-      <div className="tool-workspace">
-        {/*input */}
+          {error && <div className="error-badge">{error}</div>}
+        </div>
+      }
+      input={
         <textarea
           className="tool-textarea"
-          placeholder={
-            mode === "encode" ? "Enter plain text..." : "Enter Base64 string..."
-          }
+          placeholder={mode === "encode" ? "Enter text..." : "Enter Base64..."}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-
-        {/* output*/}
+      }
+      output={
         <textarea
           className="tool-textarea"
           placeholder="Result will appear here..."
           value={output}
           readOnly
         />
-      </div>
+      }
+      actions={
+        <div className="tool-actions">
+          <button
+            onClick={() => {
+              setMode("encode");
+              setError(null);
+            }}
+            className={`btn ${mode === "encode" ? "btn-primary" : "btn-secondary"}`}
+          >
+            Encode
+          </button>
 
-      {/* actions */}
-      <div className="tool-actions">
-        <button onClick={handleProcess} className="btn btn-primary">
-          Run
-        </button>
+          <button
+            onClick={() => {
+              setMode("decode");
+              setError(null);
+            }}
+            className={`btn ${mode === "decode" ? "btn-primary" : "btn-secondary"}`}
+          >
+            Decode
+          </button>
 
-        <button
-          onClick={handleCopy}
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
-        >
-          {copied ? "Copied" : "Copy"}
-        </button>
+          <button onClick={handleProcess} className="btn btn-primary">
+            Run
+          </button>
 
-        <button onClick={handleClear} className="btn btn-danger">
-          Clear
-        </button>
-      </div>
-    </div>
+          <button
+            onClick={() => copy(output)}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
+
+          <button onClick={handleClear} className="btn btn-danger">
+            Clear
+          </button>
+        </div>
+      }
+    />
   );
 }
