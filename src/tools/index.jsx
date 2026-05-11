@@ -21,7 +21,7 @@ import ImageResizer from "./media/ImageResizer";
 // security tools
 import Base64Tool from "./security/Base64Tool";
 import UrlEncoderDecoder from "./security/UrlEncoderDecoder";
-import JWTDebugger from "./security/JWTDebugger";
+import JwtDebugger from "./security/JwtDebugger";
 
 export const tools = [
   {
@@ -75,7 +75,7 @@ export const tools = [
   {
     name: "JWT Debugger",
     path: "/jwt",
-    component: JWTDebugger,
+    component: JwtDebugger,
     description: "Decode and verify JWT tokens",
     tags: ["jwt", "auth", "security", "decode"],
     icon: <Lock size={40} strokeWidth={1.5} />,
