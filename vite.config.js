@@ -7,4 +7,11 @@ export default defineConfig({
   server: {
     host: true,
   },
+  resolve: {
+    alias: {
+      "@styles": "/src/styles",
+      "@tools": "/src/tools",
+      "@components": "/src/components",
+    },
+  },
 });

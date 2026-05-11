@@ -1,0 +1,145 @@
+.hero-section {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0b0e14;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.hero-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.hero-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-illustration-box {
+  background-color: #c7d2fe;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 1 / 1;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.hero-img {
+  width: 85%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #6366f1;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.hero-title .highlight {
+  color: #ffffff;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.hero-btn {
+  width: fit-content;
+  background-color: #6366f1;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+}
+
+.hero-btn:hover {
+  background-color: #4f46e5;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    display: block; 
+    padding-top: 140px; 
+    min-height: auto;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .hero-illustration-box {
+    max-width: 300px; 
+    margin: 0 auto;
+    border-radius: 40px;
+  }
+  
+  .hero-content {
+    align-items: center;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}
+
+
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #818cf8;
+  margin-bottom: 40px;
+}
+
+
+
+
+
+.tool-card:hover {
+  transform: translateY(-10px);
+  border-color: #6366f1;
+}
+
+.tool-card h3 {
+  color: #f1f5f9;
+  margin: 15px 0 10px 0;
+}
+
+.tool-card p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
