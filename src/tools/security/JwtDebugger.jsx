@@ -1,4 +1,4 @@
-import "../../css/jwt.css";
+import "../../styles/tools/jwt.css";
 import { useState } from "react";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
@@ -47,7 +47,6 @@ export default function JWTDebugger() {
       setError("Verification failed.");
     }
   };
-
 
   const handleClear = () => {
     setToken("");

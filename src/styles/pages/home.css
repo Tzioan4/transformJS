@@ -1,0 +1,51 @@
+/* prevent layout shift on mobile keyboard */
+.tool-container {
+  transform: translateZ(0);
+}
+/* responsive grid for tool cards */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 2rem 40px;
+}
+/* card design for tools */
+.tool-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tool-card:hover {
+  border-color: #4f46e5;
+  background: #161e2e;
+  transform: translateY(-4px);
+}
+
+/* icon inside tool card */
+.tool-card .tool-icon {
+  color: #818cf8;
+  margin-bottom: 0.5rem;
+}
+
+/* title inside tool card */
+.tool-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+/* description inside tool card */
+.tool-card p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
