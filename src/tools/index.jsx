@@ -1,11 +1,12 @@
 import {
   FileJson,
   Hash,
-  Image as ImageIcon,
   Layout,
   FileText,
   Link,
   Lock,
+  FileCode,
+  Database,
 } from "lucide-react";
 
 // code tools
@@ -14,9 +15,8 @@ import MarkdownPreview from "./code/MarkdownPreview";
 
 // data tools
 import JsonFormatter from "./data/JsonFormatter";
-
-// media tools
-import ImageResizer from "./media/ImageResizer";
+import YamlToJson from "./data/YamlToJson"; 
+import SqlFormatter from "./data/SqlFormatter";
 
 // security tools
 import Base64Tool from "./security/Base64Tool";
@@ -28,56 +28,69 @@ export const tools = [
     name: "JSON Formatter",
     path: "/json",
     component: JsonFormatter,
-    description: "Format and validate json",
+    description:
+      "Prettify, minify, and validate JSON structures with syntax highlighting.",
     tags: ["json", "formatter", "data"],
-    icon: <FileJson size={40} strokeWidth={1.5} />,
+    icon: <FileJson size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
   {
     name: "Base64 Encoder",
     path: "/base64",
     component: Base64Tool,
-    description: "Encode and decode base64",
+    description:
+      "Bi-directional Base64 conversion for text and binary data strings.",
     tags: ["base64", "encode", "decode"],
-    icon: <Hash size={40} strokeWidth={1.5} />,
+    icon: <Hash size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
   {
     name: "URL Encoder / Decoder",
     path: "/url-encode",
     component: UrlEncoderDecoder,
-    description: "Encode and decode urls safely",
+    description: "RFC 3986 compliant encoding and decoding for URL components.",
     tags: ["url", "encode", "decode", "web"],
-    icon: <Link size={40} strokeWidth={1.5} />,
+    icon: <Link size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
   {
     name: "HTML Preview",
     path: "/html-preview",
     component: HtmlPreview,
-    description: "Write HTML/CSS and see live preview",
+    description: "Real-time sandboxed rendering for HTML and CSS snippets.",
     tags: ["html", "css", "preview", "frontend"],
-    icon: <Layout size={40} strokeWidth={1.5} />,
+    icon: <Layout size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
   {
     name: "Markdown Preview",
     path: "/markdown",
     component: MarkdownPreview,
-    description: "Convert markdown into HTML preview",
+    description:
+      "GitHub Flavored Markdown rendering with live HTML transpilation.",
     tags: ["markdown", "md", "preview", "text"],
-    icon: <FileText size={40} strokeWidth={1.5} />,
-  },
-  {
-    name: "Image Resizer",
-    path: "/image-resize",
-    component: ImageResizer,
-    description: "Resize images easily",
-    tags: ["image", "resize", "photo"],
-    icon: <ImageIcon size={40} strokeWidth={1.5} />,
+    icon: <FileText size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
   {
     name: "JWT Debugger",
     path: "/jwt",
     component: JwtDebugger,
-    description: "Decode and verify JWT tokens",
+    description:
+      "Decode JWT headers and payloads with instant signature verification.",
     tags: ["jwt", "auth", "security", "decode"],
-    icon: <Lock size={40} strokeWidth={1.5} />,
+    icon: <Lock size={40} strokeWidth={1.5} color="#F7DF1E" />,
+  },
+  {
+    name: "YAML to JSON",
+    path: "/yaml-to-json",
+    component: YamlToJson,
+    description:
+      "Convert YAML configurations to clean, formatted JSON structures.",
+    tags: ["yaml", "json", "convert", "data"],
+    icon: <FileCode size={40} strokeWidth={1.5} color="#F7DF1E" />,
+  },
+  {
+    name: "SQL Formatter",
+    path: "/sql-formatter",
+    component: SqlFormatter,
+    description: "Format and prettify SQL queries for better readability.",
+    tags: ["sql", "database", "format", "query"],
+    icon: <Database size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
 ];

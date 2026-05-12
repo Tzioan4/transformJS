@@ -9,13 +9,13 @@
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 120px 2rem 40px;
+  padding: 100px 2rem 200px;
 }
 /* card design for tools */
 .tool-card {
-  background: #111827;
-  border: 1px solid #1f2937;
-  border-radius: 12px;
+  background: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 20px;
   padding: 1.5rem;
   text-decoration: none;
   color: inherit;
@@ -24,11 +24,27 @@
   flex-direction: column;
   gap: 1rem;
 }
-
+.jwt-input-main, 
+.jwt-field-group textarea, 
+.jwt-field-group pre { 
+  background-color: #2d2d2d !important; 
+  border: 1px solid #2d2d2d;
+  color: #e6edf3;
+  border-radius: 12px;
+}
+.jwt-input-main:focus,
+.jwt-field-group textarea:focus,
+.tool-textarea:focus,
+.search-input:focus,
+input:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: #30363d !important; 
+  box-shadow: none !important;    
+}
 .tool-card:hover {
-  border-color: #4f46e5;
-  background: #161e2e;
-  transform: translateY(-4px);
+  border-color: #2d2d2d;
+  background: #121212;
 }
 
 /* icon inside tool card */

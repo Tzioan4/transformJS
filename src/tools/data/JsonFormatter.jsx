@@ -42,7 +42,10 @@ export default function JsonFormatter() {
       header={
         <div>
           <h1>JSON Formatter</h1>
-          <p>Format or minify json data easily.</p>
+          <p>
+            Prettify, minify, and validate JSON structures with syntax
+            highlighting.
+          </p>
 
           {error && <div className="error-badge">{error}</div>}
         </div>

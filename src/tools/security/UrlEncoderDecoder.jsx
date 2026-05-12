@@ -38,7 +38,7 @@ export default function UrlEncoderDecoder() {
       header={
         <div>
           <h1>URL Encoder / Decoder</h1>
-          <p>Convert text to URL safe format and back.</p>
+          <p>RFC 3986 compliant encoding and decoding for URL components.</p>
 
           {error && <div className="error-badge">{error}</div>}
         </div>
