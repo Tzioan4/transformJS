@@ -38,7 +38,9 @@ export default function Base64Tool() {
       header={
         <div>
           <h1>Base64 Tool</h1>
-          <p>Encode and decode text using Base64.</p>
+          <p>
+            Bi-directional Base64 conversion for text and binary data strings
+          </p>
 
           {error && <div className="error-badge">{error}</div>}
         </div>

@@ -61,7 +61,10 @@ export default function JWTDebugger() {
     <div className="tool-container">
       <div className="tool-header">
         <h1>JWT Debugger</h1>
-        <p>Decode and verify JSON Web Tokens (HS256)</p>
+        <p>
+          Decode JWT headers and payloads with instant signature verification
+          status.
+        </p>
 
         {/* Error Messages */}
         {error && (

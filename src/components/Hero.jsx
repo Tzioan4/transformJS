@@ -27,12 +27,13 @@ export default function Hero() {
         {/* right side */}
         <div className="hero-content">
           <h1 className="hero-title">
-            Smart Tools for <br />
-            <span className="highlight">Modern Devs</span>
+            Fast Tools for <br />
+            <span className="highlight">Busy Devs</span>
           </h1>
           <p className="hero-description">
-            <strong> TransformJS</strong> is your open-source companion for
-            speeding up daily development tasks without the clutter.
+            <strong> transformJS</strong> is a lightweight,
+            open-source toolkit designed to eliminate friction from your
+            workflow. No ads, no tracking, just the tools you need.
           </p>
           <button className="hero-btn" onClick={scrollToTools}>
             Find your tool
