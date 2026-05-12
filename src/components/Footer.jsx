@@ -4,23 +4,37 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-content">
-        {/* left side: brand and copyright */}
         <div className="footer-left">
-          <span className="footer-brand">transformJS</span>
-          <span className="footer-copy">© 2026 — built for devs</span>
+          <span className="footer-brand">transformJS </span>
+          <span className="footer-copy">
+            © {new Date().getFullYear()} — Built by{" "}
+            <a
+              href="https://github.com/Tzioan4"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              Ioannis Tz.
+            </a>
+          </span>
         </div>
 
-        {/* right side: simple links */}
         <div className="footer-links">
+          <span
+            className="footer-license"
+            style={{ opacity: 0.6, fontSize: "0.85rem", marginRight: "10px" }}
+          >
+            MIT License
+          </span>
           <a
             href="https://github.com/Tzioan4/transformJS"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
-            github
+            GitHub
           </a>
-          <Link to="/privacy">privacy</Link>
-          <Link to="/terms">terms</Link>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/about">About</Link>
         </div>
       </div>
     </footer>

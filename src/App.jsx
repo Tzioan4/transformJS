@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
+import About from "./pages/About";
 
 // tools registry
 import { tools } from "./tools";
@@ -55,7 +55,7 @@ export default function App() {
 
             {/* legal pages */}
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
+            <Route path="/about" element={<About />} />
 
             {/* fallback */}
             <Route path="*" element={<Home searchTerm={searchTerm} />} />
