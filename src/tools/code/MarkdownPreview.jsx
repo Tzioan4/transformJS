@@ -35,20 +35,12 @@ export default function MarkdownPreview() {
   `;
 
   const handleCopy = async () => {
-    if (!md) return;
     try {
-      await navigator.clipboard.writeText(htmlOutput);
+      await navigator.clipboard.writeText(md);
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
     } catch (err) {
-      const textarea = document.createElement("textarea");
-      textarea.value = htmlOutput;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
+      console.error("Could not copy text: ", err);
     }
   };
 
