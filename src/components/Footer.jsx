@@ -1,3 +1,4 @@
+import "@styles/components/footer.css";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -5,14 +6,14 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-content">
         <div className="footer-left">
-          <span className="footer-brand">transformJS </span>
+          <span className="footer-brand">transformJS</span>
           <span className="footer-copy">
             © {new Date().getFullYear()} — Built by{" "}
             <a
               href="https://github.com/Tzioan4"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "inherit", textDecoration: "none" }}
+              className="author-link"
             >
               Ioannis Tz.
             </a>
@@ -20,12 +21,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-links">
-          <span
-            className="footer-license"
-            style={{ opacity: 0.6, fontSize: "0.85rem", marginRight: "10px" }}
-          >
-            MIT License
-          </span>
+          <span className="footer-license">MIT License</span>
           <a
             href="https://github.com/Tzioan4/transformJS"
             target="_blank"

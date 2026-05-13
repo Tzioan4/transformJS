@@ -1,19 +1,23 @@
-/* fixed navbar with blur background */
+/*navbar main container */
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  height: 64px;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
-  background: #121212;
-  backdrop-filter: blur(12px);
-  z-index: 100;
+  box-sizing: border-box;
+  /* spacing and ios fix */
+  padding: 1rem 2rem;
+  padding-top: max(1rem, env(safe-area-inset-top));
+ /* glass effect */  
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* logo styling using mono font for dev feel */
 .nav-logo {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
@@ -22,37 +26,32 @@
   text-decoration: none;
   letter-spacing: -1px;
 }
-
-/* search input styling for navbar */
 .search-input {
+  width: 300px;
+  padding: 0.5rem 1rem;
   background: #2d2d2d;
   border: 1px solid #2b323b;
-  padding: 0.5rem 1rem;
   border-radius: 6px;
   color: white;
   font-family: 'Inter', sans-serif;
-  width: 300px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #F7DF1E;
+  background-color: #333333;
 }
-
-/* mobile navbar layout */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0 1rem;
-    height: auto;
     flex-direction: column;
-    padding-bottom: 10px;
+    gap: 10px;
+    padding: 0.8rem 1rem;
+    padding-top: max(0.8rem, env(safe-area-inset-top));
   }
-
   .nav-logo {
-    margin: 10px 0;
+    margin: 0; 
   }
-
   .search-input {
     width: 100%;
     max-width: none;
