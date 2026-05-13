@@ -1,3 +1,4 @@
+import "../styles/pages/legal.css";
 export default function Privacy() {
   return (
     <div className="policy-container">
@@ -16,8 +17,8 @@ export default function Privacy() {
       <section>
         <h2>Data & Privacy</h2>
         <p>
-          No servers,databases,unecessary account creations and no data
-          collection. Everything you process here happens{" "}
+          <strong>No</strong> servers, databases, unnecessary account creations
+          and data collection. Everything you process here happens{" "}
           <strong>locally in your browser</strong>. Once you close the tab, your
           data is gone forever.
         </p>

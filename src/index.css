@@ -1,255 +1,34 @@
-/* import fonts for ui and code styling */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* base html setup for mobile stability and full height layout */
+@import "./styles/components/navbar.css";
+@import "./styles/components/footer.css";
+@import "./styles/tools/tools.css";
+
 html {
+  height: 100%;
+  background-color: #121212;
+  /*mobile stability*/
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   touch-action: manipulation;
   overscroll-behavior: none;
-  height: 100%;
-  background: #121212;
 }
 
-/* global body styling with dark theme and font smoothing */
+/*global styling */
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #121212;
-  color: #e2e8f0;
-  line-height: 1.5;
-  height: 100%;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: none;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
   position: relative;
-}
-
-/* fix input zoom issues on ios and keep consistent font sizing */
-input,
-textarea,
-select {
-  font-size: 16px !important;
-  line-height: normal;
-  -webkit-appearance: none;
-  appearance: none;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
-/* remove focus jump and keep layout stable */
-textarea:focus,
-input:focus {
-  outline: none;
-  transform: none !important;
-}
-
-/* reset spacing and enable consistent box model */
-* {
+  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-
-/* main tool page container */
-.tool-container {
-  max-width: 100% !important; 
-  margin: 0;
-  padding: 100px 2rem 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; 
-  min-height: calc(100vh - 180px);
-}
-
-/* tool page header */
-.tool-header h1 {
-  font-family: 'JetBrains Mono', monospace;
-  color: #F7DF1E;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.tool-header p {
-  color: #94a3b8;
-}
-
-.tool-workspace {
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 15px; 
-  width: 100%;
-  align-items: stretch; 
-  margin-bottom: 1rem;
-}
-
-.tool-workspace > * {
-  min-width: 0;
-}
-
-/* editor textarea styling */
-.tool-textarea {
-  width: 100%;
-  height: 450px; 
-  background: #2d2d2d;
-  border: 1px solid #121212;
-  border-radius: 8px;
-  padding: 1.5rem;
+  overflow-x: hidden;
+  background-color: #121212;
   color: #e2e8f0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  outline: none;
-}
-
-.tool-workspace .tool-textarea {
-  height: 100%;
-  min-height: 450px;
-}
-
-/* button row */
-.tool-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-/* base button style */
-.btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: opacity 0.2s;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-/* button variants */
-.btn-primary { background: #6366f1; color: white; }
-.btn-secondary { background: #334155; color: white; }
-.btn-danger { background: #ef4444; color: white; }
-.btn-copy { background: #475569; color: white; }
-.btn-success { background: #22c55e !important; color: white; }
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* error message styling */
-.error-badge {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #ef4444;
-  color: #ef4444;
-  padding: 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-/* footer layout */
-.site-footer {
-  width: 100%;
-  padding: 2rem 0;
-  margin-top: auto;
-  background: #121212;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-brand {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  color: #F7DF1E;
-}
-
-.footer-copy {
-  font-size: 0.85rem;
-  color: #64748b;
-}
-
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-links a {
-  color: #94a3b8;
-  text-decoration: none;
-  font-size: 0.85rem;
-}
-
-.footer-links a:hover {
-  color: #F7DF1E;
-}
-
-/* legal pages styling */
-.policy-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 120px 2rem 60px;
-}
-
-.policy-container h1 {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2.5rem;
-  color: #F7DF1E;
-}
-
-.policy-container h2 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  color: #f8fafc;
-}
-
-.policy-container p {
-  color: #94a3b8;
-  line-height: 1.8;
-}
-
-
-textarea, 
-.tool-textarea, 
-.jwt-input-main {
-  resize: none !important; /* removing resizing */
-}
-
-/* mobile responsive layout */
-@media (max-width: 800px) {
-  .tool-workspace {
-    grid-template-columns: 1fr; 
-    display: flex;
-    flex-direction: column;
-  }
-
-  .tool-textarea {
-    height: 350px !important;
-    min-height: 350px !important;
-  }
-  .tool-workspace > div {
-    height: 350px !important;
-    min-height: 350px !important;
-  }
-
-  .tool-actions {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .btn {
-    width: 100%;
-    text-align: center;
-  }
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  
+  /*mobile*/
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }

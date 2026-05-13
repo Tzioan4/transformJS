@@ -7,6 +7,7 @@ import {
   Lock,
   FileCode,
   Database,
+  Terminal,
 } from "lucide-react";
 
 // code tools
@@ -94,3 +95,4 @@ export const tools = [
     icon: <Database size={40} strokeWidth={1.5} color="#F7DF1E" />,
   },
 ];
+

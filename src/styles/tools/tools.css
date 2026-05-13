@@ -1,0 +1,144 @@
+/* ios fixes */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input,
+textarea,
+select {
+  font-size: 16px !important; /*ios auto zoom*/
+  line-height: normal;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  resize: none !important;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: #F7DF1E !important;
+}
+
+/*main container*/
+.tool-container {
+  max-width: 100% !important; 
+  margin: 0;
+  padding: 100px 2rem 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; 
+  min-height: calc(100vh - 180px);
+}
+
+.tool-header h1 {
+  font-family: 'JetBrains Mono', monospace;
+  color: #F7DF1E;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-header p {
+  color: #94a3b8;
+}
+
+/*editor area*/
+.tool-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 15px; 
+  width: 100%;
+  align-items: stretch; 
+  margin-bottom: 1rem;
+}
+
+.tool-workspace > * {
+  min-width: 0; /*prevents grid blowout */
+}
+
+.tool-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
+  background: #2d2d2d;
+  border: 1px solid #121212;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+/*buttons*/
+.tool-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/*button variants */
+.btn-primary { background: #F7DF1E; color: #000; }
+.btn-secondary { background: #334155; color: white; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-copy { background: #475569; color: white; }
+.btn-success { background: #22c55e !important; color: white; }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*error*/
+.error-badge {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  .tool-workspace {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .tool-textarea,
+  .tool-workspace > div {
+    height: 350px !important;
+    min-height: 350px !important;
+  }
+
+  .tool-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

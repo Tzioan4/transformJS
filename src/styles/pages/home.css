@@ -1,8 +1,7 @@
-/* prevent layout shift on mobile keyboard */
 .tool-container {
+  /* prevent layout shift on mobile keyboard */
   transform: translateZ(0);
 }
-/* responsive grid for tool cards */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -11,27 +10,57 @@
   margin: 0 auto;
   padding: 100px 2rem 200px;
 }
-/* card design for tools */
+
 .tool-card {
-  background: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #1a1a1a;
   border: 1px solid #1a1a1a;
   border-radius: 20px;
   padding: 1.5rem;
   text-decoration: none;
   color: inherit;
   transition: all 0.2s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
+
+.tool-card:hover {
+  background-color: #121212;
+  border-color: #F7DF1E; 
+  transform: translateY(-10px);
+}
+
+/*tool card font and icons */
+.tool-card .tool-icon {
+  color: #818cf8;
+  margin-bottom: 0.5rem;
+}
+
+.tool-card h2, 
+.tool-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 15px 0 10px 0;
+}
+
+.tool-card p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
 .jwt-input-main, 
 .jwt-field-group textarea, 
-.jwt-field-group pre { 
+.jwt-field-group pre,
+.tool-textarea { 
   background-color: #2d2d2d !important; 
   border: 1px solid #2d2d2d;
   color: #e6edf3;
   border-radius: 12px;
+  padding: 10px;
 }
+
 .jwt-input-main:focus,
 .jwt-field-group textarea:focus,
 .tool-textarea:focus,
@@ -39,29 +68,6 @@
 input:focus,
 textarea:focus {
   outline: none !important;
-  border-color: #30363d !important; 
+  border-color: #F7DF1E !important; 
   box-shadow: none !important;    
-}
-.tool-card:hover {
-  border-color: #2d2d2d;
-  background: #121212;
-}
-
-/* icon inside tool card */
-.tool-card .tool-icon {
-  color: #818cf8;
-  margin-bottom: 0.5rem;
-}
-
-/* title inside tool card */
-.tool-card h2 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #f8fafc;
-}
-
-/* description inside tool card */
-.tool-card p {
-  font-size: 0.9rem;
-  color: #94a3b8;
 }

@@ -1,0 +1,41 @@
+.policy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 2rem 60px;
+  box-sizing: border-box;
+}
+
+/*legal pages fonts*/
+.policy-container h1 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  color: #F7DF1E;
+  margin-bottom: 2rem;
+  letter-spacing: -1px;
+}
+
+.policy-container h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  color: #f8fafc;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.policy-container p {
+  font-family: 'Inter', sans-serif;
+  color: #94a3b8;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.policy-container a {
+  color: #F7DF1E;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.policy-container a:hover {
+  border-bottom-color: #F7DF1E;
+}
