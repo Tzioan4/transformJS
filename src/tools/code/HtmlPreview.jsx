@@ -22,16 +22,11 @@ export default function HtmlPreview() {
 
   const handleCopy = async () => {
   try {
-    // Χρήση του σύγχρονου Clipboard API
     await navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
   } catch (err) {
-    // Fallback σε περίπτωση που ο browser είναι πολύ παλιός ή δεν έχει δικαιώματα
-    console.error('Αποτυχία αντιγραφής:', err);
-    
-    // Αν θες οπωσδήποτε fallback, χρησιμοποίησε το textarea 
-    // αλλά χωρίς να το κάνεις append στο body (αν είναι δυνατόν)
+    console.error('Copy Error:', err);
   }
 };
 
