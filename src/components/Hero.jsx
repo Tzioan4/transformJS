@@ -36,7 +36,7 @@ export default function Hero() {
           className="hero-content"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }} 
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h1 className="hero-title">
             Fast Tools <br />
@@ -47,6 +47,9 @@ export default function Hero() {
             <strong>TransformJS</strong> is a lightweight toolkit designed to
             eliminate friction from your workflow. No distractions, just the
             tools you need.
+          </p>
+          <p className="hero-description">
+            <strong>This App is still under developement</strong> 
           </p>
 
           <div className="hero-btns-group">

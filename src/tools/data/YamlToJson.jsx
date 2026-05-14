@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import yaml from "js-yaml";
-import useCopy from "../../hooks/useCopy"; // Προσάρμοσε το path αν χρειάζεται
+import useCopy from "../../hooks/useCopy"; 
 
 export default function YamlToJson() {
   const [yamlInput, setYamlInput] = useState(
@@ -9,7 +9,6 @@ export default function YamlToJson() {
   const [jsonOutput, setJsonOutput] = useState("");
   const [error, setError] = useState(null);
 
-  // Χρήση του custom hook σου
   const { copied, copy } = useCopy();
 
   useEffect(() => {
@@ -59,7 +58,7 @@ export default function YamlToJson() {
           placeholder="JSON output will appear here..."
           style={{
             background: "#151c29",
-            color: "#60a5fa",
+            color: "#e2e8f0",
             fontFamily: "monospace",
             cursor: "default",
           }}

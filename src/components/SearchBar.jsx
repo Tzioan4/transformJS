@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "@styles/components/searchbar.css";
 
 export default function SearchBar({ tools, setFilteredTools }) {
   // local state for the input text

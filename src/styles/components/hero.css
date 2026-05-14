@@ -86,12 +86,12 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.05em;
-  color: #F7DF1E;
+  color: #f7de1e;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .hero-title .highlight {
-  color: #ffffff;
+  color: #ffffff8f;
 }
 
 .hero-description {
@@ -132,7 +132,7 @@
 .hero-btn.primary:hover {
   background-color: #F7DF1E;
   color: #000000; 
-  transform: translateY(-3px);
+  transform: translateY(-1px);
 }
 
 /*right button */
@@ -146,7 +146,7 @@
   background-color: #ffffff;
   color: #000000;
   border-color: #ffffff;
-  transform: translateY(-3px);
+  transform: translateY(-1px);
   box-shadow: 0 10px 15px -3px rgba(247, 223, 30, 0.2);
 }
 

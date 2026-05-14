@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import useCopy from "../../hooks/useCopy";
-
 import { encodeUrl, decodeUrl } from "../../utils/url";
 
+const EXAMPLE_URL_TEXT =
+  "https://transformjs.com/search?query=hello world & dev=true";
+
 export default function UrlEncoderDecoder() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(EXAMPLE_URL_TEXT);
   const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
 
   const { copied, copy } = useCopy();
 
+  useEffect(() => {
+    handleProcess();
+  }, []);
+
   const handleProcess = () => {
     setError(null);
+    if (!text) return;
 
     try {
       if (mode === "encode") {
@@ -39,7 +46,6 @@ export default function UrlEncoderDecoder() {
         <div>
           <h1>URL Encoder / Decoder</h1>
           <p>RFC 3986 compliant encoding and decoding for URL components.</p>
-
           {error && <div className="error-badge">{error}</div>}
         </div>
       }

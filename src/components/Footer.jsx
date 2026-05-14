@@ -6,7 +6,9 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-content">
         <div className="footer-left">
-          <span className="footer-brand">transformJS</span>
+          <span className="footer-brand">
+            Transform<span>JS</span>
+          </span>
           <span className="footer-copy">
             © {new Date().getFullYear()} — Built by{" "}
             <a

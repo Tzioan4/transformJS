@@ -7,8 +7,8 @@ export default function About() {
       <section>
         <h2>About me</h2>
         <p>
-          Im Giannis Tziotis, an aspiring developer who loves spending my free
-          time building digital tools that solve real-world problems.
+          I'm Giannis Tziotis, an aspiring developer who loves spending my free
+          time building apps that solve real world problems.
           TransformJS is a project born out of that curiosity.
         </p>
       </section>
@@ -35,16 +35,16 @@ export default function About() {
       <section>
         <h2>The Tech Stack</h2>
         <p>Building this allowed me to dive deep into:</p>
-        <ul style={{ lineHeight: "1.8", marginLeft: "20px" }}>
-          <li>
-            <strong>React & Hooks</strong> for state management and modular
+        <ul style={{ marginLeft: "20px" }}>
+          <li>  
+            React & Hooks for state management and modular
             architecture.
           </li>
           <li>
-            <strong>Vite</strong> for lightning-fast bundling and development.
+            Vite for lightning-fast bundling and development.
           </li>
           <li>
-            <strong>Client-side Processing</strong> using libraries
+            Client-side Processing using libraries
             for SQL, YAML, and Markdown.
           </li>
         </ul>

@@ -1,19 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import useCopy from "../../hooks/useCopy";
-
 import { encodeBase64, decodeBase64 } from "../../utils/base64";
 
+const EXAMPLE_TEXT = "Hello World! Welcome to transformJS.";
+
 export default function Base64Tool() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(EXAMPLE_TEXT);
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
 
   const { copied, copy } = useCopy();
 
+  useEffect(() => {
+    handleProcess();
+  }, []);
+
   const handleProcess = () => {
     setError(null);
+    if (!input) return;
 
     try {
       if (mode === "encode") {
@@ -41,7 +47,6 @@ export default function Base64Tool() {
           <p>
             Bi-directional Base64 conversion for text and binary data strings
           </p>
-
           {error && <div className="error-badge">{error}</div>}
         </div>
       }
