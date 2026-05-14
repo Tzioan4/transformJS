@@ -1,17 +1,27 @@
 import "../../styles/tools/jwt.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
 
+const EXAMPLE_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+const EXAMPLE_SECRET = "your-256-bit-secret";
+
 export default function JWTDebugger() {
-  const [token, setToken] = useState("");
-  const [secret, setSecret] = useState("");
+  const [token, setToken] = useState(EXAMPLE_TOKEN);
+  const [secret, setSecret] = useState(EXAMPLE_SECRET);
   const [header, setHeader] = useState("");
   const [payload, setPayload] = useState("");
   const [verified, setVerified] = useState(null);
   const [error, setError] = useState(null);
 
   const { copied, copy } = useCopy();
+
+  useEffect(() => {
+    if (token) {
+      handleDecode();
+    }
+  }, []);
 
   const handleDecode = () => {
     if (!token) {
@@ -23,7 +33,7 @@ export default function JWTDebugger() {
       setHeader(JSON.stringify(result.header, null, 2));
       setPayload(JSON.stringify(result.payload, null, 2));
       setError(null);
-      setVerified(null); // Reset verification status
+      setVerified(null);
     } catch (err) {
       setError(
         "Invalid JWT format. Make sure it has 3 parts separated by dots.",
@@ -66,7 +76,6 @@ export default function JWTDebugger() {
           status.
         </p>
 
-        {/* Error Messages */}
         {error && (
           <div
             className="status-badge status-error"
@@ -76,7 +85,6 @@ export default function JWTDebugger() {
           </div>
         )}
 
-        {/* success/fail Badges */}
         {verified !== null && (
           <div
             className={`status-badge ${verified ? "status-success" : "status-error"}`}
@@ -87,7 +95,6 @@ export default function JWTDebugger() {
       </div>
 
       <div className="jwt-grid-layout">
-        {/* top left*/}
         <div className="jwt-field-group">
           <label className="jwt-label">JWT Token (Encoded)</label>
           <textarea
@@ -98,7 +105,6 @@ export default function JWTDebugger() {
           />
         </div>
 
-        {/*top rifght */}
         <div className="jwt-field-group">
           <label className="jwt-label">Header (Decoded)</label>
           <textarea
@@ -109,7 +115,6 @@ export default function JWTDebugger() {
           />
         </div>
 
-        {/*bottom left */}
         <div className="jwt-field-group">
           <label className="jwt-label">Secret / Verify Key</label>
           <textarea
@@ -120,7 +125,6 @@ export default function JWTDebugger() {
           />
         </div>
 
-        {/*bottom right */}
         <div className="jwt-field-group">
           <label className="jwt-label">Payload (Data)</label>
           <textarea
@@ -132,16 +136,13 @@ export default function JWTDebugger() {
         </div>
       </div>
 
-      {/* actions */}
       <div className="jwt-actions">
         <button onClick={handleDecode} className="btn btn-primary">
           Decode
         </button>
-
         <button onClick={handleVerify} className="btn btn-secondary">
           Verify
         </button>
-
         <button
           onClick={() => copy(payload)}
           className={`btn ${copied ? "btn-success" : "btn-copy"}`}
@@ -149,7 +150,6 @@ export default function JWTDebugger() {
         >
           {copied ? "Copied" : "Copy Payload"}
         </button>
-
         <button onClick={handleClear} className="btn btn-danger">
           Clear
         </button>

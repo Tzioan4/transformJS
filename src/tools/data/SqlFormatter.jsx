@@ -1,67 +1,101 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "sql-formatter";
-import useCopy from "../../hooks/useCopy"; 
+import ToolLayout from "../../layouts/ToolLayout";
+import useCopy from "../../hooks/useCopy";
+
+const SQL_EXAMPLE =
+  "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
 export default function SqlFormatter() {
-  const [sql, setSql] = useState(
-    "SELECT id, name FROM users WHERE active = 1;",
-  );
+  const [input, setInput] = useState(SQL_EXAMPLE);
+  const [output, setOutput] = useState("");
+  const [error, setError] = useState(null);
 
   const { copied, copy } = useCopy();
 
+  // Αυτόματο format κατά την είσοδο
+  useEffect(() => {
+    handleFormat();
+  }, []);
+
   const handleFormat = () => {
     try {
-      const formatted = format(sql, {
+      const formatted = format(input, {
         language: "sql",
-        uppercase: true,
+        keywordCase: "upper",
       });
-      setSql(formatted);
+      setOutput(formatted);
+      setError(null);
     } catch (err) {
-      alert("Invalid SQL query");
+      setError("Invalid SQL query");
+      setOutput("");
     }
   };
 
   const handleMinify = () => {
-    const minified = sql.replace(/\s+/g, " ").trim();
-    setSql(minified);
+    try {
+      const minified = input.replace(/\s+/g, " ").trim();
+      setOutput(minified);
+      setError(null);
+    } catch (err) {
+      setError("Error minifying SQL");
+    }
+  };
+
+  const handleClear = () => {
+    setInput("");
+    setOutput("");
+    setError(null);
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <h1>SQL Formatter</h1>
-        <p>Clean up your SQL queries and make them readable.</p>
-      </div>
-
-      <div className="tool-workspace" style={{ gridTemplateColumns: "1fr" }}>
+    <ToolLayout
+      header={
+        <div>
+          <h1>SQL Formatter</h1>
+          <p>
+            Clean up your SQL queries and make them readable with auto-uppercase
+            keywords.
+          </p>
+          {error && <div className="error-badge">{error}</div>}
+        </div>
+      }
+      input={
         <textarea
           className="tool-textarea"
-          style={{ height: "300px", fontFamily: "monospace" }}
-          value={sql}
-          onChange={(e) => setSql(e.target.value)}
           placeholder="Paste your SQL query here..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
-      </div>
-
-      <div className="tool-actions">
-        <button onClick={handleFormat} className="btn btn-secondary">
-          Format SQL
-        </button>
-        <button onClick={handleMinify} className="btn btn-secondary">
-          Minify
-        </button>
-
-        <button
-          onClick={() => copy(sql)}
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
-        >
-          {copied ? "Copied!" : "Copy SQL"}
-        </button>
-
-        <button className="btn btn-danger" onClick={() => setSql("")}>
-          Clear
-        </button>
-      </div>
-    </div>
+      }
+      output={
+        <textarea
+          className="tool-textarea"
+          placeholder="Formatted SQL will appear here..."
+          value={output}
+          readOnly
+        />
+      }
+      actions={
+        <div className="tool-actions">
+          <button onClick={handleFormat} className="btn btn-primary">
+            Format SQL
+          </button>
+          <button onClick={handleMinify} className="btn btn-secondary">
+            Minify
+          </button>
+          <button
+            onClick={() => copy(output)}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+            disabled={!output}
+          >
+            {copied ? "Copied!" : "Copy Output"}
+          </button>
+          <button onClick={handleClear} className="btn btn-danger">
+            Clear
+          </button>
+        </div>
+      }
+    />
   );
 }

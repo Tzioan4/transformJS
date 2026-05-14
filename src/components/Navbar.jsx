@@ -1,11 +1,13 @@
 import "@styles/components/navbar.css";
+import "@styles/components/searchbar.css";
+
 import { Link } from "react-router-dom";
 
 export default function Navbar({ searchTerm, setSearchTerm }) {
   return (
     <nav className="navbar">
       <Link to="/" className="nav-logo">
-        transform<span className="logo-highlight">JS</span>
+        Transform<span className="logo-highlight">JS</span>
       </Link>
 
       <div className="nav-right">

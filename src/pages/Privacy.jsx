@@ -7,7 +7,7 @@ export default function Privacy() {
 
       <section>
         <h2>The Deal</h2>
-        <p style={{ lineHeight: "1.6", color: "var(--text-secondary)" }}>
+        <p>
           TransformJS is a collection of free tools built for developers and
           advanced users. You are welcome to use them for personal or commercial
           projects as much as you like. All I ask is that you use them fairly
