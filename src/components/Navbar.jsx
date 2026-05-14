@@ -5,7 +5,7 @@ export default function Navbar({ searchTerm, setSearchTerm }) {
   return (
     <nav className="navbar">
       <Link to="/" className="nav-logo">
-        transformJS
+        transform<span className="logo-highlight">JS</span>
       </Link>
 
       <div className="nav-right">

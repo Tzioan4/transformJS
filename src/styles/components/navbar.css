@@ -1,6 +1,6 @@
 /*navbar main container */
 .navbar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -9,38 +9,40 @@
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  /* spacing and ios fix */
-  padding: 1rem 2rem;
-  padding-top: max(1rem, env(safe-area-inset-top));
- /* glass effect */  
-  background: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(10px);
+  background: #0a0a0af6;
+  backdrop-filter: blur(8px); /* glass effect */  
   -webkit-backdrop-filter: blur(10px);
+  padding: 0.75rem 2rem;/* spacing and ios fix */
+  padding-top: max(1rem, env(safe-area-inset-top));
+  border-bottom: 1px solid #1c1f245d;
 }
 
 .nav-logo {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
   font-size: 1.2rem;
-  color: #F7DF1E;
+  color: #ffffff;
   text-decoration: none;
-  letter-spacing: -1px;
+  letter-spacing: -0.05em;
+}
+.logo-highlight {
+  color: #facc15;
 }
 .search-input {
   width: 300px;
   padding: 0.5rem 1rem;
-  background: #2d2d2d;
+  background: transparent;
   border: 1px solid #2b323b;
-  border-radius: 6px;
+  border-radius: 10px;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   transition: border-color 0.2s, background-color 0.2s;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #F7DF1E;
-  background-color: #333333;
+  background-color: transparent;
 }
 @media (max-width: 768px) {
   .navbar {

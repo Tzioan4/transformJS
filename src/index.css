@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
 @import "./styles/components/navbar.css";
 @import "./styles/components/footer.css";
 @import "./styles/tools/tools.css";
 
 html {
   height: 100%;
-  background-color: #121212;
+  background-color:#0a0a0a;
   /*mobile stability*/
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -21,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #121212;
+  background-color:#0a0a0a; /*ios aswell*/
   color: #e2e8f0;
   font-family: 'Inter', sans-serif;
   line-height: 1.5;
