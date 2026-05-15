@@ -14,31 +14,39 @@ export default function SqlFormatter() {
 
   const { copied, copy } = useCopy();
 
-  
   useEffect(() => {
     handleFormat();
   }, []);
 
-  const handleFormat = () => {
-    try {
-      if (!input) return;
-      const formatted = format(input, {
-        language: "sql",
-        keywordCase: "upper",
-        indentStyle: "tabularLeft",
-      });
-      setOutput(formatted);
-      setIsMinified(false);
-      setError(null);
-    } catch (err) {
-      setError("SQL Error: " + err.message);
-      setOutput("");
-    }
-  };
+ const handleFormat = () => {
+   try {
+     if (!input) return;
+
+     const formatted = format(input, {
+       language: "sql",
+       keywordCase: "upper",
+       tabWidth: 2,
+       useTabs: false,
+     });
+
+     const cleanOutput = formatted
+       .split("\n")
+       .map((line) => line.trimEnd())
+       .join("\n");
+
+     setOutput(cleanOutput);
+     setIsMinified(false);
+     setError(null);
+   } catch (err) {
+     setError("SQL Error: " + err.message);
+     setOutput("");
+   }
+ };
 
   const handleMinify = () => {
     try {
       if (!input) return;
+
       const minified = format(input, {
         language: "sql",
         keywordCase: "upper",
@@ -47,7 +55,7 @@ export default function SqlFormatter() {
         .trim();
 
       setOutput(minified);
-      setIsMinified(true); //sets state badge
+      setIsMinified(true);
       setError(null);
     } catch (err) {
       setError("Error minifying SQL");
@@ -72,7 +80,6 @@ export default function SqlFormatter() {
             keywords.
           </p>
 
-          {/*dynamic status badge*/}
           {output && !error && (
             <div
               className={`status-badge ${isMinified ? "status-min" : "status-pretty"}`}
@@ -88,7 +95,7 @@ export default function SqlFormatter() {
                 letterSpacing: "0.05em",
               }}
             >
-              STATUS: {isMinified ? "MINIFIED" : "FORMATTED"}
+              STATUS: {isMinified ? "Minified" : "Formatted"}
             </div>
           )}
 
@@ -124,7 +131,7 @@ export default function SqlFormatter() {
             className={`btn ${copied ? "btn-success" : "btn-copy"}`}
             disabled={!output}
           >
-            {copied ? "Copied!" : "Copy Output"}
+            {copied ? "Copied" : "Copy Output"}
           </button>
           <button onClick={handleClear} className="btn btn-danger">
             Clear
