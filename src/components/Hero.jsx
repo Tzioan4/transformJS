@@ -44,7 +44,7 @@ export default function Hero() {
           </h1>
 
           <p className="hero-description">
-            <strong>TransformJS</strong> is a lightweight toolkit designed to
+            TransformJS is a lightweight toolkit designed to
             eliminate friction from your workflow. No distractions, just the
             tools you need.
           </p>
@@ -60,7 +60,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Find your tool
+              Find your Tool
             </motion.button>
             <motion.button
               className="hero-btn secondary"

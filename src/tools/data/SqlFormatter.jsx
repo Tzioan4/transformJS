@@ -10,35 +10,48 @@ export default function SqlFormatter() {
   const [input, setInput] = useState(SQL_EXAMPLE);
   const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
+  const [isMinified, setIsMinified] = useState(false);
 
   const { copied, copy } = useCopy();
 
-  // Αυτόματο format κατά την είσοδο
+  
   useEffect(() => {
     handleFormat();
   }, []);
 
   const handleFormat = () => {
     try {
+      if (!input) return;
       const formatted = format(input, {
         language: "sql",
         keywordCase: "upper",
+        indentStyle: "tabularLeft",
       });
       setOutput(formatted);
+      setIsMinified(false);
       setError(null);
     } catch (err) {
-      setError("Invalid SQL query");
+      setError("SQL Error: " + err.message);
       setOutput("");
     }
   };
 
   const handleMinify = () => {
     try {
-      const minified = input.replace(/\s+/g, " ").trim();
+      if (!input) return;
+      const minified = format(input, {
+        language: "sql",
+        keywordCase: "upper",
+      })
+        .replace(/\s+/g, " ")
+        .trim();
+
       setOutput(minified);
+      setIsMinified(true); //sets state badge
       setError(null);
     } catch (err) {
       setError("Error minifying SQL");
+      setOutput("");
     }
   };
 
@@ -46,6 +59,7 @@ export default function SqlFormatter() {
     setInput("");
     setOutput("");
     setError(null);
+    setIsMinified(false);
   };
 
   return (
@@ -57,6 +71,27 @@ export default function SqlFormatter() {
             Clean up your SQL queries and make them readable with auto-uppercase
             keywords.
           </p>
+
+          {/*dynamic status badge*/}
+          {output && !error && (
+            <div
+              className={`status-badge ${isMinified ? "status-min" : "status-pretty"}`}
+              style={{
+                marginTop: "10px",
+                display: "inline-block",
+                padding: "2px 8px",
+                fontSize: "11px",
+                borderRadius: "4px",
+                textTransform: "uppercase",
+                fontWeight: "600",
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: "0.05em",
+              }}
+            >
+              STATUS: {isMinified ? "MINIFIED" : "FORMATTED"}
+            </div>
+          )}
+
           {error && <div className="error-badge">{error}</div>}
         </div>
       }

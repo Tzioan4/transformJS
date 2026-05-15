@@ -57,9 +57,23 @@ textarea.jwt-input-main:focus {
 }
 
 .btn-copy.copied {
-  background-color: #22c55e !important;
   color: white !important;
   border: none !important;
+}
+.status-badge, .status-success {
+  background: rgba(247, 223, 30, 0.1);
+  color: #F7DF1E;
+  border: 1px solid rgba(247, 223, 30, 0.3); 
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 8px !important;    
+  font-size: 1px !important;    
+  line-height: 1;         
+  border-radius: 6px; 
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;  
 }
 
 @media (max-width: 768px) {
