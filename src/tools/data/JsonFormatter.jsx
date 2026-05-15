@@ -15,12 +15,15 @@ export default function JsonFormatter() {
   const [input, setInput] = useState(JSON.stringify(jsonExample, null, 2));
   const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
+  //badge setter based on current state
+  const [isMinified, setIsMinified] = useState(false);
 
   const { copied, copy } = useCopy();
 
   useEffect(() => {
     try {
       setOutput(formatJson(JSON.stringify(jsonExample)));
+      setIsMinified(false);
     } catch (err) {
       console.error(err);
     }
@@ -29,6 +32,7 @@ export default function JsonFormatter() {
   const handleFormat = () => {
     try {
       setOutput(formatJson(input));
+      setIsMinified(false); //formated state
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);
@@ -39,6 +43,7 @@ export default function JsonFormatter() {
   const handleMinify = () => {
     try {
       setOutput(minifyJson(input));
+      setIsMinified(true);//minified state
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);
@@ -50,6 +55,7 @@ export default function JsonFormatter() {
     setInput("");
     setOutput("");
     setError(null);
+    setIsMinified(false);
   };
 
   return (
@@ -61,6 +67,24 @@ export default function JsonFormatter() {
             Prettify, minify, and validate JSON structures with syntax
             highlighting.
           </p>
+
+          {/*dynamic status badge*/}
+          {output && !error && (
+            <div
+              className={`status-badge ${isMinified ? "status-min" : "status-pretty"}`}
+              style={{
+                marginTop: "10px",
+                display: "inline-block",
+                fontSize: "0.75rem",
+                padding: "4px 12px",
+                borderRadius: "6px",
+              }}
+            >
+              STATUS: <strong>{isMinified ? "MINIFIED" : "FORMATTED"}</strong>
+              
+            </div>
+          )}
+
           {error && <div className="error-badge">{error}</div>}
         </div>
       }
@@ -91,6 +115,7 @@ export default function JsonFormatter() {
           <button
             onClick={() => copy(output)}
             className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+            disabled={!output}
           >
             {copied ? "Copied" : "Copy"}
           </button>

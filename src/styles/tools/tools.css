@@ -4,7 +4,48 @@
   padding: 0;
   box-sizing: border-box;
 }
+.mode-indicator, .status-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+}
 
+/*encode mode */
+.mode-indicator.encode {
+  background: rgba(247, 223, 30, 0.1); 
+  color: #F7DF1E;
+  border-color: rgba(247, 223, 30, 0.3);
+}
+
+/*decode mode */
+.mode-indicator.decode {
+  background: rgba(59, 130, 246, 0.1); 
+  color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.status-badge,
+.status-error{
+  padding-top: 10px;
+  font-size: 1rem !important;
+  
+}
+.input-warning-text, .input-warning {
+  display: block;
+  margin-top: 12px;
+  color: #ffffff; 
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  background: none !important; 
+  border: none !important;  
+  padding: 0 !important;   
+}
 input,
 textarea,
 select {
@@ -114,7 +155,7 @@ input:focus {
 
 /* button variants */
 .btn-primary { 
-    background: #f7de1e5d; 
+    background: transparent;
     border: 1px solid #f7de1e86;
     color: #ffffff; 
 }
@@ -133,12 +174,13 @@ input:focus {
 .btn-copy { 
     background: transparent;
     color: #ffffff;
-    border: 1px solid #22c55e80
+    border: 1px solid #f7de1e86;
     
 }
 
 .btn-success { 
-    background: #22c55e93 !important; 
+    background: transparent;
+    border: 1px solid #f7de1e86;
     color: white !important; 
 }
 
@@ -147,17 +189,44 @@ input:focus {
   cursor: not-allowed;
   filter: grayscale(1);
 }
+/*json minify*/
+.status-min {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem!important;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/*json beautify*/
+.status-pretty {
+  background: rgba(247, 223, 30, 0.1); 
+  color: #F7DF1E;
+  border-color: rgba(247, 223, 30, 0.3);
+  letter-spacing: 0.05em!important;    
+  font-size: 0.8rem!important;
+}
 
 /* error */
 .error-badge {
+  text-align: center;
+  margin-top: 20px;
   background: rgba(239, 68, 68, 0.05);
   border: 1px solid rgba(239, 68, 68, 0.2);
   color: #f8717196;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 6px;
   font-size: 0.9rem;
   font-family: 'JetBrains Mono', monospace;
 }
+
 
 @media (max-width: 800px) {
   .tool-workspace {
