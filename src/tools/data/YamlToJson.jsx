@@ -71,7 +71,7 @@ export default function YamlToJson() {
           onClick={() => copy(jsonOutput)}
           className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
         >
-          {copied ? "Copied!" : "Copy JSON"}
+          {copied ? "Copied" : "Copy JSON"}
         </button>
 
         <button className="btn btn-danger" onClick={() => setYamlInput("")}>
