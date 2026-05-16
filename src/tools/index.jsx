@@ -15,6 +15,7 @@ import {
 import HtmlPreview from "./code/HtmlPreview";
 import MarkdownPreview from "./code/MarkdownPreview";
 import RegexTester from "./code/RegExTester";
+import FtlPreviewer from "./code/FtlPreviewer";
 
 // data tools
 import JsonFormatter from "./data/JsonFormatter";
@@ -120,7 +121,8 @@ export const tools = [
     name: "CSV To JSON",
     path: "/csv-to-json",
     component: CsvToJson,
-    description: "Robust CSV parser",
+    description:
+      "Convert complex CSV data to clean JSON with full RFC 4180 compliance.",
     tags: ["csv", "json", "convert"],
     icon: <FileText size={40} strokeWidth={1.5} />,
   },
@@ -129,8 +131,16 @@ export const tools = [
     path: "/regex",
     component: RegexTester,
     description:
-      "Test regular expressions with real-time match highlighting, capture groups, and flag support.",
+      "Test regular expressions with real-time match highlighting and flag support.",
     tags: ["regex", "pattern", "test", "code"],
     icon: <Terminal size={40} strokeWidth={1.5} />,
+  },
+  {
+    name: "FTL Previewer",
+    path: "/ftl-previewer",
+    component: FtlPreviewer,
+    description: "Preview FreeMarker templates with mock JSON data.",
+    tags: ["ftl", "freemarker", "template", "preview", "render"],
+    icon: <FileCode size={40} />,
   },
 ];

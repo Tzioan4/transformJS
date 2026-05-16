@@ -1,35 +1,39 @@
-import React, { useRef } from "react";
-import "@styles/components/hero.css";
-import heroImg from "../assets/Programming-rafiki.png";
+import { useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 
 export default function Hero() {
   const dotLayerRef = useRef(null);
+  const toolsSectionRef = useRef(null);
+  const rafRef = useRef(null);
 
   const scrollToTools = () => {
-    const section = document.getElementById("tools-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    document
+      .getElementById("tools-section")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  //mouse following animation
-  const handleMouseMove = (e) => {
+  // requestAnimationFrame
+  const handleMouseMove = useCallback((e) => {
     if (!dotLayerRef.current) return;
-    const { clientX, clientY } = e;
-    const { left, top } = dotLayerRef.current.getBoundingClientRect();
 
-    const x = clientX - left;
-    const y = clientY - top;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
-    dotLayerRef.current.style.setProperty("--mouse-x", `${x}px`);
-    dotLayerRef.current.style.setProperty("--mouse-y", `${y}px`);
-  };
+    rafRef.current = requestAnimationFrame(() => {
+      const { left, top } = dotLayerRef.current.getBoundingClientRect();
+      dotLayerRef.current.style.setProperty(
+        "--mouse-x",
+        `${e.clientX - left}px`,
+      );
+      dotLayerRef.current.style.setProperty(
+        "--mouse-y",
+        `${e.clientY - top}px`,
+      );
+    });
+  }, []);
 
   return (
     <section className="hero-section" onMouseMove={handleMouseMove}>
-      {/*layer that brightens dots while hovering*/}
-      <div className="mouse-dot-mask" ref={dotLayerRef}></div>
+      <div className="mouse-dot-mask" ref={dotLayerRef} />
 
       <div className="hero-container">
         <motion.div
@@ -44,16 +48,15 @@ export default function Hero() {
           </h1>
 
           <p className="hero-description">
-            TransformJS is a lightweight toolkit designed to
-            eliminate friction from your workflow. No distractions, just the
-            tools you need.
+            TransformJS is a lightweight toolkit designed to eliminate friction
+            from your workflow. No distractions, just the tools you need.
           </p>
+
           <p className="hero-description">
-            <strong>This App is still under developement</strong> 
+            <strong>This app is still under development.</strong>
           </p>
 
           <div className="hero-btns-group">
-            {/*buttons hover scaling*/}
             <motion.button
               className="hero-btn primary"
               onClick={scrollToTools}
@@ -62,6 +65,7 @@ export default function Hero() {
             >
               Find your Tool
             </motion.button>
+
             <motion.button
               className="hero-btn secondary"
               whileHover={{ scale: 1.05 }}

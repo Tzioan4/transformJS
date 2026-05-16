@@ -61,7 +61,7 @@ export default function RegexTester() {
         <div>
           <h1>RegEx Tester</h1>
           <p>
-            Test regular expressions with real-time match highlighting and flag
+            Test regular expressions with real time match highlighting and flag
             support.
           </p>
           {matches.length > 0 && !error && (

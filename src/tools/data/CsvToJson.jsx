@@ -94,7 +94,10 @@ export default function CsvToJson() {
       header={
         <div>
           <h1>CSV to JSON</h1>
-          <p>Robust CSV parser</p>
+          <p>
+            Convert complex CSV data to clean JSON with full RFC 4180
+            compliance.
+          </p>
 
           {json && !error && (
             <div
