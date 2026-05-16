@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { marked } from "marked";
+import DOMPurify from "dompurify";
+
 
 export default function MarkdownPreview() {
   const [md, setMd] = useState(
@@ -7,7 +9,7 @@ export default function MarkdownPreview() {
   );
   const [copied, setCopied] = useState(false);
 
-  const htmlOutput = marked.parse(md);
+const htmlOutput = DOMPurify.sanitize(marked.parse(md));
 
   const iframeSrcDoc = `
     <!DOCTYPE html>

@@ -10,20 +10,20 @@ export default function Footer() {
             Transform<span>JS</span>
           </span>
           <span className="footer-copy">
-            © {new Date().getFullYear()} — Built by{" "}
+            Copyright © {new Date().getFullYear()}{" "}
             <a
-              href="https://github.com/Tzioan4"
+              href="https://www.linkedin.com/in/giannistziotis/"
               target="_blank"
               rel="noopener noreferrer"
               className="author-link"
             >
-              Ioannis Tz.
+              Tziotis Ioannis
             </a>
           </span>
         </div>
 
         <div className="footer-links">
-          <span className="footer-license">MIT License</span>
+          <span className="footer-license">Released under the MIT License.</span>
           <a
             href="https://github.com/Tzioan4/transformJS"
             target="_blank"
