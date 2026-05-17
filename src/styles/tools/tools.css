@@ -414,12 +414,12 @@ textarea:focus {
   border-color: #94a3b8;
 }
 
-/* RegEx pattern input and highlighted preview */
+/*regex pattern input and highlighted preview */
 [data-theme="light"] .tool-textarea {
   color: #1e293b !important;
 }
 
-/* RegEx dark boxes , pattern bar and highlighted preview */
+/*regex dark boxes, pattern bar and highlighted preview */
 [data-theme="light"] [style*="background: #121212"],
 [data-theme="light"] [style*="background:#121212"],
 [data-theme="light"] [style*="background: #0a0a0a"],
@@ -428,7 +428,7 @@ textarea:focus {
   color: #1e293b !important;
 }
 
-/* Match details */
+/*match details */
 [data-theme="light"] [style*="background: rgba(247, 223, 30, 0.05)"] {
   background: rgba(201, 168, 0, 0.08) !important;
 }
@@ -437,6 +437,14 @@ textarea:focus {
 [data-theme="light"] [style*="background:#333"] {
   background: #e2e8f0 !important;
   color: #1e293b !important;
+}
+
+.btn-hint {
+  font-size: 9px;
+  opacity: 0.5;
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
 }
 
 @media (max-width: 800px) {
@@ -472,5 +480,8 @@ textarea:focus {
     width: 100%;
     text-align: center;
     padding: 1rem;
+  }
+  .btn-hint {
+    display: none;
   }
 }

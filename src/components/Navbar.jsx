@@ -16,7 +16,7 @@ export default function Navbar({ searchTerm, setSearchTerm }) {
       <div className="nav-right">
         <input
           type="text"
-          placeholder="Search tools..."
+          placeholder="Ctrl+K to search "
           className="search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

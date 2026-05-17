@@ -115,7 +115,6 @@ export default function UrlEncoderDecoder({ tips }) {
           {error && <div className="error-badge">{error}</div>}
           {tips && <ToolInfo tips={tips} />}
         </div>
-
       }
       input={
         <textarea
@@ -162,10 +161,11 @@ export default function UrlEncoderDecoder({ tips }) {
             disabled={!result}
           >
             {copied ? "Copied" : "Copy"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
 
           <button onClick={handleClear} className="btn btn-danger">
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

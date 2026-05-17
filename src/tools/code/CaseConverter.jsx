@@ -157,7 +157,7 @@ export default function CaseConverter({ tips }) {
       actions={
         <div className="tool-actions">
           <button onClick={() => setInput("")} className="btn btn-danger">
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

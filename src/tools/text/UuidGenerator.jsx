@@ -137,7 +137,8 @@ export default function UuidGenerator({ tips }) {
             className={`btn ${copiedAll ? "btn-success" : "btn-copy"}`}
             disabled={uuids.length === 0}
           >
-            {copiedAll ? "Copied!" : "Copy All"}
+            {copiedAll ? "Copied" : "Copy All"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
           <button
             onClick={() => {
@@ -146,7 +147,7 @@ export default function UuidGenerator({ tips }) {
             }}
             className="btn btn-danger"
           >
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

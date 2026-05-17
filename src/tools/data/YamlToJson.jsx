@@ -64,13 +64,14 @@ export default function YamlToJson({ tips }) {
         <button
           disabled={!!error || !jsonOutput}
           onClick={() => copy(jsonOutput)}
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
+          className={`btn ${copied ? "btn-success" : "btn-copy"}`}
         >
           {copied ? "Copied" : "Copy JSON"}
+          <span className="btn-hint">Ctrl+Shift+C</span>
         </button>
 
         <button className="btn btn-danger" onClick={() => setYamlInput("")}>
-          Clear
+          Clear <span className="btn-hint">Esc</span>
         </button>
       </div>
     </div>

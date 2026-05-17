@@ -1,0 +1,195 @@
+.urlp-label {
+  color: #888;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  display: block;
+  letter-spacing: 0.05em;
+}
+
+.urlp-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.urlp-input:focus {
+  border-color: var(--color-accent);
+}
+
+.urlp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.urlp-info-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+}
+
+.urlp-info-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/*output */
+.urlp-output {
+  padding: 16px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.urlp-empty {
+  color: var(--color-dim);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.urlp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.urlp-section-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.urlp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.urlp-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.urlp-field-empty {
+  opacity: 0.4;
+}
+
+.urlp-field-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-muted);
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.urlp-field-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text);
+  word-break: break-all;
+}
+
+/* Query params */
+.urlp-params {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.urlp-param-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  flex-wrap: wrap;
+}
+
+.urlp-param-key {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-accent);
+}
+
+.urlp-param-eq {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-dim);
+}
+
+.urlp-param-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text);
+  flex: 1;
+  word-break: break-all;
+}
+
+.urlp-copy-btn {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.urlp-copy-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/*light mode */
+[data-theme="light"] .urlp-input {
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+
+[data-theme="light"] .urlp-field,
+[data-theme="light"] .urlp-param-row {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .urlp-field-value,
+[data-theme="light"] .urlp-param-value {
+  color: #1e293b;
+}
+
+[data-theme="light"] .urlp-info {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+@media (max-width: 800px) {
+  .urlp-param-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -134,9 +134,10 @@ export default function SqlFormatter({ tips }) {
             disabled={!output}
           >
             {copied ? "Copied" : "Copy Output"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
           <button onClick={handleClear} className="btn btn-danger">
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

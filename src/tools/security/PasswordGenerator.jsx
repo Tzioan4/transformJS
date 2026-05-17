@@ -232,6 +232,7 @@ export default function PasswordGenerator({ tips }) {
             disabled={!hasOptions || !password}
           >
             {copied ? "Copied" : "Copy Password"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
         </div>
       }

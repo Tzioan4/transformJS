@@ -799,10 +799,11 @@ export default function FtlPreviewer({ tips }) {
             className={`btn ${copied ? "btn-success" : "btn-copy"}`}
             disabled={!rendered}
           >
-            {copied ? "Copied!" : "Copy HTML"}
+            {copied ? "Copied" : "Copy HTML"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
           <button onClick={handleClear} className="btn btn-danger">
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }
