@@ -84,12 +84,13 @@ export default function MarkdownPreview({ tips }) {
       <div className="tool-actions">
         <button
           onClick={handleCopy}
-          className={`btn ${copied ? "btn-success" : "btn-secondary"}`}
+          className={`btn ${copied ? "btn-success" : "btn-copy"}`}
         >
           {copied ? "Copied" : "Copy"}
+          <span className="btn-hint">Ctrl+Shift+C</span>
         </button>
         <button className="btn btn-danger" onClick={() => setMd("")}>
-          Clear
+          Clear <span className="btn-hint">Esc</span>
         </button>
       </div>
     </div>

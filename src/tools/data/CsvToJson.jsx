@@ -149,10 +149,11 @@ export default function CsvToJson({ tips }) {
             disabled={!json}
           >
             {copied ? "Copied!" : "Copy JSON"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
 
           <button onClick={handleClear} className="btn btn-danger">
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

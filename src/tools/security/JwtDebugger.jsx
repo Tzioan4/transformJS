@@ -150,9 +150,10 @@ export default function JWTDebugger({ tips }) {
           disabled={!payload}
         >
           {copied ? "Copied" : "Copy Payload"}
+          <span className="btn-hint">Ctrl+Shift+C</span>
         </button>
         <button onClick={handleClear} className="btn btn-danger">
-          Clear
+          Clear <span className="btn-hint">Esc</span>
         </button>
       </div>
     </div>

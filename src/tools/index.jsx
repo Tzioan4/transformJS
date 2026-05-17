@@ -11,6 +11,7 @@ import {
   Hash,
   ArrowLeftRight,
   Fingerprint,
+  Link2,
 } from "lucide-react";
 
 // code tools
@@ -35,6 +36,8 @@ import PasswordGenerator from "./security/PasswordGenerator";
 
 // text tools
 import UuidGenerator from "./text/UuidGenerator";
+import UrlParser from "./text/UrlParser";
+
 
 export const tools = [
   {
@@ -254,6 +257,21 @@ export const tools = [
       "Each UUID is generated with crypto.randomUUID() - cryptographically secure.",
       "Click Copy on any row to copy a single UUID.",
       "Use Copy All to copy the full list separated by newlines.",
+    ],
+  },
+  {
+    name: "URL Parser",
+    path: "/url-parser",
+    component: UrlParser,
+    description:
+      "Break down any URL into protocol, host, path, query params and hash.",
+    tags: ["url", "parse", "query", "params", "web"],
+    icon: <Link2 size={40} strokeWidth={1.5} />,
+    tips: [
+      "Paste any full URL including http:// or https://.",
+      "Query parameters are shown as individual key=value pairs.",
+      "Click Copy on any param row to copy that specific parameter.",
+      "Port shows default (443 for https, 80 for http) if not specified.",
     ],
   },
 ];

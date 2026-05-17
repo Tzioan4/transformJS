@@ -203,7 +203,7 @@ export default function RegexTester({ tips }) {
             }}
             className="btn btn-danger"
           >
-            Clear
+            Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
       }

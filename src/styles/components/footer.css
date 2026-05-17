@@ -65,7 +65,9 @@
 .footer-links a:hover {
   color: var(--color-accent);
 }
-
+[data-theme="light"] .footer-brand {
+  color: #1e293b;
+}
 @media (max-width: 800px) {
   .footer-content {
     flex-direction: column;

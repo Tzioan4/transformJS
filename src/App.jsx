@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
+import { useTheme } from "./ThemeContext";
 
 
 import Navbar from "./components/Navbar";
@@ -26,6 +28,9 @@ function ScrollToTop({ setSearchTerm }) {
 
 function AppContent() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { toggleTheme } = useTheme();
+
+  useKeyboardShortcuts({ toggleTheme }); 
 
   return (
     <>

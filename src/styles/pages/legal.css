@@ -80,3 +80,23 @@
   opacity: 0.8;
   text-decoration: none;
 }
+[data-theme="light"] .policy-container h2 {
+  color: #1e293b;
+}
+
+[data-theme="light"] .policy-container p {
+  color: #64748b;
+}
+
+[data-theme="light"] .policy-container a {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .policy-container a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+[data-theme="light"] .license-block {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
