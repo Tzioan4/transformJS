@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import NotFound from "./pages/NotFound";
+
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -42,13 +44,13 @@ function AppContent() {
               <Route
                 key={tool.path}
                 path={tool.path}
-                element={<tool.component />}
+                element={<tool.component tips={tool.tips} />}
               />
             ))}
 
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/about" element={<About />} />
-            <Route path="*" element={<Home searchTerm={searchTerm} />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 

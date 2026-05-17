@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import yaml from "js-yaml";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import "../../styles/tools/yaml.css";
 
-export default function YamlToJson() {
+export default function YamlToJson({ tips }) {
   const [yamlInput, setYamlInput] = useState(
     "server:\n  port: 8080\n  host: localhost\n  enabled: true\ntags:\n  - docker\n  - react",
   );
@@ -33,6 +34,7 @@ export default function YamlToJson() {
       <div className="tool-header">
         <h1>YAML to JSON</h1>
         <p>Convert your YAML configuration to a clean JSON object.</p>
+        {tips && <ToolInfo tips={tips} />}
       </div>
 
       {error && (

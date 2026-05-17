@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Papa from "papaparse";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
-export default function CsvToJson() {
+export default function CsvToJson({ tips }) {
   const [csv, setCsv] = useState("");
   const [json, setJson] = useState("");
   const [error, setError] = useState(null);
@@ -113,6 +114,7 @@ export default function CsvToJson() {
               {error}
             </div>
           )}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

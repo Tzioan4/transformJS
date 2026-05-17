@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { marked } from "marked";
+import ToolInfo from "../../components/ToolInfo";
 import DOMPurify from "dompurify";
 
 
-export default function MarkdownPreview() {
+export default function MarkdownPreview({ tips }) {
   const [md, setMd] = useState(
     "# Markdown Title\n\n**Bold text** and [links](https://transformjs.com)",
   );
   const [copied, setCopied] = useState(false);
 
-const htmlOutput = DOMPurify.sanitize(marked.parse(md));
+  const htmlOutput = DOMPurify.sanitize(marked.parse(md));
 
   const iframeSrcDoc = `
     <!DOCTYPE html>
@@ -51,6 +52,7 @@ const htmlOutput = DOMPurify.sanitize(marked.parse(md));
       <div className="tool-header">
         <h1>Markdown Preview</h1>
         <p>Instant Markdown to HTML conversion with isolated preview.</p>
+        {tips && <ToolInfo tips={tips} />}
       </div>
 
       <div className="tool-workspace">

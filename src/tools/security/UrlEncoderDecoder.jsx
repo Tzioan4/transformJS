@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { encodeUrl, decodeUrl } from "../../utils/url";
 
 const EXAMPLE_URL_TEXT =
   "https://transformjs.com/search?query=hello world & dev=true";
 
-export default function UrlEncoderDecoder() {
+export default function UrlEncoderDecoder({ tips }) {
   const [text, setText] = useState(EXAMPLE_URL_TEXT);
   const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
@@ -112,7 +113,9 @@ export default function UrlEncoderDecoder() {
           )}
 
           {error && <div className="error-badge">{error}</div>}
+          {tips && <ToolInfo tips={tips} />}
         </div>
+
       }
       input={
         <textarea

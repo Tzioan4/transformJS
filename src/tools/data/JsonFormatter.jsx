@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { formatJson, minifyJson } from "../../utils/json";
 
@@ -11,11 +12,10 @@ const jsonExample = {
   version: 1.0,
 };
 
-export default function JsonFormatter() {
+  export default function JsonFormatter({ tips }) {
   const [input, setInput] = useState(JSON.stringify(jsonExample, null, 2));
   const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
-  //badge setter based on current state
   const [isMinified, setIsMinified] = useState(false);
 
   const { copied, copy } = useCopy();
@@ -32,7 +32,7 @@ export default function JsonFormatter() {
   const handleFormat = () => {
     try {
       setOutput(formatJson(input));
-      setIsMinified(false); //formated state
+      setIsMinified(false);
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);
@@ -43,7 +43,7 @@ export default function JsonFormatter() {
   const handleMinify = () => {
     try {
       setOutput(minifyJson(input));
-      setIsMinified(true);//minified state
+      setIsMinified(true);
       setError(null);
     } catch (err) {
       setError("Invalid JSON: " + err.message);
@@ -68,7 +68,6 @@ export default function JsonFormatter() {
             highlighting.
           </p>
 
-          {/*dynamic status badge*/}
           {output && !error && (
             <div
               className={`status-badge ${isMinified ? "status-min" : "status-pretty"}`}
@@ -81,11 +80,11 @@ export default function JsonFormatter() {
               }}
             >
               STATUS: <strong>{isMinified ? "MINIFIED" : "FORMATTED"}</strong>
-              
             </div>
           )}
 
           {error && <div className="error-badge">{error}</div>}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

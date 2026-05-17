@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
 const CHARSET = {
@@ -67,7 +68,7 @@ function getStrength(entropy) {
   return { label: "Very Strong", color: "#14b8a6" };
 }
 
-export default function PasswordGenerator() {
+export default function PasswordGenerator({ tips }) {
   const [length, setLength] = useState(16);
   const [options, setOptions] = useState({
     uppercase: true,
@@ -141,6 +142,7 @@ export default function PasswordGenerator() {
               WAITING FOR SELECTION...
             </div>
           )}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

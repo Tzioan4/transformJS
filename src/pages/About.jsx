@@ -7,18 +7,23 @@ export default function About() {
       <section>
         <h2>About me</h2>
         <p>
-          I'm Giannis Tziotis, an aspiring developer who loves spending my free
-          time building apps that solve real world problems.
-          TransformJS is a project born out of that curiosity.
+          I'm Giannis Tziotis, currently working in tech while actively
+          transitioning into web development. TransformJS is one of the projects
+          I've built out of genuine passion, not just to learn, but because I
+          actually wanted it to exist.
         </p>
       </section>
 
       <section>
         <h2>The Purpose</h2>
         <p>
-          I created this platform as a learning project to understand modern web
-          technologies like React, Vite, and client-side data processing. It serves as a central hub for the tools I found myself
-          needing daily, built to be clean, fast, and ad-free.
+          TransformJS started as a personal toolkit and grew into something I'm
+          proud to share. Every tool here is something I've needed at some
+          point.
+        </p>
+        <p>
+          TransformJS is also fully open-source. If you find a bug, want to
+          contribute, or just want to see how it's built, the code is there.
         </p>
       </section>
 
@@ -34,18 +39,24 @@ export default function About() {
 
       <section>
         <h2>The Tech Stack</h2>
-        <p>Building this allowed me to dive deep into:</p>
+        <p>
+          Built with the fundamentals - no over-engineering, no unnecessary
+          abstractions:
+        </p>
         <ul style={{ marginLeft: "20px" }}>
-          <li>  
-            React & Hooks for state management and modular
-            architecture.
+          <li>
+            <strong>React</strong> - component architecture and state management
           </li>
           <li>
-            Vite for lightning-fast bundling and development.
+            <strong>Vite</strong> - fast bundling and development experience
           </li>
           <li>
-            Client-side Processing using libraries
-            for SQL, YAML, and Markdown.
+            <strong>Vanilla CSS</strong> -custom design system with CSS
+            variables, no UI frameworks
+          </li>
+          <li>
+            <strong>Web APIs</strong> - Web Crypto for hashing, sandbox iframes
+            for safe previews, native browser APIs wherever possible
           </li>
         </ul>
       </section>
@@ -53,17 +64,12 @@ export default function About() {
       <section>
         <h2>Let's Connect</h2>
         <p>
-          I'm always looking for new challenges and opportunities to grow. If
-          you're interested in my work, feel free to check out my{" "}
+          I'm actively looking for opportunities to grow as a developer. If
+          you'd like to see more of my work or just say hi, you can find me on{" "}
           <a
             href="https://github.com/Tzioan4"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              textDecoration: "none",
-              color: "#F7DF1E", 
-              fontWeight: "500",
-            }}
           >
             GitHub
           </a>{" "}
@@ -72,11 +78,6 @@ export default function About() {
             href="https://www.linkedin.com/in/giannistziotis/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              textDecoration: "none",
-              color: "#F7DF1E",
-              fontWeight: "500",
-            }}
           >
             LinkedIn
           </a>

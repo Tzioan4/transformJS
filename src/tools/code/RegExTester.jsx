@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import "../../styles/tools/regex.css";
 
 function escapeHtml(str) {
@@ -23,7 +24,7 @@ function buildHighlightedHtml(text, matches) {
   return parts.join("");
 }
 
-export default function RegexTester() {
+export default function RegexTester({ tips }) {
   const [pattern, setPattern] = useState(
     "([a-z0-9_.-]+)@([\\da-z.-]+)\\.([a-z.]{2,6})",
   );
@@ -73,6 +74,7 @@ export default function RegexTester() {
               MATCHES FOUND: <strong>{matches.length}</strong>
             </div>
           )}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

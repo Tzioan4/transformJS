@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "@/components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
 //tokenizer
@@ -558,7 +559,7 @@ function tabStyle(active) {
   };
 }
 
-export default function FtlPreviewer() {
+export default function FtlPreviewer({ tips }) {
   const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
   const [mockData, setMockData] = useState(DEFAULT_DATA);
   const [rendered, setRendered] = useState("");
@@ -636,6 +637,7 @@ export default function FtlPreviewer() {
               {error}
             </div>
           )}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

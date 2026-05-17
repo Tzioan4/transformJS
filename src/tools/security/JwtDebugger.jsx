@@ -1,5 +1,6 @@
 import "../../styles/tools/jwt.css";
 import { useState, useEffect } from "react";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
 
@@ -7,7 +8,7 @@ const EXAMPLE_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 const EXAMPLE_SECRET = "your-256-bit-secret";
 
-export default function JWTDebugger() {
+export default function JWTDebugger({ tips }) {
   const [token, setToken] = useState(EXAMPLE_TOKEN);
   const [secret, setSecret] = useState(EXAMPLE_SECRET);
   const [header, setHeader] = useState("");
@@ -85,10 +86,9 @@ export default function JWTDebugger() {
 
         {/*success*/}
         {verified === true && !isInvalidFormat && (
-          <div className="status-badge status-success">
-            Signature Verified
-          </div>
+          <div className="status-badge status-success">Signature Verified</div>
         )}
+        {tips && <ToolInfo tips={tips} />}
       </div>
 
       <div className="jwt-grid-layout">

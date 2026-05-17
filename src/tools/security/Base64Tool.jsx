@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { encodeBase64, decodeBase64 } from "../../utils/base64";
 
+
+
 const EXAMPLE_TEXT = "Hello World! Welcome to transformJS.";
 
-export default function Base64Tool() {
+export default function Base64Tool({ tips }) {
   const [input, setInput] = useState(EXAMPLE_TEXT);
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
@@ -109,10 +112,7 @@ export default function Base64Tool() {
 
           {/*input validation*/}
           {mode === "encode" && isBase64(input) && (
-            <div
-              className="input-warning-text"
-              
-            >
+            <div className="input-warning-text">
               Warning: Input is already Base64 encoded. Switch to{" "}
               <strong>Decode </strong>
               mode.
@@ -120,6 +120,8 @@ export default function Base64Tool() {
           )}
 
           {error && <div className="error-badge">{error}</div>}
+
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
