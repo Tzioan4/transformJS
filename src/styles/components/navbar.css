@@ -36,7 +36,7 @@
 
 .theme-toggle {
   background: transparent;
-  border: 1px solid #333;
+  border: 1px solid #00000000;
   border-radius: 6px;
   color: #94a3b8;
   cursor: pointer;
@@ -49,17 +49,17 @@
 }
 
 .theme-toggle:hover {
-  border-color: #F7DF1E;
+  border-color: #00000000;
   color: #F7DF1E;
 }
 
 [data-theme="light"] .theme-toggle {
-  border-color: #e2e8f0;
+  border-color: #e2e8f000;
   color: #64748b;
 }
 
 [data-theme="light"] .theme-toggle:hover {
-  border-color: #F7DF1E;
+  border-color: #f7de1e00;
   color: #c9a800;
 }
 [data-theme="light"] .navbar {
