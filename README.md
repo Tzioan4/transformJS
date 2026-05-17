@@ -1,6 +1,6 @@
 # transformJS
 
-Fast, private and modern developer tools — built for everyday workflows.
+Fast, private and modern developer tools - built for everyday workflows.
 
 TransformJS is a lightweight collection of browser-based utilities designed to help developers work faster without unnecessary complexity.
 
@@ -70,7 +70,7 @@ More tools are continuously being added.
 
 ## Architecture
 
-The project uses a modular tool-based architecture designed for scalability.
+The project uses a modular tool based architecture designed for scalability.
 
 ### Structure Highlights
 
@@ -155,7 +155,7 @@ transformJS started as a learning and portfolio project focused on:
 * deployment pipelines
 * UI/UX design
 
-Over time, it evolved into a real-world utility platform.
+Over time, it evolved into a real world utility platform.
 
 ---
 
