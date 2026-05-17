@@ -1,0 +1,164 @@
+.regex-pattern-bar {
+  display: flex;
+  align-items: center;
+  background: #121212;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 4px 12px;
+}
+
+.regex-slash {
+  color: #555;
+  font-family: monospace;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.regex-pattern-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  padding: 10px 6px;
+  outline: none;
+  min-width: 0;
+}
+
+.regex-flags-input {
+  width: 52px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #333;
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 4px;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.regex-test-input {
+  flex: 1;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  color: #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  line-height: 1.6;
+}
+
+.regex-highlight-box {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #999;
+  min-height: 60px;
+}
+
+.regex-match-card {
+  background: rgba(247, 223, 30, 0.05);
+  border-left: 3px solid #F7DF1E;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.regex-match-title {
+  color: #F7DF1E;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.regex-match-value {
+  color: #fff;
+  margin: 5px 0;
+  word-break: break-all;
+}
+
+.regex-match-index {
+  color: #888;
+  font-size: 11px;
+}
+
+.regex-group-badge {
+  font-size: 11px;
+  background: #333;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.regex-no-match {
+  color: #444;
+  font-size: 13px;
+}
+
+.regex-label {
+  color: #888;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Light mode */
+[data-theme="light"] .regex-pattern-bar {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .regex-slash {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .regex-pattern-input,
+[data-theme="light"] .regex-flags-input {
+  color: #1e293b;
+}
+
+[data-theme="light"] .regex-flags-input {
+  border-left-color: #e2e8f0;
+}
+
+[data-theme="light"] .regex-test-input {
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+
+[data-theme="light"] .regex-highlight-box {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+[data-theme="light"] .regex-match-card {
+  background: rgba(201, 168, 0, 0.08);
+}
+
+[data-theme="light"] .regex-match-value {
+  color: #1e293b;
+}
+
+[data-theme="light"] .regex-group-badge {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+[data-theme="light"] .regex-no-match {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .regex-label {
+  color: #64748b;
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import "../../styles/tools/regex.css";
 
 function escapeHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -84,86 +85,27 @@ export default function RegexTester() {
             overflowY: "auto",
           }}
         >
-          {/*pattern and flags*/}
           <div>
-            <label
-              style={{
-                color: "#888",
-                fontSize: "12px",
-                display: "block",
-                marginBottom: "8px",
-              }}
-            >
-              Regex Pattern & Flags
-            </label>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                background: "#121212",
-                border: "1px solid #333",
-                borderRadius: "8px",
-                padding: "4px 12px",
-              }}
-            >
-              <span
-                style={{
-                  color: "#555",
-                  fontFamily: "monospace",
-                  fontSize: "1.2rem",
-                  flexShrink: 0,
-                }}
-              >
-                /
-              </span>
+            <label className="regex-label">Regex Pattern & Flags</label>
+            <div className="regex-pattern-bar">
+              <span className="regex-slash">/</span>
               <input
                 type="text"
                 autoCapitalize="none"
                 autoCorrect="off"
                 spellCheck={false}
-                style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  color: "#ffffff",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "14px",
-                  padding: "10px 6px",
-                  outline: "none",
-                  minWidth: 0,
-                }}
+                className="regex-pattern-input"
                 placeholder="Enter pattern..."
                 value={pattern}
                 onChange={(e) => setPattern(e.target.value)}
               />
-              <span
-                style={{
-                  color: "#555",
-                  fontFamily: "monospace",
-                  fontSize: "1.2rem",
-                  flexShrink: 0,
-                }}
-              >
-                /
-              </span>
+              <span className="regex-slash">/</span>
               <input
                 type="text"
                 autoCapitalize="none"
                 autoCorrect="off"
                 spellCheck={false}
-                style={{
-                  width: "52px",
-                  background: "transparent",
-                  border: "none",
-                  borderLeft: "1px solid #333",
-                  color: "#ffffff",
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "14px",
-                  textAlign: "center",
-                  padding: "10px 4px",
-                  outline: "none",
-                  flexShrink: 0,
-                }}
+                className="regex-flags-input"
                 placeholder="gim"
                 value={flags}
                 onChange={(e) => setFlags(e.target.value)}
@@ -171,32 +113,10 @@ export default function RegexTester() {
             </div>
           </div>
 
-          {/*test string*/}
           <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-            <label
-              style={{
-                color: "#888",
-                fontSize: "12px",
-                display: "block",
-                marginBottom: "8px",
-              }}
-            >
-              Test String
-            </label>
+            <label className="regex-label">Test String</label>
             <textarea
-              style={{
-                flex: 1,
-                background: "transparent",
-                border: "1px solid #333",
-                borderRadius: "8px",
-                padding: "12px",
-                color: "#e2e8f0",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "14px",
-                outline: "none",
-                resize: "none",
-                lineHeight: "1.6",
-              }}
+              className="regex-test-input"
               placeholder="Type text to test against regex..."
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -220,84 +140,25 @@ export default function RegexTester() {
             overflowY: "auto",
           }}
         >
-          {/*highlighted preview*/}
           <div>
-            <label
-              style={{
-                color: "#888",
-                fontSize: "12px",
-                display: "block",
-                marginBottom: "8px",
-              }}
-            >
-              Highlighted Preview
-            </label>
-            <div
-              style={{
-                background: "#0a0a0a",
-                border: "1px solid #222",
-                borderRadius: "8px",
-                padding: "12px",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "13px",
-                lineHeight: "1.7",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-all",
-                color: "#999",
-                minHeight: "60px",
-              }}
-            >
+            <label className="regex-label">Highlighted Preview</label>
+            <div className="regex-highlight-box">
               <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
             </div>
           </div>
 
-          {/*match details*/}
           <div style={{ flex: 1, overflowY: "auto" }}>
-            <label
-              style={{
-                color: "#888",
-                fontSize: "12px",
-                display: "block",
-                marginBottom: "8px",
-              }}
-            >
-              Match Details
-            </label>
+            <label className="regex-label">Match Details</label>
             {matches.length === 0 ? (
-              <p style={{ color: "#444", fontSize: "13px" }}>
-                No matches found.
-              </p>
+              <p className="regex-no-match">No matches found.</p>
             ) : (
               matches.map((match, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: "rgba(247,223,30,0.05)",
-                    borderLeft: "3px solid #F7DF1E",
-                    padding: "10px",
-                    marginBottom: "8px",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <div
-                    style={{
-                      color: "#F7DF1E",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Match {i + 1}
+                <div key={i} className="regex-match-card">
+                  <div className="regex-match-title">Match {i + 1}</div>
+                  <div className="regex-match-value">
+                    Value: <code>{match[0]}</code>
                   </div>
-                  <div
-                    style={{
-                      color: "#fff",
-                      margin: "5px 0",
-                      wordBreak: "break-all",
-                    }}
-                  >
-                    Value: <code style={{ color: "#ffffff" }}>{match[0]}</code>
-                  </div>
-                  <div style={{ color: "#888", fontSize: "11px" }}>
+                  <div className="regex-match-index">
                     Index: {match.index} — End: {match.index + match[0].length}
                   </div>
                   {match.length > 1 && (
@@ -315,12 +176,9 @@ export default function RegexTester() {
                       {match.slice(1).map((g, gi) => (
                         <span
                           key={gi}
+                          className="regex-group-badge"
                           style={{
-                            fontSize: "11px",
-                            background: "#333",
-                            padding: "2px 5px",
-                            borderRadius: "3px",
-                            color: g === undefined ? "#555" : "#fff",
+                            color: g === undefined ? "#555" : undefined,
                           }}
                         >
                           {g === undefined ? "∅" : g}

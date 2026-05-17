@@ -115,18 +115,19 @@
   justify-content: center;
   box-sizing: border-box;
   font-family: var(--font-mono);
-  background-color: #000000!important;
-  color: #fff;
+  background-color: #000000;
+  color: #ffffff;
   border: 1px solid var(--color-accent-border);
   position: relative;
   z-index: 3;
 }
 
 .hero-btn:hover {
-  background-color: var(--color-bg)!important;
+  background-color: var(--color-bg);
   transform: translateY(-1px);
   box-shadow: 0 10px 15px -3px var(--color-accent-shadow);
 }
+
 
 /*section title (shared)*/
 .section-title {
@@ -295,6 +296,108 @@
   background-color: var(--color-bg);
   transform: translateY(-1px);
   box-shadow: 0 10px 15px -3px var(--color-accent-shadow);
+}
+
+[data-theme="light"] .hero-section {
+  background-color: var(--color-bg);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+}
+
+[data-theme="light"] .hero-section::after {
+  background: radial-gradient(circle at center, transparent 10%, var(--color-bg) 100%);
+}
+
+[data-theme="light"] .hero-title {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .hero-title .highlight {
+  color: #1e293b;
+}
+
+[data-theme="light"] .hero-description {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .hero-btn {
+  background-color: #ffffff;
+  color: #1e293b;
+}
+
+[data-theme="light"] .hero-btn:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  box-shadow: 0 10px 15px -3px var(--color-accent-shadow);
+}
+
+[data-theme="light"] .tool-card {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .tool-card:hover {
+  border-color: var(--color-accent-border);
+  box-shadow: 0 10px 40px var(--color-accent-shadow);
+}
+
+[data-theme="light"] .tool-card h2,
+[data-theme="light"] .tool-card h3 {
+  color: #1e293b;
+}
+
+[data-theme="light"] .tool-card p {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .promises-section {
+  background: var(--color-surface-alt);
+  border-top-color: #e2e8f0;
+}
+
+[data-theme="light"] .promise-title {
+  color: #1e293b;
+}
+
+[data-theme="light"] .contrib-banner {
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .contrib-title {
+  color: #1e293b;
+}
+
+[data-theme="light"] .section-title {
+  color: var(--color-accent);
+}
+/* Hero buttons */
+[data-theme="light"] .hero-btn {
+  background-color: #ffffff;
+  color: #1e293b;
+  border-color: var(--color-accent-border);
+}
+
+[data-theme="light"] .hero-btn:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+/* Tool card icons */
+[data-theme="light"] .tool-card .tool-icon {
+  color: #64748b;
+}
+
+/* Contrib button */
+[data-theme="light"] .contrib-btn {
+  color: #1e293b;
+  border-color: var(--color-accent-border);
+}
+
+[data-theme="light"] .contrib-btn:hover {
+  color: #1e293b;
+  background-color: #f1f5f9;
+}
+
+[data-theme="light"] .contrib-btn svg {
+  fill: #1e293b;
 }
 
 /* mobile*/

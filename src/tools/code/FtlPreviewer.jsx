@@ -620,8 +620,8 @@ export default function FtlPreviewer() {
         <div>
           <h1>FTL Previewer</h1>
           <p>
-            Preview FreeMarker templates with mock JSON data locally, no
-            server needed.
+            Preview FreeMarker templates with mock JSON data locally, no server
+            needed.
           </p>
           {rendered && !error && (
             <div

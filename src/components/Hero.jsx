@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   const dotLayerRef = useRef(null);
-  const toolsSectionRef = useRef(null);
   const rafRef = useRef(null);
 
   const scrollToTools = () => {

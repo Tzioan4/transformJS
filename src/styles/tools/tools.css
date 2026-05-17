@@ -316,6 +316,128 @@ textarea:focus {
 .custom-checkbox input:checked ~ .option-text {
   color: #fff;
 }
+[data-theme="light"] .tool-container {
+  background-color: var(--color-bg);
+}
+
+[data-theme="light"] .tool-header h1 {
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .tool-header p {
+  color: var(--color-muted);
+}
+
+[data-theme="light"] .tool-textarea,
+[data-theme="light"] .jwt-input-main,
+[data-theme="light"] .jwt-field-group textarea,
+[data-theme="light"] .jwt-field-group pre {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b;
+}
+
+[data-theme="light"] .tool-textarea::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .tool-textarea:focus {
+  border-color: var(--color-accent) !important;
+}
+
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .btn-secondary,
+[data-theme="light"] .btn-copy,
+[data-theme="light"] .btn-success {
+  color: #1e293b;
+  border-color: var(--color-accent-border);
+}
+
+[data-theme="light"] .btn-danger {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+[data-theme="light"] .error-badge {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+
+[data-theme="light"] .status-pretty,
+[data-theme="light"] .mode-indicator.encode {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+  border-color: var(--color-accent-border);
+}
+
+[data-theme="light"] .status-min,
+[data-theme="light"] .mode-indicator.decode {
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="light"] .custom-checkbox {
+  color: #1e293b;
+}
+
+[data-theme="light"] .checkmark {
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .label-row {
+  color: #64748b;
+}
+
+[data-theme="light"] .custom-slider {
+  background: #e2e8f0;
+}
+/*JWT/YAML output text */
+[data-theme="light"] .jwt-field-group textarea,
+[data-theme="light"] .jwt-field-group pre,
+[data-theme="light"] .jwt-input-main {
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/*password generator checkboxes */
+[data-theme="light"] .custom-checkbox {
+  color: #1e293b;
+}
+
+[data-theme="light"] .custom-checkbox input:checked ~ .option-text {
+  color: #1e293b;
+}
+
+[data-theme="light"] .checkmark {
+  border-color: #94a3b8;
+}
+
+/* RegEx pattern input and highlighted preview */
+[data-theme="light"] .tool-textarea {
+  color: #1e293b !important;
+}
+
+/* RegEx dark boxes , pattern bar and highlighted preview */
+[data-theme="light"] [style*="background: #121212"],
+[data-theme="light"] [style*="background:#121212"],
+[data-theme="light"] [style*="background: #0a0a0a"],
+[data-theme="light"] [style*="background:#0a0a0a"] {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+
+/* Match details */
+[data-theme="light"] [style*="background: rgba(247, 223, 30, 0.05)"] {
+  background: rgba(201, 168, 0, 0.08) !important;
+}
+
+[data-theme="light"] [style*="background: #333"],
+[data-theme="light"] [style*="background:#333"] {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
 
 @media (max-width: 800px) {
   .tool-workspace {
