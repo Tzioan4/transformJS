@@ -75,6 +75,19 @@ textarea.jwt-input-main:focus {
   letter-spacing: 0.05em;
   font-weight: 500;  
 }
+[data-theme="light"] .jwt-input-main {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .jwt-label {
+  color: #64748b;
+}
+
+[data-theme="light"] .jwt-grid-layout {
+  background: transparent;
+}
 
 @media (max-width: 768px) {
   .jwt-grid-layout {

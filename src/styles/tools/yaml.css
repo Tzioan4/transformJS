@@ -1,0 +1,12 @@
+.yaml-output {
+  background: #151c29;
+  color: #e2e8f0;
+  font-family: monospace;
+  cursor: default;
+}
+
+[data-theme="light"] .yaml-output {
+  background: #f8fafc;
+  color: #1e293b;
+  border-color: #e2e8f0 !important;
+}

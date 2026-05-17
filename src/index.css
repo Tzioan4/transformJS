@@ -14,7 +14,7 @@
   --color-border:         #222;
   --color-border-subtle:  #333;
 
-  --color-accent:         rgb(247, 223, 30);
+  --color-accent:         #f7df1e;
   --color-accent-border:  rgba(255, 255, 255, 0.295);
   --color-accent-shadow:  rgba(247, 223, 30, 0.33);
   --color-accent-bg:      rgba(247, 223, 30, 0.1);
@@ -31,6 +31,21 @@
   --font-mono:  'JetBrains Mono', monospace;
 
   --transition: 0.2s ease;
+}
+/*light mode*/
+[data-theme="light"] {
+  --color-bg:             #f8fafc;
+  --color-surface:        #ffffff;
+  --color-surface-alt:    #f1f5f9;
+  --color-border:         #e2e8f0;
+  --color-border-subtle:  #cbd5e1;
+  --color-text:           #1e293b;
+  --color-muted:          #64748b;
+  --color-dim:            #94a3b8;
+  --color-accent:         #c9a800;
+  --color-accent-border:  rgba(201, 168, 0, 0.5);
+  --color-accent-shadow:  rgba(201, 168, 0, 0.3);
+  --color-accent-bg:      rgba(201, 168, 0, 0.1);
 }
 
 /*base*/

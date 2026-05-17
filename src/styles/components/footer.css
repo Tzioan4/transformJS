@@ -1,8 +1,8 @@
 .site-footer {
   width: 100%;
-  padding: 2.5rem 0; 
+  padding: 2.5rem 0;
   margin-top: auto;
-  background-color:#0a0a0a;
+  background-color: var(--color-bg);
 }
 
 .footer-content {
@@ -12,50 +12,47 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease;
-  
 }
+
 .footer-left {
   display: flex;
-  flex-direction: row; 
-  align-items: baseline; 
-  gap: 10px; 
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
 }
-.author-link {
-  text-decoration: none;
-  color: #64748b;
-}
-.author-link:hover {
-  color: #F7DF1E;
-  transition: color 0.2s ease;
-  
-}
+
 .footer-brand {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-weight: 700;
   color: #ffffff;
   font-size: 1.1rem;
 }
+
 .footer-brand span {
-  color: #F7DF1E; 
+  color: var(--color-accent);
 }
-.footer-copy {
+
+.footer-copy,
+.footer-license {
   font-size: 0.85rem;
   color: #64748b;
 }
-.footer-license {
-  opacity: 0.8; 
-  font-size: 0.85rem; 
-  color: #94a3b8; 
-  margin-right: 0; 
+
+.author-link {
+  text-decoration: none;
+  color: #64748b;
 }
+
+.author-link:hover {
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+}
+
 .footer-links {
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  opacity: 0.8; 
-  color: #94a3b8; 
-  margin-right: 0; 
+  color: #94a3b8;
 }
 
 .footer-links a {
@@ -66,27 +63,37 @@
 }
 
 .footer-links a:hover {
-  color: #F7DF1E;
+  color: var(--color-accent);
 }
+
 @media (max-width: 800px) {
   .footer-content {
-    flex-direction: column; 
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1.5rem;
     text-align: center;
   }
 
   .footer-left {
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; 
+  }
+
+  .footer-brand {
+    display: block;
+    text-align: center;
+    margin-bottom: 4px;
   }
 
   .footer-links {
-    flex-wrap: wrap; 
+    flex-direction: row; 
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.2rem;
   }
-  
+
   .footer-license {
-    margin-right: 0 !important; 
-    width: 100%; 
+    width: 100%;
+    text-align: center;
   }
 }

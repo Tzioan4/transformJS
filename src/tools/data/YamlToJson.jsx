@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import yaml from "js-yaml";
-import useCopy from "../../hooks/useCopy"; 
+import useCopy from "../../hooks/useCopy";
+import "../../styles/tools/yaml.css";
 
 export default function YamlToJson() {
   const [yamlInput, setYamlInput] = useState(
@@ -17,11 +18,9 @@ export default function YamlToJson() {
       setError(null);
       return;
     }
-
     try {
       const obj = yaml.load(yamlInput);
       const json = JSON.stringify(obj, null, 2);
-
       setJsonOutput(json);
       setError(null);
     } catch (e) {
@@ -52,16 +51,10 @@ export default function YamlToJson() {
         />
 
         <textarea
-          className="tool-textarea"
+          className="tool-textarea yaml-output"
           value={jsonOutput}
           readOnly
           placeholder="JSON output will appear here..."
-          style={{
-            background: "#151c29",
-            color: "#e2e8f0",
-            fontFamily: "monospace",
-            cursor: "default",
-          }}
         />
       </div>
 
