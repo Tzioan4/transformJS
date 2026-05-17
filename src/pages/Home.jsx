@@ -4,6 +4,20 @@ import { tools } from "../tools";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Zap, Cpu } from "lucide-react";
 
+function StarIcon({ size = 16 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="#F7DF1E"
+      style={{ verticalAlign: "middle", marginBottom: "2px" }}
+    >
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    </svg>
+  );
+}
+
 function GitHubIcon() {
   return (
     <svg
@@ -90,14 +104,18 @@ export default function Home({ searchTerm }) {
         <section className="contrib-section">
           <div className="contrib-banner">
             <div className="contrib-text">
-              <h3 className="contrib-title">Want to add a custom utility?</h3>
+              <h3 className="contrib-title">
+                If TransformJS saved you time, <StarIcon /> on GitHub means a
+                lot.
+              </h3>
               <p className="contrib-desc">
-                TransformJS is open-source. Fork the repository, add your
-                zero-dependency code, and open a PR.
+                TransformJS is open-source and free forever. A star helps others
+                discover it.
               </p>
             </div>
-            
-              <a href="https://github.com/Tzioan4/transformJS"
+
+            <a
+              href="https://github.com/Tzioan4/transformJS"
               target="_blank"
               rel="noreferrer"
               className="contrib-btn"

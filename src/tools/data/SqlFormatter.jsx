@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { format } from "sql-formatter";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
 const SQL_EXAMPLE =
   "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
-export default function SqlFormatter() {
+export default function SqlFormatter({ tips }) {
   const [input, setInput] = useState(SQL_EXAMPLE);
   const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
@@ -18,30 +19,30 @@ export default function SqlFormatter() {
     handleFormat();
   }, []);
 
- const handleFormat = () => {
-   try {
-     if (!input) return;
+  const handleFormat = () => {
+    try {
+      if (!input) return;
 
-     const formatted = format(input, {
-       language: "sql",
-       keywordCase: "upper",
-       tabWidth: 2,
-       useTabs: false,
-     });
+      const formatted = format(input, {
+        language: "sql",
+        keywordCase: "upper",
+        tabWidth: 2,
+        useTabs: false,
+      });
 
-     const cleanOutput = formatted
-       .split("\n")
-       .map((line) => line.trimEnd())
-       .join("\n");
+      const cleanOutput = formatted
+        .split("\n")
+        .map((line) => line.trimEnd())
+        .join("\n");
 
-     setOutput(cleanOutput);
-     setIsMinified(false);
-     setError(null);
-   } catch (err) {
-     setError("SQL Error: " + err.message);
-     setOutput("");
-   }
- };
+      setOutput(cleanOutput);
+      setIsMinified(false);
+      setError(null);
+    } catch (err) {
+      setError("SQL Error: " + err.message);
+      setOutput("");
+    }
+  };
 
   const handleMinify = () => {
     try {
@@ -100,6 +101,7 @@ export default function SqlFormatter() {
           )}
 
           {error && <div className="error-badge">{error}</div>}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

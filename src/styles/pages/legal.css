@@ -39,3 +39,44 @@
 .policy-container a:hover {
   border-bottom-color: #F7DF1E;
 }
+
+.license-block {
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.license-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.license-text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  line-height: 1.7;
+  text-align: left;
+}
+
+.license-text.uppercase {
+  color: var(--color-dim);
+}
+.about-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+
+.about-link:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}

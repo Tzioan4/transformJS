@@ -1,0 +1,117 @@
+.case-label {
+  color: #888;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+}
+
+.case-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  line-height: 1.6;
+  transition: border-color var(--transition);
+}
+
+.case-input:focus {
+  border-color: var(--color-accent);
+}
+
+.case-output-grid-wrapper {
+  padding: 12px !important;
+}
+
+.case-output-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.case-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color var(--transition);
+}
+
+.case-card:hover {
+  border-color: var(--color-accent-border);
+}
+
+.case-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.case-card-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-text);
+  word-break: break-all;
+  line-height: 1.4;
+  min-height: 20px;
+}
+
+.case-card-empty {
+  color: var(--color-dim);
+}
+
+.case-card-copy {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-top: 4px;
+}
+
+.case-card-copy:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.case-card-copy:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* light mode */
+[data-theme="light"] .case-input {
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+
+[data-theme="light"] .case-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .case-card-value {
+  color: #1e293b;
+}
+
+@media (max-width: 800px) {
+  .case-output-grid {
+    grid-template-columns: 1fr;
+  }
+}

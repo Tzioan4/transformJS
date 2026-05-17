@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
+import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
 const ALGORITHMS = ["MD5", "SHA-1", "SHA-256", "SHA-512"];
@@ -148,7 +149,7 @@ async function computeHash(algo, input) {
     .join("");
 }
 
-export default function HashGenerator() {
+export default function HashGenerator({ tips }) {
   const [input, setInput] = useState("");
   const [algo, setAlgo] = useState("SHA-256");
   const [output, setOutput] = useState("");
@@ -199,6 +200,7 @@ export default function HashGenerator() {
               signatures.
             </div>
           )}
+          {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={

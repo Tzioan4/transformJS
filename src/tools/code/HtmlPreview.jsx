@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
+import ToolInfo from "../../components/ToolInfo";
 
-export default function HtmlPreview() {
-  const [code, setCode] = useState(
-    `<h1> Hello World </h1>`,
-  );
+
+export default function HtmlPreview({ tips }) {
+  const [code, setCode] = useState(`<h1> Hello World </h1>`);
 
   const [copied, setCopied] = useState(false);
-
 
   const finalHtml = `
     <!DOCTYPE html>
@@ -21,20 +20,21 @@ export default function HtmlPreview() {
   `;
 
   const handleCopy = async () => {
-  try {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  } catch (err) {
-    console.error('Copy Error:', err);
-  }
-};
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (err) {
+      console.error("Copy Error:", err);
+    }
+  };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
         <h1>HTML Preview</h1>
         <p>Real-time sandboxed rendering for HTML and CSS snippets.</p>
+        {tips && <ToolInfo tips={tips} />}
       </div>
 
       <div className="tool-workspace">
@@ -73,6 +73,7 @@ export default function HtmlPreview() {
         <button className="btn btn-danger" onClick={() => setCode("")}>
           Clear
         </button>
+        
       </div>
     </div>
   );
