@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToolInfo from "../../components/ToolInfo";
-
 
 export default function HtmlPreview({ tips }) {
   const [code, setCode] = useState(`<h1> Hello World </h1>`);
-
   const [copied, setCopied] = useState(false);
 
   const finalHtml = `
@@ -12,6 +10,7 @@ export default function HtmlPreview({ tips }) {
     <html>
       <head>
         <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:;">
       </head>
       <body>
         ${code}
@@ -55,9 +54,9 @@ export default function HtmlPreview({ tips }) {
           }}
         >
           <iframe
-            title="freedom-preview"
+            title="html-preview"
             srcDoc={finalHtml}
-            sandbox="allow-scripts"
+            sandbox=""
             style={{ width: "100%", height: "100%", border: "none" }}
           />
         </div>

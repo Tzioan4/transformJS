@@ -1,5 +1,3 @@
-/* homepage only (hero, tools grid, promises, contrib) */
-
 /*hero*/
 .hero-section {
   position: relative;
@@ -276,7 +274,6 @@
   font-size: 0.9rem;
 }
 
-/*reusing the same hover pattern as .hero-btn*/
 .contrib-btn {
   display: flex;
   align-items: center;
@@ -380,12 +377,12 @@
   color: #1e293b;
 }
 
-/* Tool card icons */
+/*tool card icons */
 [data-theme="light"] .tool-card .tool-icon {
   color: #64748b;
 }
 
-/* Contrib button */
+/*contrib button */
 [data-theme="light"] .contrib-btn {
   color: #1e293b;
   border-color: var(--color-accent-border);
@@ -399,8 +396,61 @@
 [data-theme="light"] .contrib-btn svg {
   fill: #1e293b;
 }
+/*category filter bar*/
 
-/* mobile*/
+.category-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.category-btn {
+  padding: 6px 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-top: 3rem;;
+}
+
+.category-btn:hover {
+  border-color: var(--color-accent-border);
+  transform: translateY(-2px);
+  color: var(--color-text);
+  box-shadow: 0 10px 15px -3px var(--color-accent-shadow);
+}
+
+.category-btn.active {
+  background: var(--color-accent-bg);
+  border-color: rgba(247, 223, 30, 0.4);
+  color: var(--color-accent);
+}
+
+[data-theme="light"] .category-btn {
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+[data-theme="light"] .category-btn:hover {
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+[data-theme="light"] .category-btn.active {
+  background: rgba(201, 168, 0, 0.08);
+  border-color: rgba(201, 168, 0, 0.4);
+  color: #c9a800;
+}
+
 @media (max-width: 900px) {
   .hero-section {
     padding: 80px 20px 40px;
@@ -416,7 +466,7 @@
   }
    .hero-content {
     position: relative;
-    z-index: 3; /*overides ::after */
+    z-index: 3; 
   }
 
   .hero-title {

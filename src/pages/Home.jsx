@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../styles/pages/home.css";
 import Hero from "../components/Hero";
 import { tools } from "../tools";
@@ -41,22 +42,37 @@ const PROMISES = [
   },
   {
     key: "fast",
-    icon: <Zap size={24}/>,
+    icon: <Zap size={24} />,
     title: "Zero Dependencies",
     desc: "No external bloatware or heavy libraries. Built with pure JavaScript for blazing fast performance (~10ms execution).",
   },
   {
     key: "dev",
-    icon: <Cpu size={24}/>,
+    icon: <Cpu size={24} />,
     title: "Developer Focused UX",
     desc: "Monospaced outputs, persistent configurations, and one-click copy feedback. Designed for developers, by developers.",
   },
 ];
 
+const CATEGORIES = [
+  { id: "all", label: "All" },
+  { id: "code", label: "Code" },
+  { id: "data", label: "Data" },
+  { id: "security", label: "Security" },
+  { id: "text", label: "Text" },
+];
+
 export default function Home({ searchTerm }) {
-  const filteredTools = tools.filter((tool) =>
-    tool.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const filteredTools = tools.filter((tool) => {
+    const matchesSearch = tool.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      activeCategory === "all" || tool.tags.includes(activeCategory);
+    return matchesSearch && matchesCategory;
+  });
 
   const isSearching = searchTerm.length > 0;
 
@@ -83,6 +99,21 @@ export default function Home({ searchTerm }) {
       )}
 
       <div id="tools-section" className="tools-section-wrapper">
+        {/* Category filter bar */}
+        {!isSearching && (
+          <div className="category-bar">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                className={`category-btn ${activeCategory === cat.id ? "active" : ""}`}
+                onClick={() => setActiveCategory(cat.id)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="tools-grid">
           {filteredTools.length > 0 ? (
             filteredTools.map((tool) => (
@@ -94,7 +125,8 @@ export default function Home({ searchTerm }) {
             ))
           ) : (
             <p style={{ color: "#555", fontFamily: "var(--font-mono)" }}>
-              No tools found for "{searchTerm}".
+              No tools found
+              {searchTerm ? ` for "${searchTerm}"` : " in this category"}.
             </p>
           )}
         </div>
