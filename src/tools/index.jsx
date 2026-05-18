@@ -292,7 +292,7 @@ export const tools = [
       "Paste the original text on the left and the modified version on the right.",
       "Added lines are highlighted in green, removed lines in red.",
       "The stats bar shows a quick summary of changes.",
-      "Works with any text — code, JSON, configs, prose.",
+      "Works with any text - code, JSON, configs, prose.",
     ],
   },
   {
@@ -303,8 +303,8 @@ export const tools = [
     tags: ["code", "color", "convert", "frontend", "css"],
     icon: <Palette size={40} strokeWidth={1.5} />,
     tips: [
-      "Type a HEX value to auto-convert to RGB and HSL.",
-      "Edit any RGB or HSL channel — all formats update live.",
+      "Type a HEX value to auto convert to RGB and HSL.",
+      "Edit any RGB or HSL channel - all formats update live.",
       "Click any output card or Copy button to copy the CSS string.",
       "The swatch at the top gives you a live preview of the color.",
     ],

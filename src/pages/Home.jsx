@@ -137,7 +137,7 @@ export default function Home({ searchTerm }) {
           <div className="contrib-banner">
             <div className="contrib-text">
               <h3 className="contrib-title">
-                If TransformJS saved you time, <StarIcon /> on GitHub means a
+                If TransformJS saved you time, A <StarIcon /> on GitHub means a
                 lot.
               </h3>
               <p className="contrib-desc">
