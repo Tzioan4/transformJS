@@ -1,0 +1,141 @@
+.diff-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.diff-panel-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+/*stats bar */
+.diff-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.diff-stat {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.diff-stat--added {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.diff-stat--removed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.diff-stat--same {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
+
+/*output */
+.diff-output {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.diff-output-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.diff-lines {
+  border: 1px solid #2d2d2d;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.diff-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 2px 12px;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.diff-line--same {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.diff-line--added {
+  background: rgba(34, 197, 94, 0.08);
+  color: #4ade80;
+}
+
+.diff-line--removed {
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+}
+
+.diff-line-gutter {
+  flex-shrink: 0;
+  width: 12px;
+  color: inherit;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.diff-line-text {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/*light theme */
+[data-theme="light"] .diff-lines {
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .diff-line--same {
+  color: #1e293b;
+}
+
+[data-theme="light"] .diff-line--added {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+[data-theme="light"] .diff-line--removed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+[data-theme="light"] .diff-stat--same {
+  background: #f1f5f9;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+@media (max-width: 800px) {
+  .diff-output {
+    grid-template-columns: 1fr;
+  }
+}

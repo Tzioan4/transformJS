@@ -12,6 +12,8 @@ import {
   ArrowLeftRight,
   Fingerprint,
   Link2,
+  GitCompare,
+  Palette,
 } from "lucide-react";
 
 // code tools
@@ -20,6 +22,10 @@ import MarkdownPreview from "./code/MarkdownPreview";
 import RegexTester from "./code/RegExTester";
 import FtlPreviewer from "./code/FtlPreviewer";
 import CaseConverter from "./code/CaseConverter";
+import DiffChecker from "./code/DiffChecker";
+import ColorConverter from "./code/ColorConverter";
+
+
 
 // data tools
 import JsonFormatter from "./data/JsonFormatter";
@@ -46,7 +52,7 @@ export const tools = [
     component: JsonFormatter,
     description:
       "Prettify, minify, and validate JSON structures with syntax highlighting.",
-    tags: ["json", "formatter", "data"],
+    tags: ["data", "json", "formatter"],
     icon: <FileJson size={40} strokeWidth={1.5} />,
     tips: [
       "Paste any JSON to format on input.",
@@ -61,7 +67,7 @@ export const tools = [
     component: Base64Tool,
     description:
       "Bi-directional Base64 conversion for text and binary data strings.",
-    tags: ["base64", "encode", "decode"],
+    tags: ["security", "base64", "encode", "decode"],
     icon: <FileCode size={40} strokeWidth={1.5} />,
     tips: [
       "Toggle between Encode and Decode mode with the buttons.",
@@ -74,7 +80,7 @@ export const tools = [
     path: "/url-encode",
     component: UrlEncoderDecoder,
     description: "RFC 3986 compliant encoding and decoding for URL components.",
-    tags: ["url", "encode", "decode", "web"],
+    tags: ["security", "url", "encode", "decode"],
     icon: <Link size={40} strokeWidth={1.5} />,
     tips: [
       "Toggle between Encode and Decode mode.",
@@ -88,12 +94,12 @@ export const tools = [
     path: "/html-preview",
     component: HtmlPreview,
     description: "Real-time sandboxed rendering for HTML and CSS snippets.",
-    tags: ["html", "css", "preview", "frontend"],
+    tags: ["code", "html", "css", "preview", "frontend"],
     icon: <Layout size={40} strokeWidth={1.5} />,
     tips: [
       "Write HTML and CSS on the left, see the result on the right.",
       "The preview is sandboxed - safe to test any snippet.",
-      "Supports inline styles, external fonts via CDN, and JavaScript.",
+      "Supports inline styles and static CSS. External fonts and JavaScript execution are disabled for security reasons.",
       "Use it to quickly prototype email templates or UI components.",
     ],
   },
@@ -103,7 +109,7 @@ export const tools = [
     component: MarkdownPreview,
     description:
       "GitHub Flavored Markdown rendering with live HTML transpilation.",
-    tags: ["markdown", "md", "preview", "text"],
+    tags: ["code", "markdown", "md", "preview", "text"],
     icon: <FileText size={40} strokeWidth={1.5} />,
     tips: [
       "Write Markdown on the left, see rendered HTML on the right.",
@@ -118,7 +124,7 @@ export const tools = [
     component: JwtDebugger,
     description:
       "Decode JWT headers and payloads with instant signature verification.",
-    tags: ["jwt", "auth", "security", "decode"],
+    tags: ["security", "jwt", "auth", "decode"],
     icon: <EarthLock size={40} strokeWidth={1.5} />,
     tips: [
       "Paste a JWT token to decode its header and payload.",
@@ -133,7 +139,7 @@ export const tools = [
     component: YamlToJson,
     description:
       "Convert YAML configurations to clean, formatted JSON structures.",
-    tags: ["yaml", "json", "convert", "data"],
+    tags: ["data", "yaml", "json", "convert"],
     icon: <Terminal size={40} strokeWidth={1.5} />,
     tips: [
       "Paste YAML on the left to get formatted JSON on the right.",
@@ -147,7 +153,7 @@ export const tools = [
     path: "/sql-formatter",
     component: SqlFormatter,
     description: "Format and prettify SQL queries for better readability.",
-    tags: ["sql", "database", "format", "query"],
+    tags: ["data", "sql", "database", "format"],
     icon: <Database size={40} strokeWidth={1.5} />,
     tips: [
       "Paste any SQL query to format it with proper indentation.",
@@ -162,7 +168,7 @@ export const tools = [
     component: HashGenerator,
     description:
       "Generate secure MD5, SHA-1, SHA-256 and SHA-512 hashes for any input.",
-    tags: ["hash", "security", "md5", "sha256"],
+    tags: ["security", "hash", "md5", "sha256"],
     icon: <Hash size={40} strokeWidth={1.5} />,
     tips: [
       "Type or paste any text to generate its hash instantly.",
@@ -176,7 +182,7 @@ export const tools = [
     path: "/password-generator",
     component: PasswordGenerator,
     description: "Generate secure, random passwords with custom requirements.",
-    tags: ["password", "security", "secure"],
+    tags: ["security", "password", "secure"],
     icon: <Lock size={40} strokeWidth={1.5} />,
     tips: [
       "Adjust the slider to set the password length (6-64 characters).",
@@ -191,7 +197,7 @@ export const tools = [
     component: CsvToJson,
     description:
       "Convert complex CSV data to clean JSON with full RFC 4180 compliance.",
-    tags: ["csv", "json", "convert"],
+    tags: ["data", "csv", "json", "convert"],
     icon: <FileText size={40} strokeWidth={1.5} />,
     tips: [
       "Paste CSV with a header row, the first row becomes the JSON keys.",
@@ -206,7 +212,7 @@ export const tools = [
     component: RegexTester,
     description:
       "Test regular expressions with real-time match highlighting and flag support.",
-    tags: ["regex", "pattern", "test", "code"],
+    tags: ["code", "regex", "pattern", "test"],
     icon: <Terminal size={40} strokeWidth={1.5} />,
     tips: [
       "Enter your pattern between the / slashes and set flags (g, i, m).",
@@ -220,7 +226,7 @@ export const tools = [
     path: "/ftl-previewer",
     component: FtlPreviewer,
     description: "Preview FreeMarker templates with mock JSON data.",
-    tags: ["ftl", "freemarker", "template", "preview", "render"],
+    tags: ["code", "ftl", "freemarker", "template"],
     icon: <FileCode size={40} />,
     tips: [
       "Paste your FTL template on the left and mock JSON data below it.",
@@ -235,7 +241,7 @@ export const tools = [
     component: CaseConverter,
     description:
       "Convert text between camelCase, snake_case, kebab-case, PascalCase and more.",
-    tags: ["case", "convert", "text", "camel", "snake", "kebab"],
+    tags: ["code", "case", "convert", "text"],
     icon: <ArrowLeftRight size={40} strokeWidth={1.5} />,
     tips: [
       "Type or paste any text in any format - the tool detects it automatically.",
@@ -250,7 +256,7 @@ export const tools = [
     component: UuidGenerator,
     description:
       "Generate cryptographically secure UUID v4 identifiers instantly.",
-    tags: ["uuid", "guid", "generate", "id", "unique"],
+    tags: ["text", "uuid", "guid", "generate"],
     icon: <Fingerprint size={40} strokeWidth={1.5} />,
     tips: [
       "Set the count (1-100) and click Generate to create multiple UUIDs at once.",
@@ -265,13 +271,42 @@ export const tools = [
     component: UrlParser,
     description:
       "Break down any URL into protocol, host, path, query params and hash.",
-    tags: ["url", "parse", "query", "params", "web"],
+    tags: ["text", "url", "parse", "query"],
     icon: <Link2 size={40} strokeWidth={1.5} />,
     tips: [
       "Paste any full URL including http:// or https://.",
       "Query parameters are shown as individual key=value pairs.",
       "Click Copy on any param row to copy that specific parameter.",
       "Port shows default (443 for https, 80 for http) if not specified.",
+    ],
+  },
+  {
+    name: "Diff Checker",
+    path: "/diff-checker",
+    component: DiffChecker,
+    description:
+      "Compare two text blocks and highlight line-by-line differences.",
+    tags: ["code", "diff", "compare", "text"],
+    icon: <GitCompare size={40} strokeWidth={1.5} />,
+    tips: [
+      "Paste the original text on the left and the modified version on the right.",
+      "Added lines are highlighted in green, removed lines in red.",
+      "The stats bar shows a quick summary of changes.",
+      "Works with any text — code, JSON, configs, prose.",
+    ],
+  },
+  {
+    name: "Color Converter",
+    path: "/color-converter",
+    component: ColorConverter,
+    description: "Convert colors between HEX, RGB, and HSL formats instantly.",
+    tags: ["code", "color", "convert", "frontend", "css"],
+    icon: <Palette size={40} strokeWidth={1.5} />,
+    tips: [
+      "Type a HEX value to auto-convert to RGB and HSL.",
+      "Edit any RGB or HSL channel — all formats update live.",
+      "Click any output card or Copy button to copy the CSS string.",
+      "The swatch at the top gives you a live preview of the color.",
     ],
   },
 ];
