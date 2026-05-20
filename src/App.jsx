@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import NotFound from "./pages/NotFound";
@@ -14,16 +14,6 @@ import Privacy from "./pages/Privacy";
 import About from "./pages/About";
 
 import { tools } from "./tools";
-
-const lazyTools = tools.map((tool) => ({
-  ...tool,
-  lazyComponent: lazy(() =>
-    import("./tools/index.jsx").then((module) => {
-      const matchedTool = module.tools.find((t) => t.path === tool.path);
-      return { default: matchedTool.component };
-    }),
-  ),
-}));
 
 function ScrollToTop({ setSearchTerm }) {
   const location = useLocation();
@@ -62,8 +52,8 @@ function AppContent() {
             <Routes>
               <Route path="/" element={<Home searchTerm={searchTerm} />} />
 
-              {lazyTools.map((tool) => {
-                const LazyToolComponent = tool.lazyComponent;
+              {tools.map((tool) => {
+                const ToolComponent = tool.component;
                 return (
                   <Route
                     key={tool.path}
@@ -83,7 +73,7 @@ function AppContent() {
                             href={`https://transformjs.com${tool.path}`}
                           />
                         </Helmet>
-                        <LazyToolComponent tips={tool.tips} />
+                        <ToolComponent tips={tool.tips} />
                       </>
                     }
                   />
@@ -98,7 +88,7 @@ function AppContent() {
                       <title>Privacy Policy - TransformJS</title>
                       <meta
                         name="description"
-                        content="Read our privacy policy. Your data never leaves your device - everything runs locally in your browser."
+                        content="Read our privacy policy. Your data never leaves your device — everything runs locally in your browser."
                       />
                       <link
                         rel="canonical"

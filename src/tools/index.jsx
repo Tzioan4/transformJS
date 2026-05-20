@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import {
   FileJson,
   EarthLock,
@@ -17,33 +18,30 @@ import {
 } from "lucide-react";
 
 // code tools
-import HtmlPreview from "./code/HtmlPreview";
-import MarkdownPreview from "./code/MarkdownPreview";
-import RegexTester from "./code/RegExTester";
-import FtlPreviewer from "./code/FtlPreviewer";
-import CaseConverter from "./code/CaseConverter";
-import DiffChecker from "./code/DiffChecker";
-import ColorConverter from "./code/ColorConverter";
-
-
+const HtmlPreview = lazy(() => import("./code/HtmlPreview"));
+const MarkdownPreview = lazy(() => import("./code/MarkdownPreview"));
+const RegexTester = lazy(() => import("./code/RegExTester"));
+const FtlPreviewer = lazy(() => import("./code/FtlPreviewer"));
+const CaseConverter = lazy(() => import("./code/CaseConverter"));
+const DiffChecker = lazy(() => import("./code/DiffChecker"));
+const ColorConverter = lazy(() => import("./code/ColorConverter"));
 
 // data tools
-import JsonFormatter from "./data/JsonFormatter";
-import YamlToJson from "./data/YamlToJson";
-import SqlFormatter from "./data/SqlFormatter";
-import CsvToJson from "./data/CsvToJson";
+const JsonFormatter = lazy(() => import("./data/JsonFormatter"));
+const YamlToJson = lazy(() => import("./data/YamlToJson"));
+const SqlFormatter = lazy(() => import("./data/SqlFormatter"));
+const CsvToJson = lazy(() => import("./data/CsvToJson"));
 
 // security tools
-import Base64Tool from "./security/Base64Tool";
-import UrlEncoderDecoder from "./security/UrlEncoderDecoder";
-import JwtDebugger from "./security/JwtDebugger";
-import HashGenerator from "./security/HashGenerator";
-import PasswordGenerator from "./security/PasswordGenerator";
+const Base64Tool = lazy(() => import("./security/Base64Tool"));
+const UrlEncoderDecoder = lazy(() => import("./security/UrlEncoderDecoder"));
+const JwtDebugger = lazy(() => import("./security/JwtDebugger"));
+const HashGenerator = lazy(() => import("./security/HashGenerator"));
+const PasswordGenerator = lazy(() => import("./security/PasswordGenerator"));
 
 // text tools
-import UuidGenerator from "./text/UuidGenerator";
-import UrlParser from "./text/UrlParser";
-
+const UuidGenerator = lazy(() => import("./text/UuidGenerator"));
+const UrlParser = lazy(() => import("./text/UrlParser"));
 
 export const tools = [
   {
