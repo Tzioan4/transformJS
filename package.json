@@ -20,6 +20,7 @@
     "prismjs": "^1.30.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.15.0",
     "sql-formatter": "^15.7.4"
   },
