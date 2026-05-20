@@ -10,7 +10,7 @@ Built with React + Vite and deployed on Vercel.
 
 ## Live Demo
 
-https://transformjs-ashy.vercel.app/
+https://transformjs.com/
 
 ---
 
@@ -52,6 +52,8 @@ Your data never leaves your device.
 * FTL Previewer
 * Case Converter
 * UUID Generator
+* DiffChecker
+* Color Converter
 
 More tools are continuously being added.
 
@@ -85,80 +87,53 @@ The project uses a modular tool based architecture designed for scalability.
 
 ## Local Development
 
-Clone the repository:
+- Clone the repository:
 
-```bash
-git clone https://github.com/Tzioan4/transformJS.git
-```
+git clone [https://github.com/Tzioan4/transformJS.git](https://github.com/Tzioan4/transformJS.git)
 
-Enter the project folder:
+- Enter the project folder:
 
-```bash
 cd transformJS
-```
 
-Install dependencies:
+- Install dependencies:
 
-```bash
 npm install
-```
 
-Start development server:
+- Start development server:
 
-```bash
 npm run dev
-```
 
----
+- Production Build
 
-## Production Build
-
-```bash
 npm run build
-```
-
----
 
 ## Future Plans
-
-Planned tools and improvements include:
-
-* Better mobile optimizations
-* Accessibility improvements
-* More developer-focused utilities
-
----
+- Planned tools and improvements include:
+- Better mobile optimizations
+- Accessibility improvements
+- More developer-focused utilities
 
 ## Contributing
-
 Contributions, ideas and improvements are welcome.
 
-To contribute:
+## To contribute:
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push the branch
-5. Open a pull request
-
----
+- Fork the repository
+- Create a feature branch
+- Commit your changes
+- Push the branch
+- Open a pull request
 
 ## Purpose
-
 transformJS started as a learning and portfolio project focused on:
-
-* React architecture
-* scalable frontend structure
-* reusable component systems
-* routing patterns
-* Git workflows
-* deployment pipelines
-* UI/UX design
-
+- React architecture
+- scalable frontend structure
+- reusable component systems
+- routing patterns
+- Git workflows
+- deployment pipelines
+- UI/UX design
 Over time, it evolved into a real world utility platform.
 
----
-
 ## License
-
 Licensed under the MIT License.
