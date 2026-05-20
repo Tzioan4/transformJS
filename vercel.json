@@ -3,6 +3,12 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "transformjs-ashy.vercel.app"
+        }
+      ],
       "destination": "https://transformjs.com/$1",
       "permanent": true
     }
