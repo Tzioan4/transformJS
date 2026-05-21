@@ -3,6 +3,10 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
+const MIN_LENGTH = 12;
+const MAX_LENGTH = 64;
+const DEFAULT_LENGTH = 16;
+
 const CHARSET = {
   uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
   lowercase: "abcdefghijklmnopqrstuvwxyz",
@@ -69,7 +73,7 @@ function getStrength(entropy) {
 }
 
 export default function PasswordGenerator({ tips }) {
-  const [length, setLength] = useState(16);
+  const [length, setLength] = useState(DEFAULT_LENGTH);
   const [options, setOptions] = useState({
     uppercase: true,
     lowercase: true,
@@ -80,6 +84,12 @@ export default function PasswordGenerator({ tips }) {
   const { copied, copy } = useCopy();
 
   const hasOptions = Object.values(options).some(Boolean);
+
+  //clamp length if it ever falls below the minimum
+  useEffect(() => {
+    if (length < MIN_LENGTH) setLength(MIN_LENGTH);
+    if (length > MAX_LENGTH) setLength(MAX_LENGTH);
+  }, [length]);
 
   const generate = useCallback(() => {
     if (!hasOptions) {
@@ -160,13 +170,31 @@ export default function PasswordGenerator({ tips }) {
             </div>
             <input
               type="range"
-              min="6"
-              max="64"
+              min={MIN_LENGTH}
+              max={MAX_LENGTH}
               value={length}
-              onChange={(e) => setLength(Number(e.target.value))}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                //clamp on change too
+                const clamped = Math.max(MIN_LENGTH, Math.min(MAX_LENGTH, val));
+                setLength(clamped);
+              }}
               className="custom-slider"
               disabled={!hasOptions}
             />
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.7rem",
+                color: "#666",
+                marginTop: "6px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <span>min {MIN_LENGTH}</span>
+              <span>max {MAX_LENGTH}</span>
+            </div>
           </div>
 
           <div className="options-grid">

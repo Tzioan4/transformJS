@@ -213,7 +213,7 @@ export const tools = [
     seoDesc:
       "Generate strong, randomized, and highly secure passwords with custom lengths and criteria locally.",
     tips: [
-      "Adjust the slider to set the password length (6-64 characters).",
+      "Adjust the slider to set the password length (12-64 characters).",
       "Toggle uppercase, lowercase, numbers and symbols as needed.",
       "Uses crypto.getRandomValues(), cryptographically secure.",
       "The entropy (bits) shown indicates how strong the password is.",
