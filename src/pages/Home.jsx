@@ -43,8 +43,8 @@ const PROMISES = [
   {
     key: "fast",
     icon: <Zap size={24} />,
-    title: "Zero Dependencies",
-    desc: "No external bloatware or heavy libraries. Built with pure JavaScript for blazing fast performance (~10ms execution).",
+    title: "Lightweight & Fast",
+    desc: "No heavy frameworks or bloated UI libraries.Built with open-source tools for reliable performance. Most operations complete in milliseconds.",
   },
   {
     key: "dev",

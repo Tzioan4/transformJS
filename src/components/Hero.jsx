@@ -47,12 +47,13 @@ export default function Hero() {
           </h1>
 
           <p className="hero-description">
-            TransformJS is a lightweight toolkit designed to eliminate friction
-            from your workflow. No distractions, just the tools you need.
+            TransformJS is a free and open-source developer toolkit built for 
+            everyday workflows. Format, convert, debug and preview - all locally 
+            in your browser. No accounts, no tracking, no data leaving your machine.
           </p>
 
           <p className="hero-description">
-            <strong>This app is still under development.</strong>
+            This app is still under development.
           </p>
 
           <div className="hero-btns-group">
