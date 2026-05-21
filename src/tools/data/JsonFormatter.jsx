@@ -1,4 +1,4 @@
-import { formatJson, minifyJson, detectDuplicateKeys } from "../../utils/json";
+import { formatJson, minifyJson } from "../../utils/json";
 import { useState, useEffect } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
@@ -32,12 +32,11 @@ const jsonExample = {
     }
   }, []);
 
-const handleFormat = () => {
+const handleFormat = async () => {
   try {
-    // Detect duplicates before parsing
+    const { detectDuplicateKeys } = await import("../../utils/json");
     const dupes = detectDuplicateKeys(input);
     setDuplicateWarning(dupes);
-    
     setOutput(formatJson(input));
     setIsMinified(false);
     setError(null);
@@ -48,11 +47,11 @@ const handleFormat = () => {
   }
 };
 
-const handleMinify = () => {
+const handleMinify = async () => {
   try {
+    const { detectDuplicateKeys } = await import("../../utils/json");
     const dupes = detectDuplicateKeys(input);
     setDuplicateWarning(dupes);
-
     setOutput(minifyJson(input));
     setIsMinified(true);
     setError(null);

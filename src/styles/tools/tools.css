@@ -31,7 +31,7 @@ input:focus {
 .tool-container {
   max-width: 100%;
   margin: 0;
-  padding: 100px 2rem 20px;
+  padding: 26px 2rem 20px; 
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
