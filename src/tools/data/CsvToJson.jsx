@@ -4,6 +4,36 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 
+function inferType(raw) {
+  //undefined/null → null (missing field)
+  if (raw === undefined || raw === null) return null;
+
+  if (typeof raw !== "string") return raw;
+
+  const trimmed = raw.trim();
+
+  // JSON objects/arrays
+  if (
+    (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+    (trimmed.startsWith("[") && trimmed.endsWith("]"))
+  ) {
+    try { return JSON.parse(trimmed); }
+    catch { return trimmed; }
+  }
+
+  //numbers
+  if (trimmed !== "" && !isNaN(trimmed) && !isNaN(parseFloat(trimmed))) {
+    return parseFloat(trimmed);
+  }
+
+  //booleans
+  if (trimmed.toLowerCase() === "true") return true;
+  if (trimmed.toLowerCase() === "false") return false;
+
+  //empty string stays as empty string
+  return trimmed;
+}
+
 export default function CsvToJson({ tips }) {
   const [csv, setCsv] = useState("");
   const [json, setJson] = useState("");
@@ -19,7 +49,7 @@ export default function CsvToJson({ tips }) {
     const results = Papa.parse(csv, {
       header: true,
       skipEmptyLines: true,
-      dynamicTyping: true,
+      dynamicTyping: false,
       quotes: true,
       quoteChar: '"',
       escapeChar: '"',
@@ -38,46 +68,15 @@ export default function CsvToJson({ tips }) {
       return;
     }
 
-    //extract the expected headers from the first parse result
     const expectedKeys = results.meta?.fields ?? [];
 
     const cleaned = results.data
       .filter((row) => Object.keys(row).length > 0)
       .map((row) => {
-        //remove __parsed_extra and restrict to known headers
         const newRow = {};
         expectedKeys.forEach((key) => {
-          const value = row[key];
-
-          //normalize missing fields to null
-          if (value === undefined) {
-            newRow[key] = null;
-            return;
-          }
-
-          if (typeof value !== "string") {
-            newRow[key] = value;
-            return;
-          }
-
-          //trim string values
-          const trimmed = value.trim();
-
-          //attempt JSON parse only for obvious JSON shapes
-          if (
-            (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
-            (trimmed.startsWith("[") && trimmed.endsWith("]"))
-          ) {
-            try {
-              newRow[key] = JSON.parse(trimmed);
-            } catch {
-              newRow[key] = trimmed;
-            }
-          } else {
-            newRow[key] = trimmed === "" ? null : trimmed;
-          }
+          newRow[key] = inferType(row[key]);
         });
-
         return newRow;
       });
 

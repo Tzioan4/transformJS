@@ -193,6 +193,25 @@ function evalExpr(expr, ctx) {
   if (expr === "true") return true;
   if (expr === "false") return false;
 
+//default value operator: var!("default") or var!"default" or var!
+const defaultParenMatch = expr.match(/^(.+?)!\("([^"]*)"\)$/);
+const defaultQuoteMatch = !defaultParenMatch && expr.match(/^(.+?)!"([^"]*)"$/);
+const defaultEmptyMatch = (!defaultParenMatch && !defaultQuoteMatch && !/^[!"]/.test(expr))
+  ? expr.match(/^(.+?)!$/) : null;
+const defaultMatch = defaultParenMatch || defaultQuoteMatch || defaultEmptyMatch;
+
+if (defaultMatch) {
+  const varExpr = defaultMatch[1].trim();
+  const defaultVal = defaultMatch[2] !== undefined ? defaultMatch[2] : '';
+  try {
+    const val = evalExpr(varExpr, ctx);
+    if (val === undefined || val === null) return defaultVal;
+    return val;
+  } catch {
+    return defaultVal;
+  }
+}
+
   //?has_content
   if (expr.endsWith("?has_content")) {
     const val = evalExpr(expr.slice(0, -12), ctx);
@@ -316,8 +335,7 @@ function evalExpr(expr, ctx) {
 function evalPath(obj, parts) {
   let val = obj;
   for (const part of parts) {
-    if (val === null || val === undefined) return "";
-    // handle array index in path: bands[0]
+    if (val === null || val === undefined) return undefined;  // ✅
     const idxMatch = part.match(/^([^\[]+)\[(\d+)\]$/);
     if (idxMatch) {
       val = val[idxMatch[1]];
@@ -326,7 +344,7 @@ function evalPath(obj, parts) {
       val = val[part];
     }
   }
-  return val ?? "";
+  return val;  // can be undefined
 }
 
 function splitOnPlus(expr) {
@@ -372,16 +390,19 @@ function render(nodes, ctx) {
       continue;
     }
 
-    if (node.type === "interpolation") {
-      try {
-        const val = evalExpr(node.expr, ctx);
-        out += val ?? "";
-      } catch {
-        out += `\${${node.expr}}`;
-      }
-      continue;
+ if (node.type === "interpolation") {
+  try {
+    const val = evalExpr(node.expr, ctx);
+    if (val === undefined) {
+      out += `<span style="background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.3);padding:1px 6px;border-radius:3px;font-family:monospace;font-size:0.85em">[UNDEFINED: ${node.expr}]</span>`;
+    } else {
+      out += val ?? '';
     }
-
+  } catch {
+    out += `<span style="background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.3);padding:1px 6px;border-radius:3px;font-family:monospace;font-size:0.85em">[ERROR: ${node.expr}]</span>`;
+  }
+  continue;
+}
     if (node.type === "assign") {
       try {
         ctx[node.varName] = evalExpr(node.expr, ctx);
