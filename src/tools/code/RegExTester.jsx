@@ -1,7 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import "../../styles/tools/regex.css";
+
+const TIMEOUT_MS = 2000;
 
 function escapeHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -13,10 +15,10 @@ function buildHighlightedHtml(text, matches) {
   let lastIndex = 0;
   for (const match of matches) {
     const start = match.index;
-    const end = start + match[0].length;
+    const end = start + match.value.length; // ← match.value αντί για match[0]
     if (start > lastIndex) parts.push(escapeHtml(text.slice(lastIndex, start)));
     parts.push(
-      `<mark style="background:rgba(247,223,30,0.25);color:#F7DF1E;border-bottom:2px solid #F7DF1E;padding:0 1px;border-radius:2px;">${escapeHtml(match[0])}</mark>`,
+      `<mark style="background:rgba(247,223,30,0.25);color:#F7DF1E;border-bottom:2px solid #F7DF1E;padding:0 1px;border-radius:2px;">${escapeHtml(match.value)}</mark>`
     );
     lastIndex = end;
   }
@@ -26,35 +28,101 @@ function buildHighlightedHtml(text, matches) {
 
 export default function RegexTester({ tips }) {
   const [pattern, setPattern] = useState(
-    "([a-z0-9_.-]+)@([\\da-z.-]+)\\.([a-z.]{2,6})",
+    "([a-z0-9_.-]+)@([\\da-z.-]+)\\.([a-z.]{2,6})"
   );
   const [flags, setFlags] = useState("g");
   const [text, setText] = useState(
-    "Contact us at support@transformjs.com or dev_team@gmail.com",
+    "Contact us at support@transformjs.com or dev_team@gmail.com"
   );
   const [matches, setMatches] = useState([]);
   const [error, setError] = useState(null);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const workerRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  //cleanup worker on unmount
+  useEffect(() => {
+    return () => {
+      if (workerRef.current) workerRef.current.terminate();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
+    //kills previous worker if still running
+    if (workerRef.current) {
+      workerRef.current.terminate();
+      workerRef.current = null;
+    }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
     if (!pattern || !text) {
       setMatches([]);
       setError(null);
+      setIsRunning(false);
       return;
     }
+
+    //validates regex before sending to worker
     try {
       const safeFlags = flags.includes("g") ? flags : flags + "g";
-      const regex = new RegExp(pattern, safeFlags);
-      setMatches([...text.matchAll(regex)]);
-      setError(null);
+      new RegExp(pattern, safeFlags); // throws if invalid
     } catch (err) {
       setError(err.message);
       setMatches([]);
+      setIsRunning(false);
+      return;
     }
+
+    setIsRunning(true);
+    setError(null);
+
+    const worker = new Worker("/regexWorker.js");
+    workerRef.current = worker;
+
+    // Timeout — kill worker if it takes too long
+    timeoutRef.current = setTimeout(() => {
+      worker.terminate();
+      workerRef.current = null;
+      setIsRunning(false);
+      setMatches([]);
+      setError(
+        "Regex execution timeout! possible catastrophic backtracking detected. Simplify your pattern."
+      );
+    }, TIMEOUT_MS);
+
+    worker.onmessage = (e) => {
+      clearTimeout(timeoutRef.current);
+      workerRef.current = null;
+      setIsRunning(false);
+
+      if (e.data.type === "success") {
+        setMatches(e.data.matches);
+        setError(null);
+      } else {
+        setError(e.data.message);
+        setMatches([]);
+      }
+    };
+
+    worker.onerror = (e) => {
+      clearTimeout(timeoutRef.current);
+      workerRef.current = null;
+      setIsRunning(false);
+      setError(e.message || "Unknown error in regex worker");
+      setMatches([]);
+    };
+
+    worker.postMessage({ pattern, flags, text });
   }, [pattern, flags, text]);
 
   const highlightedHtml = useMemo(
     () => buildHighlightedHtml(text, matches),
-    [text, matches],
+    [text, matches]
   );
 
   return (
@@ -63,14 +131,20 @@ export default function RegexTester({ tips }) {
         <div>
           <h1>RegEx Tester</h1>
           <p>
-            Test regular expressions with real time match highlighting and flag
-            support.
+            Test regular expressions with real time match highlighting and flag support.
           </p>
-          {matches.length > 0 && !error && (
-            <div
-              className="status-badge status-pretty"
-              style={{ marginTop: 12, display: "inline-block" }}
-            >
+          {isRunning && (
+            <div className="status-badge" style={{
+              marginTop: 12,
+              display: "inline-block",
+              color: "#94a3b8",
+              borderColor: "#333",
+            }}>
+              RUNNING...
+            </div>
+          )}
+          {matches.length > 0 && !error && !isRunning && (
+            <div className="status-badge status-pretty" style={{ marginTop: 12, display: "inline-block" }}>
               MATCHES FOUND: <strong>{matches.length}</strong>
             </div>
           )}
@@ -78,15 +152,7 @@ export default function RegexTester({ tips }) {
         </div>
       }
       input={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            overflowY: "auto",
-          }}
-        >
+        <div className="tool-textarea" style={{ display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
           <div>
             <label className="regex-label">Regex Pattern & Flags</label>
             <div className="regex-pattern-bar">
@@ -133,15 +199,7 @@ export default function RegexTester({ tips }) {
         </div>
       }
       output={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            overflowY: "auto",
-          }}
-        >
+        <div className="tool-textarea" style={{ display: "flex", flexDirection: "column", gap: "16px", overflowY: "auto" }}>
           <div>
             <label className="regex-label">Highlighted Preview</label>
             <div className="regex-highlight-box">
@@ -151,39 +209,30 @@ export default function RegexTester({ tips }) {
 
           <div style={{ flex: 1, overflowY: "auto" }}>
             <label className="regex-label">Match Details</label>
-            {matches.length === 0 ? (
+            {isRunning ? (
+              <p className="regex-no-match">Running...</p>
+            ) : matches.length === 0 ? (
               <p className="regex-no-match">No matches found.</p>
             ) : (
               matches.map((match, i) => (
                 <div key={i} className="regex-match-card">
                   <div className="regex-match-title">Match {i + 1}</div>
                   <div className="regex-match-value">
-                    Value: <code>{match[0]}</code>
+                    Value: <code>{match.value}</code>
                   </div>
                   <div className="regex-match-index">
-                    Index: {match.index} — End: {match.index + match[0].length}
+                    Index: {match.index} — End: {match.index + match.value.length}
                   </div>
-                  {match.length > 1 && (
-                    <div
-                      style={{
-                        marginTop: "5px",
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "4px",
-                      }}
-                    >
-                      <span style={{ fontSize: "11px", color: "#666" }}>
-                        Groups:{" "}
-                      </span>
-                      {match.slice(1).map((g, gi) => (
+                  {match.groups.length > 0 && (
+                    <div style={{ marginTop: "5px", display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                      <span style={{ fontSize: "11px", color: "#666" }}>Groups: </span>
+                      {match.groups.map((g, gi) => (
                         <span
                           key={gi}
                           className="regex-group-badge"
-                          style={{
-                            color: g === undefined ? "#555" : undefined,
-                          }}
+                          style={{ color: g === null ? "#555" : undefined }}
                         >
-                          {g === undefined ? "∅" : g}
+                          {g === null ? "∅" : g}
                         </span>
                       ))}
                     </div>
@@ -197,10 +246,7 @@ export default function RegexTester({ tips }) {
       actions={
         <div className="tool-actions">
           <button
-            onClick={() => {
-              setText("");
-              setMatches([]);
-            }}
+            onClick={() => { setText(""); setMatches([]); }}
             className="btn btn-danger"
           >
             Clear <span className="btn-hint">Esc</span>
