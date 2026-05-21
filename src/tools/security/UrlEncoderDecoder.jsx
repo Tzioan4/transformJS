@@ -12,6 +12,7 @@ export default function UrlEncoderDecoder({ tips }) {
   const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
+  const [info, setInfo] = useState(null);
 
   const { copied, copy } = useCopy();
 
@@ -30,7 +31,14 @@ export default function UrlEncoderDecoder({ tips }) {
 
   const handleProcess = () => {
     setError(null);
-    if (!text) return;
+    setInfo(null);
+
+    //empty input feedback
+    if (!text || text.trim() === "") {
+      setInfo("Please enter text to encode/decode");
+      setResult("");
+      return;
+    }
 
     try {
       if (mode === "encode") {
@@ -60,6 +68,7 @@ export default function UrlEncoderDecoder({ tips }) {
     setMode(nextMode);
     setText(nextInput);
     setError(null);
+    setInfo(null);
 
     try {
       if (nextInput) {
@@ -84,6 +93,7 @@ export default function UrlEncoderDecoder({ tips }) {
     setText("");
     setResult("");
     setError(null);
+    setInfo(null);
   };
 
   return (
@@ -106,9 +116,30 @@ export default function UrlEncoderDecoder({ tips }) {
           {/*global warning*/}
           {mode === "encode" && isUrlEncoded(text) && (
             <div className="input-warning">
-              Warning: Input is already Base64 encoded. Switch to{" "}
+              Warning: Input is already URL encoded. Switch to{" "}
               <strong>Decode </strong>
               mode.
+            </div>
+          )}
+
+          {/*empty input info message */}
+          {info && (
+            <div
+              style={{
+                marginTop: "12px",
+                padding: "10px 14px",
+                background: "rgba(59, 130, 246, 0.08)",
+                border: "1px solid rgba(59, 130, 246, 0.35)",
+                borderRadius: "6px",
+                color: "#60a5fa",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.85rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span>{info}</span>
             </div>
           )}
 
@@ -123,7 +154,11 @@ export default function UrlEncoderDecoder({ tips }) {
             mode === "encode" ? "Enter text..." : "Enter URL encoded text..."
           }
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+            //clear info as soon as user starts typing
+            if (info) setInfo(null);
+          }}
         />
       }
       output={
