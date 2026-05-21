@@ -1,0 +1,48 @@
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+.animate-fade-up-fast {
+  animation: fade-up 0.6s ease-out forwards;
+}
+
+.scale-hover {
+  transition: transform 0.15s ease-out;
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+.scale-hover:active {
+  transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-up-fast {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .scale-hover {
+    transition: none;
+  }
+
+  .scale-hover:hover,
+  .scale-hover:active {
+    transform: none;
+  }
+}
