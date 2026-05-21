@@ -335,7 +335,7 @@ if (defaultMatch) {
 function evalPath(obj, parts) {
   let val = obj;
   for (const part of parts) {
-    if (val === null || val === undefined) return undefined;  // ✅
+    if (val === null || val === undefined) return undefined;  
     const idxMatch = part.match(/^([^\[]+)\[(\d+)\]$/);
     if (idxMatch) {
       val = val[idxMatch[1]];
@@ -464,7 +464,7 @@ const DEFAULT_TEMPLATE = `<#assign booking=Root.bands.booking[0].fields />
 <#assign ticket=Root.bands.ticket[0].fields />
 <#assign passenger=ticket.passenger />
 
-<#assign seatNumber="ΕΛΕΥΘΕΡΗ">
+<#assign seatNumber="FREE SEATING">
 <#if ticket.seat?has_content>
   <#assign seatNumber=ticket.seat>
 </#if>
@@ -473,31 +473,31 @@ const DEFAULT_TEMPLATE = `<#assign booking=Root.bands.booking[0].fields />
 <html>
 <head>
   <style>
-    body { font-family: Arial, sans-serif; font-size: 13px; color: #444; padding: 20px; }
+    body { font-family: Arial, sans-serif; font-size: 13px; color: #000000; padding: 20px; }
     .h2 { font-size: 16px; font-weight: bold; }
     .h3 { font-size: 13px; font-weight: bold; }
-    hr { border: none; border-top: 1px dashed #ccc; margin: 10px 0; }
+    hr { border: none; border-top: 1px dashed #ffffff; margin: 10px 0; }
     table { width: 100%; border-collapse: collapse; }
     td { padding: 6px 4px; }
     .underline td { border-bottom: 1px solid #ccc; }
   </style>
 </head>
 <body>
-  <p><b>Αριθμός κράτησης:</b> \${booking.code}</p>
+  <p><b>Order Number:</b> \${booking.code}</p>
 
   <hr/>
 
-  <p>ΑΦΕΤΗΡΙΑ: <span class="h2">\${ticket.pointFrom.nameEL} → \${ticket.pointTo.nameEL}</span></p>
-  <p>ΔΡΟΜΟΛΟΓΙΟ: <span class="h2">\${ticket.routeNameEL}</span></p>
-  <p>ΗΜΕΡΟΜΗΝΙΑ: <span class="h2">\${ticket.travelDate}</span></p>
+  <p>STARTING POINT: <span class="h2">\${ticket.pointFrom.nameEN} → \${ticket.pointTo.nameEN}</span></p>
+  <p>ROUTE: <span class="h2">\${ticket.routeNameEN}</span></p>
+  <p>DATE: <span class="h2">\${ticket.travelDate}</span></p>
 
   <hr/>
 
   <table>
     <tr class="underline">
-      <td>ΑΡ. ΕΙΣΙΤΗΡΙΟΥ</td>
-      <td>ΤΙΜΗ</td>
-      <td>ΘΕΣΗ</td>
+      <td>TICKET NO.</td>
+      <td>PRICE</td>
+      <td>SEAT</td>
     </tr>
     <tr>
       <td class="h2">\${ticket.serialNumber}</td>
@@ -508,12 +508,12 @@ const DEFAULT_TEMPLATE = `<#assign booking=Root.bands.booking[0].fields />
 
   <hr/>
 
-  <p>ΕΠΙΒΑΤΗΣ: <span class="h3">\${passenger.lastname} \${passenger.firstname}</span></p>
+  <p>PASSENGER: <span class="h3">\${passenger.lastname} \${passenger.firstname}</span></p>
 
   <#if passenger.cardNumber?has_content>
-    <p>ΚΑΡΤΑ ΕΠΙΒΑΤΗ: <span class="h3">\${passenger.cardNumber}</span></p>
+    <p>PASSENGER CARD: <span class="h3">\${passenger.cardNumber}</span></p>
   <#else>
-    <p>Χωρίς κάρτα επιβάτη</p>
+    <p>No passenger card</p>
   </#if>
 
 </body>
@@ -536,21 +536,21 @@ const DEFAULT_DATA = `{
             "seat": "12A",
             "travelDate": "2024-03-20",
             "travelTime": "08:30",
-            "routeNameEL": "ΗΡΑΚΛΕΙΟ - ΑΘΗΝΑ",
+            "routeNameEN": "HERAKLION - ATHENS",
             "serialNumber": "TK-0045231",
             "price": 35.50,
             "qrCode": "",
-            "pointFrom": { "nameEL": "ΗΡΑΚΛΕΙΟ" },
-            "pointTo": { "nameEL": "ΑΘΗΝΑ" },
+            "pointFrom": { "nameEN": "HERAKLION" },
+            "pointTo": { "nameEN": "ATHENS" },
             "destinationFrom": null,
             "destinationTo": null,
             "ticketType": {
-              "code": "Ολ",
-              "nameEL": "ΟΛΙΚΟ"
+              "code": "Full",
+              "nameEN": "FULL FARE"
             },
             "passenger": {
-              "firstname": "Γιάννης",
-              "lastname": "ΠΑΠΑΔΟΠΟΥΛΟΣ",
+              "firstname": "John",
+              "lastname": "PAPADOPOULOS",
               "cardNumber": "CARD-12345"
             }
           }
@@ -559,7 +559,6 @@ const DEFAULT_DATA = `{
     }
   }
 }`;
-
 //component
 
 //tab button style helper
@@ -784,7 +783,7 @@ export default function FtlPreviewer({ tips }) {
                   height: "100%",
                   minHeight: "350px",
                   border: "none",
-                  background: "#fff",
+                  background: "#ffffff",
                 }}
                 title="FTL Preview"
               />
@@ -795,7 +794,7 @@ export default function FtlPreviewer({ tips }) {
                 style={{
                   margin: 0,
                   padding: "16px",
-                  color: "#ccc",
+                  color: "#ffffff",
                   fontFamily: "var(--font-mono)",
                   fontSize: "12px",
                   lineHeight: "1.6",
