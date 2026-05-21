@@ -144,7 +144,7 @@ export default function Base64Tool({ tips }) {
                 gap: "8px",
               }}
             >
-              <span style={{ fontSize: "1rem" }}></span>
+              
               <span>{info}</span>
             </div>
           )}
