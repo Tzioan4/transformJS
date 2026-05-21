@@ -6,14 +6,39 @@ import "../../styles/tools/urlparser.css";
 const EXAMPLE_URL =
   "https://transformjs.com:8080/tools/search?query=hello+world&page=2&debug=true#results";
 
-const DEFAULT_PORTS = {
-  "https:": "443",
-  "http:": "80",
-  "ftp:": "21",
-  "ssh:": "22",
-  "smtp:": "25",
-  "imap:": "143",
-};
+//detects whether the raw URL string contains an explicit port (e.g. ":8080")
+//returns the port string if explicit, or null otherwise.
+//handles userinfo (user:pass@host) and IPv6 ([::1]:8080) edge cases.
+function extractExplicitPort(raw) {
+  try {
+    //strip protocol: "https://x:8080/..." → "x:8080/..."
+    const afterProtocol = raw.replace(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//, "");
+
+    //isolate host segment: cut at first /, ?, or #
+    const hostSegment = afterProtocol.split(/[/?#]/)[0];
+
+    //strip userinfo if present: "user:pass@host:port" → "host:port"
+    const hostAndPort = hostSegment.includes("@")
+      ? hostSegment.substring(hostSegment.lastIndexOf("@") + 1)
+      : hostSegment;
+
+    //IPv6 case: "[::1]:8080" → port is after "]:"
+    if (hostAndPort.startsWith("[")) {
+      const match = hostAndPort.match(/]:(\d+)$/);
+      return match ? match[1] : null;
+    }
+
+    //regular case: "host:8080" → port after final ":"
+    const colonIdx = hostAndPort.lastIndexOf(":");
+    if (colonIdx === -1) return null;
+
+    const portStr = hostAndPort.substring(colonIdx + 1);
+    //validate it's actually numeric (avoids matching weird inputs)
+    return /^\d+$/.test(portStr) ? portStr : null;
+  } catch {
+    return null;
+  }
+}
 
 function parseUrl(raw) {
   try {
@@ -23,10 +48,12 @@ function parseUrl(raw) {
       params.push({ key, value });
     });
 
+    const explicitPort = extractExplicitPort(raw);
+
     return {
       protocol: url.protocol.replace(":", ""),
       host: url.hostname,
-      port: url.port || DEFAULT_PORTS[url.protocol] || "—",
+      port: explicitPort || "—",
       pathname: decodeURIComponent(url.pathname),
       search: url.search,
       hash: url.hash.replace("#", ""),
@@ -145,7 +172,11 @@ export default function UrlParser({ tips }) {
                 <div className="urlp-fields">
                   <Field label="Protocol" value={parsed.protocol} />
                   <Field label="Host" value={parsed.host} />
-                  <Field label="Port" value={parsed.port} />
+                  <Field
+                    label="Port"
+                    value={parsed.port}
+                    empty={parsed.port === "—"}
+                  />
                   <Field
                     label="Pathname"
                     value={parsed.pathname}

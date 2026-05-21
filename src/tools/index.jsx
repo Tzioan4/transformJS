@@ -323,7 +323,7 @@ export const tools = [
       "Paste any full URL including http:// or https://.",
       "Query parameters are shown as individual key=value pairs.",
       "Click Copy on any param row to copy that specific parameter.",
-      "Port shows default (443 for https, 80 for http) if not specified.",
+      "Port shows only if explicitly defined in the URL (e.g. :8080).",
     ],
   },
   {
