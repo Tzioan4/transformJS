@@ -7,6 +7,32 @@ import useCopy from "../../hooks/useCopy";
 const SQL_EXAMPLE =
   "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
+//destructive keywords detection
+//word-boundary regex, case-insensitive, matches only whole words
+const DESTRUCTIVE_KEYWORDS_REGEX = /\b(DROP|DELETE|TRUNCATE|ALTER)\b/i;
+
+function detectDestructiveKeywords(sql) {
+  if (!sql) return [];
+
+  //strip single-line comments (-- ...) and block comments (/* ... */)
+  //so we don't false-positive on "-- DROP this column later"
+  const stripped = sql
+    .replace(/--[^\n]*/g, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "");
+
+  //strip string literals so 'DELETE me' inside a string doesn't trigger
+  const noStrings = stripped.replace(/'(?:[^'\\]|\\.)*'/g, "''");
+
+  const found = new Set();
+  const globalRegex = /\b(DROP|DELETE|TRUNCATE|ALTER)\b/gi;
+  let match;
+  while ((match = globalRegex.exec(noStrings)) !== null) {
+    found.add(match[1].toUpperCase());
+  }
+
+  return Array.from(found);
+}
+
 export default function SqlFormatter({ tips }) {
   const [input, setInput] = useState(SQL_EXAMPLE);
   const [output, setOutput] = useState("");
@@ -14,6 +40,8 @@ export default function SqlFormatter({ tips }) {
   const [isMinified, setIsMinified] = useState(false);
 
   const { copied, copy } = useCopy();
+
+  const destructiveKeywords = detectDestructiveKeywords(input);
 
   useEffect(() => {
     handleFormat();
@@ -97,6 +125,33 @@ export default function SqlFormatter({ tips }) {
               }}
             >
               STATUS: {isMinified ? "Minified" : "Formatted"}
+            </div>
+          )}
+
+          {/*destructive keywords warning */}
+          {destructiveKeywords.length > 0 && (
+            <div
+              style={{
+                marginTop: "12px",
+                padding: "10px 14px",
+                background: "rgba(245, 158, 11, 0.08)",
+                border: "1px solid rgba(245, 158, 11, 0.4)",
+                borderRadius: "6px",
+                color: "#fbbf24",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.85rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                lineHeight: "1.5",
+              }}
+            >
+              <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>WARNING</span>
+              <span>
+                <strong>Destructive SQL detected:</strong>{" "}
+                {destructiveKeywords.join(", ")}. Review carefully before
+                executing on production databases.
+              </span>
             </div>
           )}
 

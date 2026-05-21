@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { marked } from "marked";
 import ToolInfo from "../../components/ToolInfo";
 import DOMPurify from "dompurify";
-
 
 export default function MarkdownPreview({ tips }) {
   const [md, setMd] = useState(
@@ -10,13 +9,36 @@ export default function MarkdownPreview({ tips }) {
   );
   const [copied, setCopied] = useState(false);
 
-  const htmlOutput = DOMPurify.sanitize(marked.parse(md));
+  //configure marked to open all links in a new tab
+  useEffect(() => {
+    const renderer = new marked.Renderer();
+    const originalLink = renderer.link.bind(renderer);
+
+    renderer.link = (href, title, text) => {
+      const html = originalLink(href, title, text);
+      //inject target + rel into the generated <a ...>
+      return html.replace(
+        /^<a /,
+        '<a target="_blank" rel="noopener noreferrer" ',
+      );
+    };
+
+    marked.setOptions({ renderer });
+  }, []);
+
+  //DOMPurify strips target/rel by default, must whitelist them
+  const htmlOutput = DOMPurify.sanitize(marked.parse(md), {
+    ADD_ATTR: ["target", "rel"],
+    ALLOWED_URI_REGEXP:
+      /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
+  });
 
   const iframeSrcDoc = `
     <!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
+        <base target="_blank">
         <style>
           body { 
             font-family: -apple-system, system-ui, sans-serif; 
@@ -31,6 +53,7 @@ export default function MarkdownPreview({ tips }) {
           pre { background: #f1f5f9; padding: 16px; border-radius: 8px; overflow: auto; }
           blockquote { border-left: 4px solid #cbd5e1; padding-left: 16px; color: #64748b; margin: 0; }
           img { max-width: 100%; }
+          a { color: #2563eb; }
         </style>
       </head>
       <body>${htmlOutput}</body>
@@ -75,7 +98,7 @@ export default function MarkdownPreview({ tips }) {
           <iframe
             title="md-preview"
             srcDoc={iframeSrcDoc}
-            sandbox="allow-scripts"
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
             style={{ width: "100%", height: "100%", border: "none" }}
           />
         </div>

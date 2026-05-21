@@ -60,6 +60,12 @@ export default function DiffChecker({ tips }) {
 
   const added = diff.filter((l) => l.type === "added").length;
   const removed = diff.filter((l) => l.type === "removed").length;
+  const unchanged = diff.filter((l) => l.type === "same").length;
+
+  //texts are considered identical when no additions/removals
+  //AND at least one panel has content (to avoid showing banner in empty state)
+  const hasContent = left.length > 0 || right.length > 0;
+  const isIdentical = added === 0 && removed === 0 && hasContent;
 
   const leftLines = diff.filter((l) => l.type !== "added");
   const rightLines = diff.filter((l) => l.type !== "removed");
@@ -98,14 +104,39 @@ export default function DiffChecker({ tips }) {
         </div>
       </div>
 
-      {/*stats */}
-      <div className="diff-stats">
-        <span className="diff-stat diff-stat--added">+{added} added</span>
-        <span className="diff-stat diff-stat--removed">−{removed} removed</span>
-        <span className="diff-stat diff-stat--same">
-          {diff.filter((l) => l.type === "same").length} unchanged
-        </span>
-      </div>
+      {/*identical banner OR stats */}
+      {isIdentical ? (
+        <div
+          style={{
+            padding: "14px 18px",
+            background: "rgba(34, 197, 94, 0.08)",
+            border: "1px solid rgba(34, 197, 94, 0.35)",
+            borderRadius: "var(--radius-md)",
+            color: "#4ade80",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.9rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            justifyContent: "center",
+          }}
+        >
+          <span style={{ fontSize: "1.1rem" }}></span>
+          <span>
+            <strong>Texts are identical</strong> — no differences found
+          </span>
+        </div>
+      ) : (
+        <div className="diff-stats">
+          <span className="diff-stat diff-stat--added">+{added} added</span>
+          <span className="diff-stat diff-stat--removed">
+            −{removed} removed
+          </span>
+          <span className="diff-stat diff-stat--same">
+            {unchanged} unchanged
+          </span>
+        </div>
+      )}
 
       {/*output */}
       <div className="diff-output">

@@ -5,11 +5,13 @@ import "../../styles/tools/case.css";
 import ToolInfo from "../../components/ToolInfo";
 
 //converters
-
 function toWords(input) {
   return (
     input
       .trim()
+      //strip non-alphanumeric chars except whitespace, underscore, hyphen
+      //this prevents !@#$% from polluting the output identifiers
+      .replace(/[^a-zA-Z0-9\s_-]/g, "")
       //split on spaces, underscores, hyphens
       .replace(/([a-z])([A-Z])/g, "$1 $2") //camelCase / PascalCase to words
       .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2") //ABCDef to ABC Def
@@ -146,7 +148,7 @@ export default function CaseConverter({ tips }) {
                     onClick={() => handleCopy(key, result)}
                     disabled={!result}
                   >
-                    {copiedKey === key ? "Copied!" : "Copy"}
+                    {copiedKey === key ? "Copied" : "Copy"}
                   </button>
                 </div>
               );

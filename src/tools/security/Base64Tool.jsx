@@ -4,8 +4,6 @@ import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { encodeBase64, decodeBase64 } from "../../utils/base64";
 
-
-
 const EXAMPLE_TEXT = "Hello World! Welcome to transformJS.";
 
 export default function Base64Tool({ tips }) {
@@ -13,6 +11,7 @@ export default function Base64Tool({ tips }) {
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
+  const [info, setInfo] = useState(null);
 
   const { copied, copy } = useCopy();
 
@@ -34,7 +33,14 @@ export default function Base64Tool({ tips }) {
 
   const handleProcess = () => {
     setError(null);
-    if (!input) return;
+    setInfo(null);
+
+    //empty input feedback
+    if (!input || input.trim() === "") {
+      setInfo("Please enter text to encode/decode");
+      setOutput("");
+      return;
+    }
 
     try {
       if (mode === "encode") {
@@ -59,6 +65,7 @@ export default function Base64Tool({ tips }) {
     setInput("");
     setOutput("");
     setError(null);
+    setInfo(null);
   };
 
   const toggleMode = (newMode) => {
@@ -70,6 +77,7 @@ export default function Base64Tool({ tips }) {
     setMode(nextMode);
     setInput(nextInput);
     setError(null);
+    setInfo(null);
 
     try {
       if (nextInput) {
@@ -119,6 +127,28 @@ export default function Base64Tool({ tips }) {
             </div>
           )}
 
+          {/*empty input info message */}
+          {info && (
+            <div
+              style={{
+                marginTop: "12px",
+                padding: "10px 14px",
+                background: "rgba(59, 130, 246, 0.08)",
+                border: "1px solid rgba(59, 130, 246, 0.35)",
+                borderRadius: "6px",
+                color: "#60a5fa",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.85rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span style={{ fontSize: "1rem" }}></span>
+              <span>{info}</span>
+            </div>
+          )}
+
           {error && <div className="error-badge">{error}</div>}
 
           {tips && <ToolInfo tips={tips} />}
@@ -129,7 +159,11 @@ export default function Base64Tool({ tips }) {
           className="tool-textarea"
           placeholder={mode === "encode" ? "Enter text..." : "Enter Base64..."}
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            setInput(e.target.value);
+            //clear info as soon as user starts typing
+            if (info) setInfo(null);
+          }}
         />
       }
       output={
