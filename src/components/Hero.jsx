@@ -1,5 +1,4 @@
 import { useRef, useCallback } from "react";
-import { motion } from "framer-motion";
 
 export default function Hero() {
   const dotLayerRef = useRef(null);
@@ -35,21 +34,17 @@ export default function Hero() {
       <div className="mouse-dot-mask" ref={dotLayerRef} />
 
       <div className="hero-container">
-        <motion.div
-          className="hero-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
+        <div className="hero-content animate-fade-up">
           <h1 className="hero-title">
             Fast Tools <br />
             <span className="highlight">For Busy Devs</span>
           </h1>
 
           <p className="hero-description">
-            TransformJS is a free and open-source developer toolkit built for 
-            everyday workflows. Format, convert, debug and preview - all locally 
-            in your browser. No accounts, no tracking, no data leaving your machine.
+            TransformJS is a free and open-source developer toolkit built for
+            everyday workflows. Format, convert, debug and preview - all locally
+            in your browser. No accounts, no tracking, no data leaving your
+            machine.
           </p>
 
           <p className="hero-description">
@@ -57,27 +52,23 @@ export default function Hero() {
           </p>
 
           <div className="hero-btns-group">
-            <motion.button
-              className="hero-btn primary"
+            <button
+              className="hero-btn primary scale-hover"
               onClick={scrollToTools}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Find your Tool
-            </motion.button>
+            </button>
 
-            <motion.button
-              className="hero-btn secondary"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
+              className="hero-btn secondary scale-hover"
               onClick={() =>
                 window.open("https://github.com/Tzioan4/transformJS", "_blank")
               }
             >
               View on GitHub
-            </motion.button>
+            </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
