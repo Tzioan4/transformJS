@@ -7,10 +7,6 @@ import useCopy from "../../hooks/useCopy";
 const SQL_EXAMPLE =
   "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
-//destructive keywords detection
-//word-boundary regex, case-insensitive, matches only whole words
-const DESTRUCTIVE_KEYWORDS_REGEX = /\b(DROP|DELETE|TRUNCATE|ALTER)\b/i;
-
 function detectDestructiveKeywords(sql) {
   if (!sql) return [];
 

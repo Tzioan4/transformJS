@@ -85,12 +85,6 @@ export default function PasswordGenerator({ tips }) {
 
   const hasOptions = Object.values(options).some(Boolean);
 
-  //clamp length if it ever falls below the minimum
-  useEffect(() => {
-    if (length < MIN_LENGTH) setLength(MIN_LENGTH);
-    if (length > MAX_LENGTH) setLength(MAX_LENGTH);
-  }, [length]);
-
   const generate = useCallback(() => {
     if (!hasOptions) {
       setPassword("");

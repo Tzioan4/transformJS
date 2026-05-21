@@ -3,16 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" 
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link rel="stylesheet" media="print" onload="this.media='all'"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <noscript>
-      <link rel="stylesheet" 
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" />
-    </noscript>
+
+    <!-- Preload critical fonts for faster FCP -->
+<!-- Preload critical fonts for faster FCP -->
+<link
+  rel="preload"
+  href="/fonts/inter-v20-latin-regular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/jetbrains-mono-v24-latin-800.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
     <title>TransformJS - Fast Developer Tools</title>
     <meta name="description" content="A lightweight toolkit for developers. Format JSON, preview Markdown, test RegEx, generate passwords, debug JWT and more — all locally in your browser." />
     <meta name="keywords" content="developer tools, json formatter, regex tester, base64, jwt debugger, password generator, markdown preview, csv to json, yaml, sql formatter" />

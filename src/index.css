@@ -1,5 +1,5 @@
 /*index.css — global entry point*/
-
+@import "./styles/fonts.css"; 
 @import "./styles/components/navbar.css";
 @import "./styles/components/footer.css";
 @import "./styles/tools/tools.css";
