@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import "@styles/tools/diff.css";
 
-function computeDiff(a, b) {
+export function computeDiff(a, b) {
   const linesA = a.split("\n");
   const linesB = b.split("\n");
 

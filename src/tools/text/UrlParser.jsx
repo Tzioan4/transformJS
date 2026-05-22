@@ -9,7 +9,7 @@ const EXAMPLE_URL =
 //detects whether the raw URL string contains an explicit port (e.g. ":8080")
 //returns the port string if explicit, or null otherwise.
 //handles userinfo (user:pass@host) and IPv6 ([::1]:8080) edge cases.
-function extractExplicitPort(raw) {
+export function extractExplicitPort(raw) {
   try {
     //strip protocol: "https://x:8080/..." → "x:8080/..."
     const afterProtocol = raw.replace(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//, "");

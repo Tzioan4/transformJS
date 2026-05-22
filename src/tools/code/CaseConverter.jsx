@@ -5,7 +5,7 @@ import "../../styles/tools/case.css";
 import ToolInfo from "../../components/ToolInfo";
 
 //converters
-function toWords(input) {
+export function toWords(input) {
   return (
     input
       .trim()

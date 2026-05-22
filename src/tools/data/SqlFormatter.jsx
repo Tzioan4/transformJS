@@ -7,7 +7,7 @@ import useCopy from "../../hooks/useCopy";
 const SQL_EXAMPLE =
   "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
-function detectDestructiveKeywords(sql) {
+export function detectDestructiveKeywords(sql) {
   if (!sql) return [];
 
   //strip single-line comments (-- ...) and block comments (/* ... */)
