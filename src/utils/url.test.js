@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { encodeUrl, decodeUrl } from "./url.js";
 
-// ─── encodeUrl ───────────────────────────────────────────────────────────────
+//encodeUrl
 
 describe("encodeUrl", () => {
   it("encodes spaces as %20", () => {
@@ -49,7 +49,7 @@ describe("encodeUrl", () => {
   });
 });
 
-// ─── decodeUrl ───────────────────────────────────────────────────────────────
+//decodeUrl
 
 describe("decodeUrl", () => {
   it("decodes %20 back to a space", () => {
