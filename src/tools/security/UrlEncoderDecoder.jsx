@@ -20,7 +20,7 @@ export default function UrlEncoderDecoder({ tips }) {
     if (!str || str.trim() === "") return false;
     try {
       return decodeURIComponent(str) !== str;
-    } catch (err) {
+    } catch {
       return false;
     }
   };
@@ -49,7 +49,7 @@ export default function UrlEncoderDecoder({ tips }) {
       } else {
         setResult(decodeUrl(text));
       }
-    } catch (err) {
+    } catch {
       setError("Invalid input for " + mode);
       setResult("");
     }
@@ -80,7 +80,7 @@ export default function UrlEncoderDecoder({ tips }) {
           nextMode === "encode" ? encodeUrl(nextInput) : decodeUrl(nextInput);
         setResult(newResult);
       }
-    } catch (err) {
+    } catch {
       setResult("");
     }
   };
@@ -111,7 +111,7 @@ export default function UrlEncoderDecoder({ tips }) {
 
           {/*global warning*/}
           {mode === "encode" && isUrlEncoded(text) && (
-            <div className="input-warning">
+            <div className="inputWarning">
               Warning: Input is already URL encoded. Switch to{" "}
               <strong>Decode </strong>
               mode.

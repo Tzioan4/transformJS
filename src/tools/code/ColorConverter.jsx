@@ -115,9 +115,9 @@ function hsvToRgb(h, s, v) {
   const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
   const m = v - c;
 
-  let r = 0;
-  let g = 0;
-  let b = 0;
+  let r;
+  let g;
+  let b;
 
   if (h >= 0 && h < 60) {
     r = c;

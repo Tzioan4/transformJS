@@ -80,7 +80,7 @@ export default function SqlFormatter({ tips }) {
       setOutput(minified);
       setIsMinified(true);
       setError(null);
-    } catch (err) {
+    } catch {
       setError("Error minifying SQL");
       setOutput("");
     }

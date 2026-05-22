@@ -22,7 +22,7 @@ export default function Base64Tool({ tips }) {
         /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
       if (!base64Regex.test(str)) return false;
       return btoa(atob(str)) === str;
-    } catch (err) {
+    } catch {
       return false;
     }
   };
@@ -51,7 +51,7 @@ export default function Base64Tool({ tips }) {
       } else {
         setOutput(decodeBase64(input));
       }
-    } catch (err) {
+    } catch {
       setError("Invalid input for " + mode);
       setOutput("");
     }
@@ -91,7 +91,7 @@ export default function Base64Tool({ tips }) {
             : decodeBase64(nextInput);
         setOutput(result);
       }
-    } catch (err) {
+    } catch {
       setOutput("");
     }
   };

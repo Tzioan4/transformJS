@@ -1,4 +1,7 @@
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js");
+/* global importScripts, jsyaml */
+importScripts(
+  "https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js",
+);
 
 const MAX_OUTPUT_SIZE = 500_000;
 const MAX_NODES = 1000;

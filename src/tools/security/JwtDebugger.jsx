@@ -40,7 +40,7 @@ export default function JWTDebugger({ tips }) {
       const result = decodeJwtForDisplay(token);
       setHeader(result.header);
       setPayload(result.payload);
-    } catch (err) {
+    } catch {
       setError(
         "Invalid JWT format. Make sure it has 3 parts separated by dots.",
       );
@@ -56,7 +56,7 @@ export default function JWTDebugger({ tips }) {
     try {
       const isOk = await verifyJWT(token, secret);
       setVerified(isOk);
-    } catch (err) {
+    } catch {
       setVerified(false);
     }
   };

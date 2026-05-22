@@ -319,7 +319,7 @@ function evalExpr(expr, ctx) {
   }
 
   //array index access: items[0]
-  const idxMatch = expr.match(/^([^\[]+)\[(\d+)\](.*)$/);
+  const idxMatch = expr.match(/^([^[]+)\[(\d+)\](.*)$/);
   if (idxMatch) {
     const base = evalExpr(idxMatch[1], ctx);
     const idx = parseInt(idxMatch[2]);
@@ -340,7 +340,7 @@ function evalPath(obj, parts) {
   let val = obj;
   for (const part of parts) {
     if (val === null || val === undefined) return undefined;
-    const idxMatch = part.match(/^([^\[]+)\[(\d+)\]$/);
+    const idxMatch = part.match(/^([^[]+)\[(\d+)\]$/);
     if (idxMatch) {
       val = val[idxMatch[1]];
       if (Array.isArray(val)) val = val[parseInt(idxMatch[2])];
