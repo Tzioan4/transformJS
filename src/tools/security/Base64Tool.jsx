@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
@@ -8,16 +8,12 @@ const EXAMPLE_TEXT = "Hello World! Welcome to transformJS.";
 
 export default function Base64Tool({ tips }) {
   const [input, setInput] = useState(EXAMPLE_TEXT);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(() => encodeBase64(EXAMPLE_TEXT));
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
 
   const { copied, copy } = useCopy();
-
-  useEffect(() => {
-    handleProcess();
-  }, []);
 
   const isBase64 = (str) => {
     if (!str || str.trim() === "" || str.length < 4) return false;
@@ -144,7 +140,6 @@ export default function Base64Tool({ tips }) {
                 gap: "8px",
               }}
             >
-              
               <span>{info}</span>
             </div>
           )}
