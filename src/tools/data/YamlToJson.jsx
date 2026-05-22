@@ -5,14 +5,14 @@ import "../../styles/tools/yaml.css";
 
 const TIMEOUT_MS = 2000;
 const MAX_INPUT_SIZE = 50_000;
+const DEFAULT_YAML =
+  "server:\n  port: 8080\n  host: localhost\n  enabled: true\ntags:\n  - docker\n  - react";
 
 export default function YamlToJson({ tips }) {
-  const [yamlInput, setYamlInput] = useState(
-    "server:\n  port: 8080\n  host: localhost\n  enabled: true\ntags:\n  - docker\n  - react",
-  );
+  const [yamlInput, setYamlInput] = useState(DEFAULT_YAML);
   const [jsonOutput, setJsonOutput] = useState("");
   const [error, setError] = useState(null);
-  const [isRunning, setIsRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(true);
 
   const { copied, copy } = useCopy();
   const workerRef = useRef(null);
@@ -30,26 +30,13 @@ export default function YamlToJson({ tips }) {
       workerRef.current.terminate();
       workerRef.current = null;
     }
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
 
-    if (!yamlInput.trim()) {
-      setJsonOutput("");
-      setError(null);
-      setIsRunning(false);
-      return;
-    }
-
-    if (yamlInput.length > MAX_INPUT_SIZE) {
-      setError(`Input too large — maximum allowed size is ${MAX_INPUT_SIZE / 1000}KB`);
-      setJsonOutput("");
-      return;
-    }
-
-    setIsRunning(true);
-    setError(null);
+    if (!yamlInput.trim() || yamlInput.length > MAX_INPUT_SIZE) return;
 
     const worker = new Worker("/yamlWorker.js");
     workerRef.current = worker;
@@ -87,6 +74,37 @@ export default function YamlToJson({ tips }) {
     worker.postMessage({ input: yamlInput });
   }, [yamlInput]);
 
+  const handleYamlChange = (e) => {
+    const nextInput = e.target.value;
+    setYamlInput(nextInput);
+
+    if (!nextInput.trim()) {
+      setJsonOutput("");
+      setError(null);
+      setIsRunning(false);
+      return;
+    }
+
+    if (nextInput.length > MAX_INPUT_SIZE) {
+      setError(
+        `Input too large — maximum allowed size is ${MAX_INPUT_SIZE / 1000}KB`,
+      );
+      setJsonOutput("");
+      setIsRunning(false);
+      return;
+    }
+
+    setError(null);
+    setIsRunning(true);
+  };
+
+  const handleClear = () => {
+    setYamlInput("");
+    setJsonOutput("");
+    setError(null);
+    setIsRunning(false);
+  };
+
   return (
     <div className="tool-container">
       <div className="tool-header">
@@ -102,12 +120,15 @@ export default function YamlToJson({ tips }) {
       )}
 
       {isRunning && (
-        <div className="status-badge" style={{
-          marginBottom: "15px",
-          display: "inline-block",
-          color: "#94a3b8",
-          borderColor: "#333",
-        }}>
+        <div
+          className="status-badge"
+          style={{
+            marginBottom: "15px",
+            display: "inline-block",
+            color: "#94a3b8",
+            borderColor: "#333",
+          }}
+        >
           PARSING...
         </div>
       )}
@@ -116,7 +137,7 @@ export default function YamlToJson({ tips }) {
         <textarea
           className="tool-textarea"
           value={yamlInput}
-          onChange={(e) => setYamlInput(e.target.value)}
+          onChange={handleYamlChange}
           placeholder="Paste your YAML here..."
           style={error ? { borderColor: "#ef4444" } : {}}
         />
@@ -139,7 +160,7 @@ export default function YamlToJson({ tips }) {
           <span className="btn-hint">Ctrl+Shift+C</span>
         </button>
 
-        <button className="btn btn-danger" onClick={() => setYamlInput("")}>
+        <button className="btn btn-danger" onClick={handleClear}>
           Clear <span className="btn-hint">Esc</span>
         </button>
       </div>

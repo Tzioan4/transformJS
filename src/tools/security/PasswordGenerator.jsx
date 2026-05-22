@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
@@ -6,6 +6,13 @@ import useCopy from "../../hooks/useCopy";
 const MIN_LENGTH = 12;
 const MAX_LENGTH = 64;
 const DEFAULT_LENGTH = 16;
+
+const DEFAULT_OPTIONS = {
+  uppercase: true,
+  lowercase: true,
+  numbers: true,
+  symbols: true,
+};
 
 const CHARSET = {
   uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -74,28 +81,22 @@ function getStrength(entropy) {
 
 export default function PasswordGenerator({ tips }) {
   const [length, setLength] = useState(DEFAULT_LENGTH);
-  const [options, setOptions] = useState({
-    uppercase: true,
-    lowercase: true,
-    numbers: true,
-    symbols: true,
-  });
-  const [password, setPassword] = useState("");
+  const [options, setOptions] = useState(DEFAULT_OPTIONS);
+  const [password, setPassword] = useState(() =>
+    generateSecurePassword(DEFAULT_LENGTH, DEFAULT_OPTIONS),
+  );
   const { copied, copy } = useCopy();
 
   const hasOptions = Object.values(options).some(Boolean);
 
-  const generate = useCallback(() => {
-    if (!hasOptions) {
-      setPassword("");
-      return;
-    }
-    setPassword(generateSecurePassword(length, options));
-  }, [length, options, hasOptions]);
+const generate = () => {
+  if (!hasOptions) {
+    setPassword("");
+    return;
+  }
 
-  useEffect(() => {
-    generate();
-  }, [generate]);
+  setPassword(generateSecurePassword(length, options));
+  };
 
   const entropy = getEntropy(length, options);
   const strength = getStrength(entropy);
