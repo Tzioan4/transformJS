@@ -167,6 +167,7 @@ TransformJS has evolved through several focused development sprints:
 - **Sprint 1** — Critical bug fixes and correctness across all tools
 - **Sprint 2** — UX polish: input validation, feedback messages, safety warnings
 - **Sprint 3** — Mobile performance optimization (PageSpeed 81 → 97)
+- **Sprint 4** — Testing setup, utility coverage, error boundaries, and meaningful lint cleanup
 
 See [`CHANGELOG.md`](./CHANGELOG.md) for version history and [`docs/SPRINTS.md`](./docs/SPRINTS.md) for detailed retrospectives.
 
@@ -177,7 +178,7 @@ See [`CHANGELOG.md`](./CHANGELOG.md) for version history and [`docs/SPRINTS.md`]
 - Better mobile UX refinements
 - Accessibility improvements (current score: 93, target: 100)
 - Additional tools (XML formatter, image to base64, cron parser, timestamp converter)
-- Automated test suite (Vitest for utils, Playwright for E2E)
+- Expand automated testing beyond current Vitest utility/tool coverage
 
 ---
 

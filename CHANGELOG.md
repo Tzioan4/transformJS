@@ -4,6 +4,22 @@ All notable changes to TransformJS are documented here.
 
 ---
 
+## Sprint 4 — Testing, Error Boundaries & Lint Cleanup
+
+### Added
+
+- Added Vitest testing setup for utility and tool-level pure logic.
+- Added utility test coverage for Base64, URL, JSON, and JWT helpers.
+- Added tests for extracted pure logic in selected tools.
+
+### Improved
+
+- Added error boundaries to improve runtime failure isolation.
+- Cleaned up meaningful ESLint issues in small focused batches.
+- Reduced hook, static component, and bug-like lint problems without changing tool behavior.
+
+---
+
 ## Sprint 3 — Mobile Performance
 
 ### Performance
