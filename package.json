@@ -3,12 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "test": "vitest",
+  "test:ui": "vitest --ui",
+  "test:run": "vitest run"
+},
   "dependencies": {
     "dompurify": "^3.4.2",
     "highlight.js": "^11.11.1",
@@ -35,6 +38,7 @@
     "globals": "^17.5.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "vite": "^8.0.10",
-    "vite-plugin-prismjs": "^0.0.11"
+    "vite-plugin-prismjs": "^0.0.11",
+    "vitest": "^4.1.7"
   }
 }
