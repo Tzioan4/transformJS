@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { format } from "sql-formatter";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
@@ -7,7 +7,7 @@ import useCopy from "../../hooks/useCopy";
 const SQL_EXAMPLE =
   "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
 
-function detectDestructiveKeywords(sql) {
+export function detectDestructiveKeywords(sql) {
   if (!sql) return [];
 
   //strip single-line comments (-- ...) and block comments (/* ... */)
@@ -29,9 +29,23 @@ function detectDestructiveKeywords(sql) {
   return Array.from(found);
 }
 
+function formatSqlInput(sql) {
+  const formatted = format(sql, {
+    language: "sql",
+    keywordCase: "upper",
+    tabWidth: 2,
+    useTabs: false,
+  });
+
+  return formatted
+    .split("\n")
+    .map((line) => line.trimEnd())
+    .join("\n");
+}
+
 export default function SqlFormatter({ tips }) {
   const [input, setInput] = useState(SQL_EXAMPLE);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(() => formatSqlInput(SQL_EXAMPLE));
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
 
@@ -39,27 +53,11 @@ export default function SqlFormatter({ tips }) {
 
   const destructiveKeywords = detectDestructiveKeywords(input);
 
-  useEffect(() => {
-    handleFormat();
-  }, []);
-
   const handleFormat = () => {
     try {
       if (!input) return;
 
-      const formatted = format(input, {
-        language: "sql",
-        keywordCase: "upper",
-        tabWidth: 2,
-        useTabs: false,
-      });
-
-      const cleanOutput = formatted
-        .split("\n")
-        .map((line) => line.trimEnd())
-        .join("\n");
-
-      setOutput(cleanOutput);
+      setOutput(formatSqlInput(input));
       setIsMinified(false);
       setError(null);
     } catch (err) {
@@ -82,7 +80,7 @@ export default function SqlFormatter({ tips }) {
       setOutput(minified);
       setIsMinified(true);
       setError(null);
-    } catch (err) {
+    } catch {
       setError("Error minifying SQL");
       setOutput("");
     }

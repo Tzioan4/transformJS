@@ -67,7 +67,7 @@ export function detectDuplicateKeys(jsonStr) {
   try {
     skipWhitespace();
     parseValue();
-  } catch (e) {
+  } catch {
     // silent JSON errors caught elsewhere
   }
 

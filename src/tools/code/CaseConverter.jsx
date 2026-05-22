@@ -1,11 +1,10 @@
 import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
-import useCopy from "../../hooks/useCopy";
 import "../../styles/tools/case.css";
 import ToolInfo from "../../components/ToolInfo";
 
 //converters
-function toWords(input) {
+export function toWords(input) {
   return (
     input
       .trim()

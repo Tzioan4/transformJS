@@ -1,6 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import "@styles/tools/color.css";
+
+const DEFAULT_HUE = 217;
+const DEFAULT_SAT = 0.76;
+const DEFAULT_VAL = 0.96;
+const DEFAULT_HEX = rgbToHex(hsvToRgb(DEFAULT_HUE, DEFAULT_SAT, DEFAULT_VAL));
 
 //conversion utils
 
@@ -110,9 +115,9 @@ function hsvToRgb(h, s, v) {
   const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
   const m = v - c;
 
-  let r = 0;
-  let g = 0;
-  let b = 0;
+  let r;
+  let g;
+  let b;
 
   if (h >= 0 && h < 60) {
     r = c;
@@ -218,11 +223,11 @@ function startDrag(e, ref, onMove) {
 //component
 
 export default function ColorConverter({ tips }) {
-  const [hue, setHue] = useState(217);
-  const [sat, setSat] = useState(0.76);
-  const [val, setVal] = useState(0.96);
-
-  const [hexInput, setHexInput] = useState("");
+  const [hue, setHue] = useState(DEFAULT_HUE);
+  const [sat, setSat] = useState(DEFAULT_SAT);
+  const [val, setVal] = useState(DEFAULT_VAL);
+  const [hexInput, setHexInput] = useState(DEFAULT_HEX);
+  
   const [hexError, setHexError] = useState(false);
 
   const [copied, setCopied] = useState(null);
@@ -237,13 +242,6 @@ export default function ColorConverter({ tips }) {
   const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   const hslStr = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
   const pureHue = rgbToHex(hsvToRgb(hue, 1, 1));
-
-  //sync hex input when color changes from picker/RGB/HSL
-  //also clear any error since the source is now a valid color
-  useEffect(() => {
-    setHexInput(hex);
-    setHexError(false);
-  }, [hex]);
 
   const copy = (text, key) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -268,6 +266,7 @@ export default function ColorConverter({ tips }) {
 
   const handleHexChange = (v) => {
     setHexInput(v);
+    setHexError(false);
 
     //empty input is not an error, just neutral
     if (v === "" || v === "#") {
@@ -505,6 +504,7 @@ export default function ColorConverter({ tips }) {
             setHue(0);
             setSat(0);
             setVal(0);
+            setHexInput("#000000");
             setHexError(false);
           }}
         >

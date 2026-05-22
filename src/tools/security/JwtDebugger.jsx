@@ -1,5 +1,5 @@
 import "../../styles/tools/jwt.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
@@ -8,19 +8,25 @@ const EXAMPLE_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 const EXAMPLE_SECRET = "your-256-bit-secret";
 
+function decodeJwtForDisplay(token) {
+  const result = decodeJWT(token);
+
+  return {
+    header: JSON.stringify(result.header, null, 2),
+    payload: JSON.stringify(result.payload, null, 2),
+  };
+}
+
 export default function JWTDebugger({ tips }) {
   const [token, setToken] = useState(EXAMPLE_TOKEN);
   const [secret, setSecret] = useState(EXAMPLE_SECRET);
-  const [header, setHeader] = useState("");
-  const [payload, setPayload] = useState("");
+  const initialDecoded = decodeJwtForDisplay(EXAMPLE_TOKEN);
+  const [header, setHeader] = useState(initialDecoded.header);
+  const [payload, setPayload] = useState(initialDecoded.payload);
   const [verified, setVerified] = useState(null);
   const [error, setError] = useState(null);
 
   const { copied, copy } = useCopy();
-
-  useEffect(() => {
-    if (token) handleDecode();
-  }, []);
 
   const isInvalidFormat =
     token && token.trim() !== "" && token.split(".").length !== 3;
@@ -31,10 +37,10 @@ export default function JWTDebugger({ tips }) {
     if (!token) return;
 
     try {
-      const result = decodeJWT(token);
-      setHeader(JSON.stringify(result.header, null, 2));
-      setPayload(JSON.stringify(result.payload, null, 2));
-    } catch (err) {
+      const result = decodeJwtForDisplay(token);
+      setHeader(result.header);
+      setPayload(result.payload);
+    } catch {
       setError(
         "Invalid JWT format. Make sure it has 3 parts separated by dots.",
       );
@@ -50,7 +56,7 @@ export default function JWTDebugger({ tips }) {
     try {
       const isOk = await verifyJWT(token, secret);
       setVerified(isOk);
-    } catch (err) {
+    } catch {
       setVerified(false);
     }
   };

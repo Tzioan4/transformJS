@@ -11,7 +11,7 @@ export default defineConfig({
       open: false,
       gzipSize: true,
       brotliSize: true,
-      template: "treemap", 
+      template: "treemap",
     }),
   ],
   server: {
@@ -24,5 +24,9 @@ export default defineConfig({
       "@tools": path.resolve(__dirname, "./src/tools"),
       "@components": path.resolve(__dirname, "./src/components"),
     },
+  },
+  test: {
+    environment: "node",
+    include: ["src/**/*.test.{js,jsx}"],
   },
 });

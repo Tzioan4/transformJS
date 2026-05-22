@@ -67,4 +67,23 @@ Replaced framer-motion library with CSS animations.
 
 ---
 
+## Sprint 4 — Testing, Error Boundaries & Lint Cleanup
+
+**Focus:** Add a safer maintenance foundation without changing core tool behavior.
+
+### Work shipped
+
+- Added Vitest-based testing infrastructure.
+- Added utility tests for Base64, URL, JSON, and JWT logic.
+- Extracted and tested selected pure tool-specific logic.
+- Added error boundaries for safer runtime failure handling.
+- Cleaned up meaningful ESLint issues in small focused clusters.
+
+### Notes
+
+- Sprint 4 focused on maintainability and correctness confidence.
+- No unverified performance or coverage metrics are claimed.
+
+---
+
 _Last updated: May 2026_

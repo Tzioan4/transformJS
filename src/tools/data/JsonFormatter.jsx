@@ -1,5 +1,5 @@
 import { formatJson, minifyJson } from "../../utils/json";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
@@ -15,22 +15,15 @@ const jsonExample = {
 
   export default function JsonFormatter({ tips }) {
   const [input, setInput] = useState(JSON.stringify(jsonExample, null, 2));
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState(() =>
+    formatJson(JSON.stringify(jsonExample)),
+  );  
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState([]);
 
 
   const { copied, copy } = useCopy();
-
-  useEffect(() => {
-    try {
-      setOutput(formatJson(JSON.stringify(jsonExample)));
-      setIsMinified(false);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
 
 const handleFormat = async () => {
   try {

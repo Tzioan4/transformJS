@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
@@ -9,22 +9,18 @@ const EXAMPLE_URL_TEXT =
 
 export default function UrlEncoderDecoder({ tips }) {
   const [text, setText] = useState(EXAMPLE_URL_TEXT);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState(() => encodeUrl(EXAMPLE_URL_TEXT));
   const [mode, setMode] = useState("encode");
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
 
   const { copied, copy } = useCopy();
 
-  useEffect(() => {
-    handleProcess();
-  }, []);
-
   const isUrlEncoded = (str) => {
     if (!str || str.trim() === "") return false;
     try {
       return decodeURIComponent(str) !== str;
-    } catch (err) {
+    } catch {
       return false;
     }
   };
@@ -53,7 +49,7 @@ export default function UrlEncoderDecoder({ tips }) {
       } else {
         setResult(decodeUrl(text));
       }
-    } catch (err) {
+    } catch {
       setError("Invalid input for " + mode);
       setResult("");
     }
@@ -84,7 +80,7 @@ export default function UrlEncoderDecoder({ tips }) {
           nextMode === "encode" ? encodeUrl(nextInput) : decodeUrl(nextInput);
         setResult(newResult);
       }
-    } catch (err) {
+    } catch {
       setResult("");
     }
   };
@@ -115,7 +111,7 @@ export default function UrlEncoderDecoder({ tips }) {
 
           {/*global warning*/}
           {mode === "encode" && isUrlEncoded(text) && (
-            <div className="input-warning">
+            <div className="inputWarning">
               Warning: Input is already URL encoded. Switch to{" "}
               <strong>Decode </strong>
               mode.
