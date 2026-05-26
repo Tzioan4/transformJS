@@ -47,7 +47,8 @@ export default function Hero() {
             machine.
           </p>
 
-          <p className="hero-description">
+          <p className="info-description">
+            More Tools & Features Coming Soon! <br />
             This app is still under development.
           </p>
 
