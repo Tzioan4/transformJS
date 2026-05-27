@@ -1,0 +1,127 @@
+.tool-page-content {
+  background: var(--color-bg);
+}
+
+.tool-seo-content {
+  max-width: 1200px;
+  margin: 64px auto 0;
+  padding: 48px 2rem 80px;
+  border-top: 1px solid var(--color-border);
+}
+
+.seo-block {
+  margin-bottom: 48px;
+}
+
+.seo-block h2 {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  letter-spacing: -0.04em;
+}
+
+.seo-block p,
+.seo-use-cases li {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.seo-use-cases {
+  display: grid;
+  gap: 12px;
+  padding-left: 20px;
+}
+
+.seo-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.seo-faq-item {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.seo-faq-question {
+  width: 100%;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.seo-faq-question span:last-child {
+  color: var(--color-accent);
+  font-size: 1.2rem;
+}
+
+.seo-faq-answer {
+  padding: 0 20px 18px;
+}
+
+.seo-faq-answer p {
+  margin: 0;
+}
+
+.related-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.related-tool-link {
+  padding: 10px 14px;
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  transition: all var(--transition);
+}
+
+.related-tool-link:hover {
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .seo-faq-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .related-tool-link {
+  color: #1e293b;
+}
+
+@media (max-width: 800px) {
+  .tool-seo-content {
+    margin-top: 40px;
+    padding: 36px 1rem 60px;
+  }
+
+  .seo-block h2 {
+    font-size: 1.25rem;
+  }
+
+  .seo-faq-question {
+    padding: 16px;
+    font-size: 0.85rem;
+  }
+}

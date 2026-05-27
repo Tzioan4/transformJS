@@ -2,6 +2,44 @@
 
 All notable changes to TransformJS are documented here.
 
+## SprintAI 3 — Semantic Content Expansion System
+
+### Added
+- Added reusable semantic content support for all tool pages.
+- Extended the centralized tool registry with:
+  - `content.intro`
+  - `content.useCases`
+  - `content.faq`
+  - `content.relatedTools`
+- Added structured long-tail SEO content to all TransformJS tools.
+- Added semantic internal linking between related developer tools.
+- Added reusable FAQ accordion rendering through `ToolSeoContent`.
+- Added reusable related tools section with automatic path-to-name resolution.
+
+### Changed
+- Integrated `ToolSeoContent` into tool route rendering in `App.jsx`.
+- Expanded tool pages with AI-readable semantic sections:
+  - About
+  - Use Cases
+  - FAQ
+  - Related Tools
+- Improved internal linking graph for semantic discoverability.
+- Improved tool metadata consistency across the registry.
+- Kept existing flat route architecture unchanged.
+
+### SEO / AI Discoverability
+- Improved long-tail keyword coverage across tool pages.
+- Improved semantic crawlability for AI crawlers and search engines.
+- Improved contextual relationships between tools through internal linking.
+- Improved structured content density without overengineering the architecture.
+- Strengthened registry-driven metadata architecture for future automation.
+
+### Verified
+- Existing tests continue passing successfully.
+- Existing lint issues remain unrelated legacy Sprint 4.6 issues.
+- Related tool rendering verified through dynamic registry resolution.
+- Tool SEO content rendering verified on live routes.
+
 ## SprintAI 2 — SEO Metadata Foundation
 
 ### Added

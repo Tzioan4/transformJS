@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../styles/pages/home.css";
+import HomeFAQ from "../components/HomeFAQ";
+import "../styles/components/homefaq.css";
 import Hero from "../components/Hero";
 import { tools } from "../tools";
 import { Link } from "react-router-dom";
@@ -98,8 +100,11 @@ export default function Home({ searchTerm }) {
         </>
       )}
 
-      <div id="tools-section" className="tools-section-wrapper">
-        {/* Category filter bar */}
+      <div className="tools-section-wrapper">
+        {!isSearching && <HomeFAQ />}
+
+        <div id="tools-section" />
+
         {!isSearching && (
           <div className="category-bar">
             {CATEGORIES.map((cat) => (

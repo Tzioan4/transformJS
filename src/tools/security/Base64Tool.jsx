@@ -7,6 +7,7 @@ import { encodeBase64, decodeBase64 } from "../../utils/base64";
 const EXAMPLE_TEXT = "Hello World! Welcome to transformJS.";
 
 export default function Base64Tool({ tips }) {
+
   const [input, setInput] = useState(EXAMPLE_TEXT);
   const [output, setOutput] = useState(() => encodeBase64(EXAMPLE_TEXT));
   const [mode, setMode] = useState("encode");

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
+import ToolSeoContent from "./components/ToolSeoContent";
 import NotFound from "./pages/NotFound";
 
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
@@ -114,14 +114,8 @@ function AppRoutes({ searchTerm }) {
                 element={
                   <>
                     <SEO
-                      title={
-                        tool.seoTitle ||
-                        `${tool.name} - TransformJS`
-                      }
-                      description={
-                        tool.seoDesc ||
-                        tool.description
-                      }
+                      title={tool.seoTitle || `${tool.name} - TransformJS`}
+                      description={tool.seoDesc || tool.description}
                       path={tool.path}
                       jsonLd={[
                         createToolSchema(tool),
@@ -140,7 +134,11 @@ function AppRoutes({ searchTerm }) {
                       ]}
                     />
 
-                    <ToolComponent tips={tool.tips} />
+                    <div className="tool-page-content">
+                      <ToolComponent tips={tool.tips} />
+
+                      <ToolSeoContent tool={tool} />
+                    </div>
                   </>
                 }
               />

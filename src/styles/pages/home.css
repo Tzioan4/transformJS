@@ -58,7 +58,7 @@
 }
 
 .hero-container {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -140,7 +140,9 @@
   color: var(--color-accent);
   margin-bottom: 40px;
 }
-
+#tools-section {
+  scroll-margin-top: 120px;
+}
 /*tools grid*/
 .tools-grid {
   display: grid;
@@ -467,8 +469,7 @@
   .hero-container {
     min-height: unset;
     justify-content: flex-start;
-    padding-top: 40px;  
-    padding-bottom: 40px;
+    
   }
    .hero-content {
     position: relative;
