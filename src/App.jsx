@@ -1,14 +1,17 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import NotFound from "./pages/NotFound";
-import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
-import { useTheme } from "./ThemeContext";
-import ToolErrorFallback from "./components/ToolErrorFallback";
 
+import NotFound from "./pages/NotFound";
+
+import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
+
+import { useTheme } from "./ThemeContext";
+import { ThemeProvider } from "./ThemeContext";
+
+import ToolErrorFallback from "./components/ToolErrorFallback";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { ThemeProvider } from "./ThemeContext";
+import SEO from "./components/SEO";
 
 import Home from "./pages/Home";
 import Privacy from "./pages/Privacy";
@@ -16,14 +19,27 @@ import About from "./pages/About";
 
 import { tools } from "./tools";
 
+import {
+  createBreadcrumbSchema,
+  createToolSchema,
+  createWebApplicationSchema,
+} from "./seo/jsonLd";
+
 class AppErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+
+    this.state = {
+      hasError: false,
+      error: null,
+    };
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true, error };
+    return {
+      hasError: true,
+      error,
+    };
   }
 
   componentDidCatch(error, info) {
@@ -31,8 +47,14 @@ class AppErrorBoundary extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.resetKey !== this.props.resetKey && this.state.hasError) {
-      this.setState({ hasError: false, error: null });
+    if (
+      prevProps.resetKey !== this.props.resetKey &&
+      this.state.hasError
+    ) {
+      this.setState({
+        hasError: false,
+        error: null,
+      });
     }
   }
 
@@ -63,11 +85,24 @@ function AppRoutes({ searchTerm }) {
     <AppErrorBoundary resetKey={location.pathname}>
       <Suspense
         fallback={
-          <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>
+          <div style={{ padding: "2rem", textAlign: "center" }}>
+            Loading...
+          </div>
         }
       >
         <Routes>
-          <Route path="/" element={<Home searchTerm={searchTerm} />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <SEO
+                  jsonLd={createWebApplicationSchema()}
+                />
+
+                <Home searchTerm={searchTerm} />
+              </>
+            }
+          />
 
           {tools.map((tool) => {
             const ToolComponent = tool.component;
@@ -78,19 +113,32 @@ function AppRoutes({ searchTerm }) {
                 path={tool.path}
                 element={
                   <>
-                    <Helmet>
-                      <title>
-                        {tool.seoTitle || `${tool.name} - TransformJS`}
-                      </title>
-                      <meta
-                        name="description"
-                        content={tool.seoDesc || tool.description}
-                      />
-                      <link
-                        rel="canonical"
-                        href={`https://transformjs.com${tool.path}`}
-                      />
-                    </Helmet>
+                    <SEO
+                      title={
+                        tool.seoTitle ||
+                        `${tool.name} - TransformJS`
+                      }
+                      description={
+                        tool.seoDesc ||
+                        tool.description
+                      }
+                      path={tool.path}
+                      jsonLd={[
+                        createToolSchema(tool),
+
+                        createBreadcrumbSchema([
+                          {
+                            name: "Home",
+                            path: "/",
+                          },
+
+                          {
+                            name: tool.name,
+                            path: tool.path,
+                          },
+                        ]),
+                      ]}
+                    />
 
                     <ToolComponent tips={tool.tips} />
                   </>
@@ -103,17 +151,12 @@ function AppRoutes({ searchTerm }) {
             path="/privacy"
             element={
               <>
-                <Helmet>
-                  <title>Privacy Policy - TransformJS</title>
-                  <meta
-                    name="description"
-                    content="Read our privacy policy. Your data never leaves your device — everything runs locally in your browser."
-                  />
-                  <link
-                    rel="canonical"
-                    href="https://transformjs.com/privacy"
-                  />
-                </Helmet>
+                <SEO
+                  title="Privacy Policy - TransformJS"
+                  description="Read our privacy policy. Your data never leaves your device because everything runs locally in your browser."
+                  path="/privacy"
+                />
+
                 <Privacy />
               </>
             }
@@ -123,14 +166,12 @@ function AppRoutes({ searchTerm }) {
             path="/about"
             element={
               <>
-                <Helmet>
-                  <title>About TransformJS - Developer Toolkit</title>
-                  <meta
-                    name="description"
-                    content="Learn more about TransformJS, a fast, lightweight, and modern collection of browser-based utilities for everyday workflows."
-                  />
-                  <link rel="canonical" href="https://transformjs.com/about" />
-                </Helmet>
+                <SEO
+                  title="About TransformJS - Developer Toolkit"
+                  description="Learn more about TransformJS, a fast, lightweight collection of browser-based developer utilities."
+                  path="/about"
+                />
+
                 <About />
               </>
             }
@@ -145,18 +186,28 @@ function AppRoutes({ searchTerm }) {
 
 function AppContent() {
   const [searchTerm, setSearchTerm] = useState("");
+
   const { toggleTheme } = useTheme();
 
-  useKeyboardShortcuts({ toggleTheme });
+  useKeyboardShortcuts({
+    toggleTheme,
+  });
 
   return (
     <>
       <ScrollToTop setSearchTerm={setSearchTerm} />
 
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+        }}
       >
-        <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Navbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
 
         <main style={{ flex: 1 }}>
           <AppRoutes searchTerm={searchTerm} />
