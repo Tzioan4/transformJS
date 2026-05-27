@@ -84,6 +84,85 @@ Replaced framer-motion library with CSS animations.
 - Sprint 4 focused on maintainability and correctness confidence.
 - No unverified performance or coverage metrics are claimed.
 
+
+# SprintAI Roadmap
+## SprintAI 1 — Static AI Discoverability
+
+Completed:
+- Added AI-aware robots.txt rules
+- Added llms.txt
+- Synced sitemap.xml with real tool routes
+- Submitted sitemap to Google Search Console
+- Submitted sitemap to Bing Webmaster Tools
+- Requested indexing for core pages
+
+Goals:
+- improve crawlability
+- improve AI crawler discoverability
+- improve machine-readable project understanding
+- establish SEO baseline
+
+---
+
+## SprintAI 2 — Structured Metadata System
+
+Planned:
+- reusable JSON-LD component
+- SoftwareApplication schema for tools
+- metadata automation from tool registry
+- canonical URL handling
+- improved semantic head tags
+- shared SEO utilities
+
+Goals:
+- improve semantic understanding
+- improve rich search compatibility
+- reduce duplicated SEO logic
+- centralize metadata handling
+
+---
+
+## SprintAI 3 — AI-Readable Content Expansion
+
+Planned:
+- richer tool descriptions
+- AI-readable content sections
+- FAQ sections
+- semantic tool explanations
+- internal linking between related tools
+- improved long-tail keyword coverage
+
+Goals:
+- improve content depth
+- improve contextual indexing
+- improve search intent matching
+- improve AI summarization quality
+
+---
+
+## SprintAI 4 — Content & Discoverability Expansion
+
+Planned:
+- alternative comparison pages
+- use-case pages
+- developer workflow pages
+- grouped tool hub pages
+- dynamic sitemap generation
+- advanced internal SEO linking
+
+Examples:
+- /alternatives/devtoys
+- /alternatives/cyberchef
+- /use-cases/json-debugging
+- /use-cases/frontend-development
+
+Goals:
+- improve discoverability outside tool pages
+- improve topical authority
+- improve external search coverage
+- improve ecosystem positioning
+
+  
 ---
 
 _Last updated: May 2026_
