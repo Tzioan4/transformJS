@@ -1,0 +1,99 @@
+# TransformJS
+
+TransformJS is a free, privacy-first, browser-based developer toolkit.
+
+Website: https://transformjs.com
+GitHub: https://github.com/Tzioan4/transformJS
+
+## What it does
+
+TransformJS provides lightweight web tools for developers who need to format, convert, preview, debug, parse, and generate common development data directly in the browser.
+
+All tools run locally in the user's browser. TransformJS does not require accounts, does not use analytics, does not track users, and does not send user input to a server.
+
+## Main tools
+
+- JSON Formatter: format, validate, beautify, and minify JSON.
+- Base64 Tool: encode and decode Base64 strings.
+- URL Encoder / Decoder: encode and decode URL-safe text.
+- HTML Preview: preview HTML and CSS snippets in a sandboxed iframe.
+- Markdown Preview: preview Markdown as sanitized HTML.
+- JWT Debugger: decode JWT tokens and verify HMAC signatures locally.
+- YAML to JSON: convert YAML input into JSON.
+- SQL Formatter: format SQL queries.
+- Hash Generator: generate MD5, SHA-1, SHA-256, and SHA-512 hashes.
+- Password Generator: generate secure random passwords.
+- CSV to JSON: convert CSV data into JSON.
+- RegEx Tester: test regular expressions with match highlighting.
+- FTL Previewer: preview FreeMarker templates with mock JSON data.
+- Case Converter: convert text between camelCase, PascalCase, snake_case, kebab-case, and more.
+- UUID Generator: generate UUID values.
+- URL Parser: inspect URL parts such as protocol, host, path, query params, and hash.
+- Diff Checker: compare two text blocks line by line.
+- Color Converter: convert colors between HEX, RGB, and HSL.
+
+## Important URLs
+
+- Homepage: https://transformjs.com/
+- About: https://transformjs.com/about
+- Privacy: https://transformjs.com/privacy
+
+## Tool URLs
+
+- https://transformjs.com/json
+- https://transformjs.com/base64
+- https://transformjs.com/url-encoder-decoder
+- https://transformjs.com/html-preview
+- https://transformjs.com/markdown-preview
+- https://transformjs.com/jwt-debugger
+- https://transformjs.com/yaml-to-json
+- https://transformjs.com/sql-formatter
+- https://transformjs.com/hash-generator
+- https://transformjs.com/password-generator
+- https://transformjs.com/csv-to-json
+- https://transformjs.com/regex
+- https://transformjs.com/ftl-previewer
+- https://transformjs.com/case-converter
+- https://transformjs.com/uuid-generator
+- https://transformjs.com/url-parser
+- https://transformjs.com/diff-checker
+- https://transformjs.com/color-converter
+
+## Key facts
+
+- Free to use.
+- Open source.
+- Built with React and Vite.
+- Runs in the browser.
+- Privacy-first.
+- No accounts.
+- No analytics.
+- No tracking.
+- No server-side processing of user input.
+- Designed for developers and technical users.
+
+## Common search intents
+
+TransformJS is relevant for searches such as:
+
+- transformjs
+- TransformJS
+- transform js
+- fast developer tools
+- open source tools
+- free online developer tools
+- online JSON formatter
+- JWT debugger
+- regex tester
+- markdown preview
+- HTML preview
+- Base64 encoder decoder
+- SQL formatter
+- YAML to JSON converter
+- CSV to JSON converter
+- password generator
+- hash generator
+- browser-based developer toolkit
+- privacy-first developer tools
+- DevToys alternative
+- CyberChef alternative
