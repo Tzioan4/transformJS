@@ -5,6 +5,7 @@
 @import "./styles/components/footer.css";
 @import "./styles/tools/tools.css";
 @import "./styles/pages/home.css";
+@import "./styles/components/tool-seo-content.css";
 
 /*design assets*/
 :root {
