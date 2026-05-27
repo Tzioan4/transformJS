@@ -2,6 +2,18 @@
 
 All notable changes to TransformJS are documented here.
 
+## SprintAI 1 — AI Discoverability Foundation
+
+### Added
+- Added AI-aware robots.txt rules
+- Added llms.txt
+- Synced sitemap.xml with tool registry routes
+- Added AI crawler discoverability support
+
+### SEO / Infrastructure
+- Resubmitted sitemap to Google Search Console
+- Submitted sitemap to Bing Webmaster Tools
+- Requested indexing for core pages and tools
 ---
 
 ## Sprint 4 — Testing, Error Boundaries & Lint Cleanup
