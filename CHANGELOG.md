@@ -2,6 +2,26 @@
 
 All notable changes to TransformJS are documented here.
 
+## SprintAI 2 — SEO Metadata Foundation
+
+### Added
+- Added reusable SEO metadata component using `react-helmet-async`.
+- Added canonical URL support for the homepage, static pages, and tool pages.
+- Added JSON-LD structured data helpers for:
+  - `WebApplication`
+  - `SoftwareApplication`
+  - `BreadcrumbList`
+- Added site-level SEO constants in `src/seo/site.js`.
+- Added tool page structured data generated from the central tool registry.
+
+### Changed
+- Replaced inline Helmet metadata in `App.jsx` with the reusable `SEO` component.
+- Kept existing flat tool routes unchanged to avoid indexing disruption.
+
+### Verified
+- `npm run test:run` passed: 56 tests.
+- `npm run build` passed successfully.
+
 ## SprintAI 1 — AI Discoverability Foundation
 
 ### Added
