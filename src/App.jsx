@@ -2,23 +2,21 @@ import React, { useState, useEffect, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import ToolSeoContent from "./components/ToolSeoContent";
 import NotFound from "./pages/NotFound";
-
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
-
 import { useTheme } from "./ThemeContext";
 import { ThemeProvider } from "./ThemeContext";
-
 import ToolErrorFallback from "./components/ToolErrorFallback";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SEO from "./components/SEO";
-
 import Home from "./pages/Home";
 import Privacy from "./pages/Privacy";
 import About from "./pages/About";
-
+import HubPage from "./pages/HubPage";
+import AlternativePage from "./pages/AlternativePage";
 import { tools } from "./tools";
-
+import UseCasePage from "./pages/UseCasePage";
+import ToolGroupPage from "./pages/groups/ToolGroupPage";
 import {
   createBreadcrumbSchema,
   createFaqSchema,
@@ -78,6 +76,7 @@ function ScrollToTop({ setSearchTerm }) {
 
 function AppRoutes({ searchTerm }) {
   const location = useLocation();
+  
 
   return (
     <AppErrorBoundary resetKey={location.pathname}>
@@ -98,6 +97,10 @@ function AppRoutes({ searchTerm }) {
               </>
             }
           />
+          <Route
+          path="/groups/:slug"
+          element={<ToolGroupPage />}
+            />
 
           {tools.map((tool) => {
             const ToolComponent = tool.component;
@@ -166,7 +169,9 @@ function AppRoutes({ searchTerm }) {
               </>
             }
           />
-
+        <Route path="/hub/:slug" element={<HubPage />} />
+        <Route path="/alternatives/:slug" element={<AlternativePage />} />
+        <Route path="/use-cases/:slug" element={<UseCasePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

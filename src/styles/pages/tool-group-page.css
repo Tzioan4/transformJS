@@ -1,0 +1,18 @@
+.tool-group-list {
+  display: grid;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.tool-group-card {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.2s;
+}
+
+.tool-group-card:hover {
+  transform: translateY(-2px);
+}

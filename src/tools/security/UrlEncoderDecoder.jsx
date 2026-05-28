@@ -109,7 +109,7 @@ export default function UrlEncoderDecoder({ tips }) {
             </strong>
           </div>
 
-          {/*global warning*/}
+          
           {mode === "encode" && isUrlEncoded(text) && (
             <div className="inputWarning">
               Warning: Input is already URL encoded. Switch to{" "}
