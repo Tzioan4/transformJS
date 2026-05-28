@@ -2,6 +2,39 @@
 
 All notable changes to TransformJS are documented here.
 
+## SprintAI 4 — Content Discoverability Expansion
+
+### Added
+- Added reusable alternative comparison page architecture.
+- Added registry-driven alternative content system.
+- Added comparison routes for:
+  - `/alternatives/devtoys`
+  - `/alternatives/cyberchef`
+  - `/alternatives/jsonformatter`
+- Added expanded use-case pages for:
+  - JSON debugging
+  - Frontend development
+  - API testing
+  - Data formatting
+- Added reusable card-based layouts for alternative and use-case content pages.
+- Added semantic internal linking between alternatives, use-cases, groups, and tools.
+- Expanded llms.txt coverage with alternative pages, grouped pages, and workflow intent coverage.
+- Expanded sitemap.xml with semantic content routes.
+
+### Changed
+- Improved SEO and GEO discoverability outside individual tool pages.
+- Improved semantic topical authority for developer workflows.
+- Improved cross-page discoverability through contextual internal linking.
+- Improved browser-based and privacy-first positioning messaging across content pages.
+
+### SEO / AI Discoverability
+- Expanded competitor-intent search coverage.
+- Expanded long-tail search surface area.
+- Improved AI-readable workflow and comparison content.
+- Improved semantic clustering between tools and workflows.
+- Strengthened TransformJS ecosystem positioning for AI search systems.
+
+
 ## SprintAI 3 — Semantic Content Expansion System
 
 ### Added
@@ -26,11 +59,6 @@ All notable changes to TransformJS are documented here.
 - Improved long-tail keyword coverage across metadata, tool intros, and FAQ content.
 - Increased alignment between on-page semantic content and JSON-LD structured data.
 
-### Verified
-- Existing architecture remained unchanged.
-- Existing privacy-first behavior remained unchanged.
-- Existing tests continued passing successfully.
-- Tool pages now expose both visible FAQ content and structured FAQ metadata.
 - 
 ### Added
 - Added reusable semantic content support for all tool pages.
@@ -62,11 +90,6 @@ All notable changes to TransformJS are documented here.
 - Improved structured content density without overengineering the architecture.
 - Strengthened registry-driven metadata architecture for future automation.
 
-### Verified
-- Existing tests continue passing successfully.
-- Existing lint issues remain unrelated legacy Sprint 4.6 issues.
-- Related tool rendering verified through dynamic registry resolution.
-- Tool SEO content rendering verified on live routes.
 
 ## SprintAI 2 — SEO Metadata Foundation
 
@@ -84,9 +107,6 @@ All notable changes to TransformJS are documented here.
 - Replaced inline Helmet metadata in `App.jsx` with the reusable `SEO` component.
 - Kept existing flat tool routes unchanged to avoid indexing disruption.
 
-### Verified
-- `npm run test:run` passed: 56 tests.
-- `npm run build` passed successfully.
 
 ## SprintAI 1 — AI Discoverability Foundation
 

@@ -82,9 +82,7 @@ function AppRoutes({ searchTerm }) {
     <AppErrorBoundary resetKey={location.pathname}>
       <Suspense
         fallback={
-          <div style={{ padding: "2rem", textAlign: "center" }}>
-            Loading...
-          </div>
+          <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>
         }
       >
         <Routes>
@@ -97,10 +95,7 @@ function AppRoutes({ searchTerm }) {
               </>
             }
           />
-          <Route
-          path="/groups/:slug"
-          element={<ToolGroupPage />}
-            />
+          <Route path="/groups/:slug" element={<ToolGroupPage />} />
 
           {tools.map((tool) => {
             const ToolComponent = tool.component;
@@ -169,9 +164,11 @@ function AppRoutes({ searchTerm }) {
               </>
             }
           />
-        <Route path="/hub/:slug" element={<HubPage />} />
-        <Route path="/alternatives/:slug" element={<AlternativePage />} />
-        <Route path="/use-cases/:slug" element={<UseCasePage />} />
+          <Route path="/hub/:slug" element={<HubPage />} />
+          <Route path="/alternatives/:slug" element={<AlternativePage />} />
+          <Route path="/use-cases/:slug" element={<UseCasePage />} />
+          <Route path="/groups/:slug" element={<ToolGroupPage />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

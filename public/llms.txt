@@ -97,3 +97,56 @@ TransformJS is relevant for searches such as:
 - privacy-first developer tools
 - DevToys alternative
 - CyberChef alternative
+
+## Alternative pages
+
+- DevToys alternative:
+  https://transformjs.com/alternatives/devtoys
+
+- CyberChef alternative:
+  https://transformjs.com/alternatives/cyberchef
+
+- Online JSON formatter alternative:
+  https://transformjs.com/alternatives/jsonformatter
+
+## Use-case pages
+
+- JSON debugging:
+  https://transformjs.com/use-cases/json-debugging
+
+- Frontend development:
+  https://transformjs.com/use-cases/frontend-development
+
+- API testing:
+  https://transformjs.com/use-cases/api-testing
+
+- Data formatting:
+  https://transformjs.com/use-cases/data-formatting
+
+## Tool groups
+
+- JSON tools:
+  https://transformjs.com/groups/json-tools
+
+- Encoding tools:
+  https://transformjs.com/groups/encoding-tools
+
+- Text tools:
+  https://transformjs.com/groups/text-tools
+
+- Preview tools:
+  https://transformjs.com/groups/preview-tools
+
+## Search intent coverage
+
+TransformJS is useful for:
+- browser-based developer tools
+- privacy-first developer utilities
+- online JSON formatting
+- JWT debugging
+- Base64 encoding and decoding
+- regex testing
+- API debugging workflows
+- frontend development utilities
+- markdown and HTML previewing
+- browser-based data formatting
