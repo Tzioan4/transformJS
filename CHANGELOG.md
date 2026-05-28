@@ -2,6 +2,59 @@
 
 All notable changes to TransformJS are documented here.
 
+## SprintAI 5 — Registry Architecture Migration
+
+### Added
+
+* Added modular tool architecture split across:
+
+  * `src/tools/registry.js`
+  * `src/tools/toolComponents.jsx`
+  * `src/tools/toolIcons.jsx`
+* Added centralized component registry for lazy-loaded tool imports.
+* Added centralized icon registry for reusable Lucide icons.
+* Added workflow documentation for adding future tools safely.
+
+### Changed
+
+* Refactored the old monolithic `src/tools/index.jsx` architecture into separated registry layers.
+* Kept the public `tools` export API stable to avoid breaking:
+
+  * homepage cards
+  * filters/search
+  * tool routes
+  * SEO metadata
+  * FAQ rendering
+  * related tools
+  * tips system
+* Updated internal imports to use the new modular registry structure.
+
+### Verified
+
+* `npm run build` passed successfully.
+* `npm run test:run` passed successfully.
+* Sitemap and llms generation verified after migration.
+* Manual route verification completed for:
+
+  * tools
+  * use-case pages
+  * alternatives pages
+  * grouped hub pages
+
+### Notes
+
+* The registry architecture is now production-safe and significantly easier to scale.
+* Future improvement planned:
+
+  * make `registry.js` the single source of truth for:
+
+    * sitemap generation
+    * llms generation
+    * tool routes
+    * indexing systems
+  * remove remaining hardcoded tool route duplication.
+
+
 ## SprintAI 4 — Content Discoverability Expansion
 
 ### Added
