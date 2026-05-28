@@ -3,15 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "test": "vitest",
-  "test:ui": "vitest --ui",
-  "test:run": "vitest run"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:llms": "node scripts/generate-llms.js",
+    "generate:seo": "npm run generate:sitemap && npm run generate:llms"
+  },
   "dependencies": {
     "dompurify": "^3.4.2",
     "highlight.js": "^11.11.1",

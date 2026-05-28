@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SEO from "../components/SEO";
-import ContentPageLayout from "../content/ContentPageLayout";
 import { alternatives } from "../content/alternatives";
 import { createBreadcrumbSchema } from "../seo/jsonLd";
 import { SITE_NAME } from "../seo/site";
 import { tools } from "../tools";
+import "../styles/pages/alternative-page.css";
 
 export default function AlternativePage() {
   const { slug } = useParams();
@@ -17,11 +17,15 @@ export default function AlternativePage() {
 
   const path = `/alternatives/${alternative.slug}`;
 
+  const recommendedTools = alternative.recommendedTools
+    .map((toolPath) => tools.find((tool) => tool.path === toolPath))
+    .filter(Boolean);
+
   return (
     <>
       <SEO
-        title={`${alternative.title} - ${SITE_NAME}`}
-        description={alternative.description}
+        title={alternative.seoTitle || `${alternative.title} - ${SITE_NAME}`}
+        description={alternative.seoDesc}
         path={path}
         jsonLd={createBreadcrumbSchema([
           { name: "Home", path: "/" },
@@ -29,42 +33,79 @@ export default function AlternativePage() {
         ])}
       />
 
-      <ContentPageLayout
-        title={alternative.title}
-        description={alternative.intro}
-        sections={[
-          {
-            title: `Why use TransformJS instead of ${alternative.comparedTool}?`,
-            content: alternative.description,
-          },
+      <main className="alternative-page">
+        <section className="alternative-hero">
+          <div className="alternative-eyebrow">
+            Browser-based developer tools
+          </div>
 
-          {
-            title: "Advantages",
-            links: alternative.pros.map((item) => ({
-              to: "/",
-              label: item,
-            })),
-          },
+          <h1>{alternative.title}</h1>
 
-          {
-            title: "Recommended tools",
-             links: alternative.relatedTools
-            .map((path) => {
-      const tool = tools.find((item) => item.path === path);
+          <p>{alternative.intro}</p>
+        </section>
 
-      if (!tool) {
-        return null;
-      }
+        <section className="alternative-grid">
+          <article className="alternative-card alternative-card-large">
+            <h2>How it compares to {alternative.comparedTool}</h2>
+            <p>{alternative.comparison}</p>
+          </article>
 
-      return {
-        to: tool.path,
-        label: tool.name,
-      };
-    })
-    .filter(Boolean),
-}
-        ]}
-      />
+          <article className="alternative-card alternative-card-large">
+            <h2>Why use TransformJS instead?</h2>
+            <p>{alternative.whyTransformJS}</p>
+          </article>
+        </section>
+
+        <section className="alternative-section">
+          <h2>Key advantages</h2>
+
+          <div className="alternative-card-grid">
+            {alternative.highlights.map((item) => (
+              <div key={item} className="alternative-card">
+                <h3>{item}</h3>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="alternative-section">
+          <h2>Recommended tools</h2>
+
+          <div className="alternative-tool-grid">
+            {recommendedTools.map((tool) => (
+              <Link
+                key={tool.path}
+                to={tool.path}
+                className="alternative-tool-card"
+              >
+                <h3>{tool.name}</h3>
+                <p>{tool.description}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="alternative-section">
+          <h2>Explore related pages</h2>
+
+          <div className="alternative-links">
+            {alternative.internalLinks.map((link) => (
+              <Link key={link.to} to={link.to} className="alternative-link">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="alternative-privacy-card">
+          <h2>Privacy-first and no-install by default</h2>
+          <p>
+            TransformJS runs directly in your browser. It does not require an
+            account, does not add tracking, and does not send your tool input to
+            a server for processing.
+          </p>
+        </section>
+      </main>
     </>
   );
 }

@@ -1,88 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
->
-  <url>
-    <loc>https://transformjs.com/</loc>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <url>
+    <loc>https://transformjs.com</loc>
+  </url>
   <url>
     <loc>https://transformjs.com/about</loc>
   </url>
-
   <url>
     <loc>https://transformjs.com/privacy</loc>
   </url>
-
   <url>
     <loc>https://transformjs.com/json</loc>
   </url>
-
-  <url>
-    <loc>https://transformjs.com/base64</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/url-encode</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/html-preview</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/markdown</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/jwt</loc>
-  </url>
-
   <url>
     <loc>https://transformjs.com/yaml-to-json</loc>
   </url>
-
-  <url>
-    <loc>https://transformjs.com/sql-formatter</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/hash-generator</loc>
-  </url>
-
-  <url>
-    <loc>https://transformjs.com/password-generator</loc>
-  </url>
-
   <url>
     <loc>https://transformjs.com/csv-to-json</loc>
   </url>
-
   <url>
-    <loc>https://transformjs.com/regex</loc>
+    <loc>https://transformjs.com/sql-formatter</loc>
   </url>
-
   <url>
-    <loc>https://transformjs.com/ftl-previewer</loc>
+    <loc>https://transformjs.com/jwt-debugger</loc>
   </url>
-
   <url>
-    <loc>https://transformjs.com/case-converter</loc>
+    <loc>https://transformjs.com/base64</loc>
   </url>
-
   <url>
-    <loc>https://transformjs.com/uuid-generator</loc>
+    <loc>https://transformjs.com/hash-generator</loc>
   </url>
-
+  <url>
+    <loc>https://transformjs.com/password-generator</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/url-encoder-decoder</loc>
+  </url>
   <url>
     <loc>https://transformjs.com/url-parser</loc>
   </url>
-
+  <url>
+    <loc>https://transformjs.com/uuid-generator</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/regex-tester</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/markdown-preview</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/html-preview</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/case-converter</loc>
+  </url>
   <url>
     <loc>https://transformjs.com/diff-checker</loc>
   </url>
-
   <url>
     <loc>https://transformjs.com/color-converter</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/ftl-previewer</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/alternatives/devtoys</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/alternatives/cyberchef</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/alternatives/jsonformatter</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/use-cases/json-debugging</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/use-cases/frontend-development</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/use-cases/api-testing</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/use-cases/data-formatting</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/groups/json-tools</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/groups/encoding-tools</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/groups/text-tools</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/groups/preview-tools</loc>
   </url>
 </urlset>
