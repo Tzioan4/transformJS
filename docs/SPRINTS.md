@@ -161,8 +161,63 @@ Goals:
 - improve topical authority
 - improve external search coverage
 - improve ecosystem positioning
-
-  
 ---
+
+## SprintAI 5 — Registry Architecture Migration
+
+### Goal
+
+Refactor the tool system into a scalable modular registry architecture without breaking the existing production UI or routes.
+
+### Completed
+
+* Split the old monolithic `src/tools/index.jsx`.
+* Moved lazy component imports into:
+
+  * `src/tools/toolComponents.jsx`
+* Moved reusable Lucide icons into:
+
+  * `src/tools/toolIcons.jsx`
+* Moved tool metadata/content into:
+
+  * `src/tools/registry.js`
+* Reduced `src/tools/index.jsx` to a simple export layer.
+
+### Result
+
+The app now uses a cleaner production-safe architecture where:
+
+* tool metadata is centralized
+* components are isolated
+* icons are reusable
+* future tools are easier to add
+* SEO/content systems are easier to scale
+
+### Current Architecture
+
+```txt
+src/tools/
+├─ index.jsx
+├─ registry.js
+├─ toolComponents.jsx
+└─ toolIcons.jsx
+```
+
+
+### Future Planned Cleanup
+
+Convert `registry.js` into the single source of truth for:
+
+* sitemap generation
+* llms generation
+* tool route generation
+* indexing/discoverability systems
+
+This will remove duplicated route definitions across:
+
+* `toolRoutes.js`
+* `generate-llms.js`
+* sitemap generators
+
 
 _Last updated: May 2026_
