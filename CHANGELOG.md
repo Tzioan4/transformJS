@@ -5,6 +5,34 @@ All notable changes to TransformJS are documented here.
 ## SprintAI 3 — Semantic Content Expansion System
 
 ### Added
+- Added richer SEO and GEO-focused descriptions across the centralized tool registry.
+- Added improved tool-level semantic intros for all TransformJS tools.
+- Added stronger use-case content targeting real developer workflows and search intent.
+- Expanded tool FAQs with more query-shaped, AI-readable question and answer patterns.
+- Added `FAQPage` JSON-LD structured data generation for tool pages.
+- Added FAQ structured metadata to tool routes through the shared SEO system.
+
+### Changed
+- Rewrote tool descriptions to better align with search intent and semantic clarity.
+- Rewrote tool SEO descriptions for stronger metadata quality and better SERP readability.
+- Improved tool FAQ copy for answer extraction, long-tail search relevance, and AI discoverability.
+- Improved semantic consistency between visible FAQ content and structured metadata.
+- Strengthened privacy-first and local-browser processing messaging across tool content.
+
+### SEO / AI Discoverability
+- Improved machine-readable question-and-answer extraction for tool pages.
+- Improved structured discoverability for search engines and AI parsers through `FAQPage` schema.
+- Improved entity clarity for individual tools and their practical developer use cases.
+- Improved long-tail keyword coverage across metadata, tool intros, and FAQ content.
+- Increased alignment between on-page semantic content and JSON-LD structured data.
+
+### Verified
+- Existing architecture remained unchanged.
+- Existing privacy-first behavior remained unchanged.
+- Existing tests continued passing successfully.
+- Tool pages now expose both visible FAQ content and structured FAQ metadata.
+- 
+### Added
 - Added reusable semantic content support for all tool pages.
 - Extended the centralized tool registry with:
   - `content.intro`
