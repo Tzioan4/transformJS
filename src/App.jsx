@@ -21,6 +21,7 @@ import { tools } from "./tools";
 
 import {
   createBreadcrumbSchema,
+  createFaqSchema,
   createToolSchema,
   createWebApplicationSchema,
 } from "./seo/jsonLd";
@@ -47,10 +48,7 @@ class AppErrorBoundary extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.resetKey !== this.props.resetKey &&
-      this.state.hasError
-    ) {
+    if (prevProps.resetKey !== this.props.resetKey && this.state.hasError) {
       this.setState({
         hasError: false,
         error: null,
@@ -95,10 +93,7 @@ function AppRoutes({ searchTerm }) {
             path="/"
             element={
               <>
-                <SEO
-                  jsonLd={createWebApplicationSchema()}
-                />
-
+                <SEO jsonLd={createWebApplicationSchema()} />
                 <Home searchTerm={searchTerm} />
               </>
             }
@@ -106,6 +101,7 @@ function AppRoutes({ searchTerm }) {
 
           {tools.map((tool) => {
             const ToolComponent = tool.component;
+            const faqSchema = createFaqSchema(tool.content?.faq || []);
 
             return (
               <Route
@@ -119,24 +115,22 @@ function AppRoutes({ searchTerm }) {
                       path={tool.path}
                       jsonLd={[
                         createToolSchema(tool),
-
                         createBreadcrumbSchema([
                           {
                             name: "Home",
                             path: "/",
                           },
-
                           {
                             name: tool.name,
                             path: tool.path,
                           },
                         ]),
+                        ...(faqSchema ? [faqSchema] : []),
                       ]}
                     />
 
                     <div className="tool-page-content">
                       <ToolComponent tips={tool.tips} />
-
                       <ToolSeoContent tool={tool} />
                     </div>
                   </>
@@ -154,7 +148,6 @@ function AppRoutes({ searchTerm }) {
                   description="Read our privacy policy. Your data never leaves your device because everything runs locally in your browser."
                   path="/privacy"
                 />
-
                 <Privacy />
               </>
             }
@@ -169,7 +162,6 @@ function AppRoutes({ searchTerm }) {
                   description="Learn more about TransformJS, a fast, lightweight collection of browser-based developer utilities."
                   path="/about"
                 />
-
                 <About />
               </>
             }
@@ -202,10 +194,7 @@ function AppContent() {
           minHeight: "100vh",
         }}
       >
-        <Navbar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
+        <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         <main style={{ flex: 1 }}>
           <AppRoutes searchTerm={searchTerm} />

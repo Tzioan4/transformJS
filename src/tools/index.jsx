@@ -49,12 +49,12 @@ export const tools = [
     path: "/json",
     component: JsonFormatter,
     description:
-      "Prettify, minify, and validate JSON structures with syntax highlighting.",
+      "Format, validate, beautify, and minify JSON instantly in your browser.",
     tags: ["data", "json", "formatter"],
     icon: <FileJson size={40} strokeWidth={1.5} />,
     seoTitle: "JSON Formatter & Validator - TransformJS",
     seoDesc:
-      "Format, beautify, minify and validate JSON data instantly in your browser with syntax highlighting.",
+      "Format, validate, beautify, and minify JSON locally in your browser for API debugging, config cleanup, and data inspection.",
     tips: [
       "Paste any JSON to format on input.",
       "Use Beautify for readable indented output.",
@@ -63,49 +63,50 @@ export const tools = [
     ],
     content: {
       intro:
-        "Format, validate, beautify, and minify JSON directly in your browser. Use it to inspect API responses, clean configuration files, debug structured data, and make complex JSON easier to read without sending anything to a server.",
+        "JSON Formatter is a browser-based tool for formatting, validating, beautifying, and minifying JSON. Use it to inspect API responses, clean configuration files, debug structured data, and make complex JSON easier to read. All processing happens locally in your browser, so your JSON stays on your device.",
       useCases: [
-        "Format messy JSON into readable indentation",
-        "Minify JSON before storing, sharing, or embedding it",
+        "Format messy JSON into readable indented output",
+        "Minify JSON before embedding it, storing it, or sending it in requests",
         "Validate JSON copied from APIs, logs, or config files",
-        "Find duplicate keys and common JSON syntax issues",
+        "Detect duplicate keys and common JSON syntax issues during debugging",
       ],
       faq: [
         {
+          question:
+            "Can I use this JSON formatter for API responses and request payloads?",
+          answer:
+            "Yes. It is useful for formatting and validating JSON copied from API responses, request payloads, logs, and configuration files.",
+        },
+        {
           question: "Is my JSON uploaded to a server?",
           answer:
-            "No. TransformJS processes JSON locally in your browser, so your data stays on your machine.",
+            "No. JSON processing happens locally in your browser, so your data stays on your device.",
         },
         {
-          question: "Can this tool detect invalid JSON?",
+          question: "Can this detect invalid JSON and duplicate keys?",
           answer:
-            "Yes. The formatter shows an error when the input cannot be parsed as valid JSON.",
+            "Yes. The tool reports invalid JSON and can also warn about duplicate keys that may be overwritten during parsing.",
         },
         {
-          question: "What is the difference between beautify and minify?",
+          question: "What is the difference between beautify and minify JSON?",
           answer:
-            "Beautify adds indentation and line breaks for readability. Minify removes unnecessary whitespace to make the JSON smaller.",
-        },
-        {
-          question: "Can this help with API debugging?",
-          answer:
-            "Yes. It is useful for inspecting API responses, request payloads, and structured logs during development.",
+            "Beautify adds indentation and line breaks for readability, while minify removes unnecessary whitespace to make the JSON smaller.",
         },
       ],
       relatedTools: ["/yaml-to-json", "/csv-to-json", "/jwt", "/diff-checker"],
     },
   },
   {
-    name: "Base64 Encoder",
+    name: "Base64 Encoder / Decoder",
     path: "/base64",
     component: Base64Tool,
     description:
-      "Bi-directional Base64 conversion for text and binary data strings.",
+      "Encode text to Base64 or decode Base64 strings directly in your browser.",
     tags: ["security", "base64", "encode", "decode"],
     icon: <FileCode size={40} strokeWidth={1.5} />,
     seoTitle: "Base64 Encoder & Decoder - TransformJS",
     seoDesc:
-      "Encode text to Base64 format or decode Base64 strings back to plain text securely and locally.",
+      "Encode text to Base64 or decode Base64 strings locally in your browser for debugging, payload inspection, and quick developer workflows.",
     tips: [
       "Toggle between Encode and Decode mode with the buttons.",
       "Paste plain text to encode it to Base64.",
@@ -113,28 +114,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Encode plain text to Base64 or decode Base64 strings back to readable text directly in your browser. This tool is useful for working with API payloads, tokens, encoded configuration values, and debugging data that has been transferred as text.",
+        "Base64 Encoder / Decoder is a browser-based tool for converting plain text to Base64 and decoding Base64 strings back to readable text. Use it when working with API payloads, encoded values, tokens, or debug output. All processing runs locally in your browser, so your input is not uploaded for server-side processing.",
       useCases: [
-        "Encode text into Base64 for transport or testing",
-        "Decode Base64 strings from tokens, APIs, or logs",
-        "Inspect encoded payloads during debugging",
-        "Convert small text snippets without command-line tools",
+        "Encode text into Base64 for transport, testing, or configuration values",
+        "Decode Base64 strings from APIs, logs, tokens, or headers",
+        "Inspect encoded payloads during debugging workflows",
+        "Convert small text snippets without command-line tools or external services",
       ],
       faq: [
         {
-          question: "Is Base64 encryption?",
+          question: "Is Base64 the same as encryption?",
           answer:
-            "No. Base64 is an encoding format, not encryption. Anyone can decode it back to the original text.",
+            "No. Base64 is an encoding format, not encryption. Encoded text can be decoded back to the original value.",
         },
         {
-          question: "Why does Base64 sometimes end with equals signs?",
+          question: "Can I decode Base64 locally without sending data to a server?",
           answer:
-            "Equals signs are padding characters used to make the encoded output align correctly in Base64 blocks.",
+            "Yes. Base64 encoding and decoding happen locally in your browser, so your input stays on your device.",
+        },
+        {
+          question: "Why do some Base64 strings end with equals signs?",
+          answer:
+            "Equals signs are padding characters used to align the encoded output correctly in Base64 blocks.",
         },
         {
           question: "Can I decode JWT parts with this tool?",
           answer:
-            "Yes, JWT headers and payloads are Base64URL encoded. For full token inspection, use the JWT Debugger instead.",
+            "JWT header and payload sections use Base64URL encoding. You can inspect encoded parts here, but for full token analysis and verification, use the JWT Debugger.",
         },
       ],
       relatedTools: ["/jwt", "/url-encode", "/hash-generator", "/json"],
@@ -144,12 +150,13 @@ export const tools = [
     name: "URL Encoder / Decoder",
     path: "/url-encode",
     component: UrlEncoderDecoder,
-    description: "RFC 3986 compliant encoding and decoding for URL components.",
+    description:
+      "Encode or decode URL components and query values in your browser.",
     tags: ["security", "url", "encode", "decode"],
     icon: <Link size={40} strokeWidth={1.5} />,
     seoTitle: "URL Encoder & Decoder - TransformJS",
     seoDesc:
-      "Encode or decode URLs and parameters safely following RFC 3986 specifications.",
+      "Encode or decode URL components, query values, and percent-encoded text locally in your browser using RFC 3986 rules.",
     tips: [
       "Toggle between Encode and Decode mode.",
       "Encode mode converts special characters to %XX format.",
@@ -158,28 +165,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Encode and decode URL components safely for query strings, API parameters, redirects, and browser links. The tool helps convert special characters into URL-safe sequences and decode encoded URLs back into readable text.",
+        "URL Encoder / Decoder is a browser-based tool for encoding and decoding URL components, query parameter values, and percent-encoded text. Use it for API endpoints, redirects, browser links, and debugging encoded URLs. All processing happens locally in your browser, so your URL data stays on your device.",
       useCases: [
-        "Encode query parameters before adding them to a URL",
-        "Decode copied URLs with percent-encoded characters",
-        "Debug API endpoints and redirect URLs",
-        "Prepare safe URL components for frontend or backend tests",
+        "Encode query parameter values before appending them to a URL",
+        "Decode copied URLs that contain percent-encoded characters",
+        "Debug API endpoints, redirects, and callback URLs",
+        "Prepare safe URL components for frontend and backend development",
       ],
       faq: [
         {
           question: "What is URL encoding used for?",
           answer:
-            "URL encoding converts reserved or unsafe characters into percent-encoded sequences so they can be safely used inside URLs.",
+            "URL encoding converts unsafe or reserved characters into percent-encoded sequences so they can be safely used inside URLs and query parameters.",
         },
         {
-          question: "Why are spaces converted to %20?",
+          question: "Should I encode a full URL or only a query parameter value?",
           answer:
-            "Spaces are not safe inside URLs, so they are encoded as %20 or sometimes plus signs depending on the context.",
+            "In most cases, you should encode individual components such as query parameter values instead of encoding the full URL at once.",
         },
         {
-          question: "Should I encode a full URL or only parts of it?",
+          question: "Can I decode percent-encoded URLs locally in the browser?",
           answer:
-            "Usually you encode individual parts, such as query parameter values, instead of encoding the full URL at once.",
+            "Yes. TransformJS decodes URL-encoded text locally in your browser without uploading it to a server.",
+        },
+        {
+          question: "Why are spaces sometimes shown as %20?",
+          answer:
+            "Spaces are not safe inside URLs, so they are commonly encoded as %20 or, in some contexts, represented as plus signs.",
         },
       ],
       relatedTools: ["/url-parser", "/base64", "/regex", "/json"],
@@ -189,12 +201,13 @@ export const tools = [
     name: "HTML Preview",
     path: "/html-preview",
     component: HtmlPreview,
-    description: "Real-time sandboxed rendering for HTML and CSS snippets.",
+    description:
+      "Preview HTML and CSS snippets instantly in a sandboxed browser frame.",
     tags: ["code", "html", "css", "preview", "frontend"],
     icon: <Layout size={40} strokeWidth={1.5} />,
-    seoTitle: "HTML Live Preview - Sandboxed HTML/CSS Editor - TransformJS",
+    seoTitle: "HTML Live Preview - Sandboxed HTML & CSS Tool - TransformJS",
     seoDesc:
-      "Render and preview HTML and CSS code snippets in real-time within a secure sandboxed environment.",
+      "Preview HTML and CSS snippets instantly in a sandboxed browser environment for quick frontend testing and static markup checks.",
     tips: [
       "Write HTML and CSS on the left, see the result on the right.",
       "The preview is sandboxed - safe to test any snippet.",
@@ -203,28 +216,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Preview HTML and CSS snippets instantly in a sandboxed browser frame. Use it to test small layouts, email template fragments, static markup, and frontend experiments without creating a full project setup.",
+        "HTML Preview is a browser-based tool for rendering HTML and CSS snippets instantly inside a sandboxed preview frame. Use it to test small layouts, email fragments, static markup, and frontend experiments without creating a full project setup. The preview stays isolated from the main app for safer testing.",
       useCases: [
-        "Test small HTML and CSS snippets quickly",
-        "Preview static email template fragments",
-        "Prototype simple UI blocks before moving them into a project",
-        "Check how markup renders in an isolated preview",
+        "Preview small HTML and CSS snippets during frontend development",
+        "Test static email template fragments and markup blocks",
+        "Prototype simple UI sections before moving them into a real project",
+        "Check how isolated markup renders without a full build setup",
       ],
       faq: [
         {
           question: "Is the HTML preview sandboxed?",
           answer:
-            "Yes. The preview runs inside a sandboxed iframe to keep snippets isolated from the main app.",
+            "Yes. The preview runs inside a sandboxed iframe so your snippet stays isolated from the main application.",
         },
         {
-          question: "Can I run JavaScript in the preview?",
+          question: "Can I run JavaScript in the HTML preview?",
           answer:
             "No. Script execution is disabled for safety. The tool is intended for HTML and CSS previewing.",
         },
         {
-          question: "Can I use this for full websites?",
+          question: "Can I use this tool to preview small UI snippets and email markup?",
           answer:
-            "It is best for small snippets and quick previews, not complete multi-file websites.",
+            "Yes. It is useful for testing small layout fragments, static HTML snippets, and simple email template markup.",
+        },
+        {
+          question: "Does the HTML code leave my browser?",
+          answer:
+            "No. The preview is generated locally in your browser and is not uploaded for server-side processing.",
         },
       ],
       relatedTools: [
@@ -240,12 +258,12 @@ export const tools = [
     path: "/markdown",
     component: MarkdownPreview,
     description:
-      "GitHub Flavored Markdown rendering with live HTML transpilation.",
+      "Write Markdown and preview the rendered HTML instantly in your browser.",
     tags: ["code", "markdown", "md", "preview", "text"],
     icon: <FileText size={40} strokeWidth={1.5} />,
     seoTitle: "Markdown Preview & Live Editor - TransformJS",
     seoDesc:
-      "Write Markdown code and view the live rendered HTML preview with clean typography.",
+      "Preview Markdown as rendered HTML instantly in your browser for README files, documentation drafts, notes, and developer content.",
     tips: [
       "Write Markdown on the left, see rendered HTML on the right.",
       "Supports GitHub Flavored Markdown (tables, checkboxes, code blocks).",
@@ -254,16 +272,16 @@ export const tools = [
     ],
     content: {
       intro:
-        "Write Markdown and preview the rendered HTML output instantly in your browser. This tool is useful for README files, documentation drafts, notes, changelog entries, and any workflow where Markdown needs to be checked before publishing.",
+        "Markdown Preview is a browser-based tool for writing Markdown and viewing the rendered HTML output instantly. Use it for README files, documentation drafts, changelog entries, notes, and technical content before publishing. Rendering happens locally in your browser, so your Markdown stays on your device.",
       useCases: [
-        "Preview README content before pushing to GitHub",
+        "Preview README files before pushing them to GitHub",
         "Check Markdown tables, lists, links, and code blocks",
-        "Draft documentation or changelog sections",
-        "Convert Markdown into a rendered HTML preview",
+        "Draft documentation, notes, or changelog sections",
+        "Render Markdown into HTML for quick review and editing",
       ],
       faq: [
         {
-          question: "Does this support GitHub-style Markdown?",
+          question: "Does this Markdown preview support GitHub-style Markdown?",
           answer:
             "Yes. It supports common Markdown features used in developer documentation, including links, lists, tables, and code blocks.",
         },
@@ -273,9 +291,14 @@ export const tools = [
             "Links are sanitized and opened in a new tab with safe attributes where applicable.",
         },
         {
-          question: "Can I copy the generated HTML?",
+          question: "Can I preview Markdown locally in the browser?",
           answer:
-            "The preview renders Markdown as HTML. If you need source extraction, this can be expanded later with a dedicated HTML output mode.",
+            "Yes. Markdown rendering happens locally in your browser without uploading your content to a server.",
+        },
+        {
+          question: "Can I use this for README and documentation workflows?",
+          answer:
+            "Yes. It is especially useful for previewing README files, internal docs, changelogs, and technical notes before publishing.",
         },
       ],
       relatedTools: [
@@ -291,12 +314,12 @@ export const tools = [
     path: "/jwt",
     component: JwtDebugger,
     description:
-      "Decode JWT headers and payloads with instant signature verification.",
+      "Decode JWT tokens, inspect claims, and verify HMAC signatures locally.",
     tags: ["security", "jwt", "auth", "decode"],
     icon: <EarthLock size={40} strokeWidth={1.5} />,
-    seoTitle: "JWT Debugger - Decode JSON Web Tokens - TransformJS",
+    seoTitle: "JWT Debugger - Decode & Verify JSON Web Tokens - TransformJS",
     seoDesc:
-      "Decode and analyze JSON Web Tokens (JWT) locally to inspect header, payload data, and verify signatures.",
+      "Decode JWT tokens, inspect headers and payload claims, and verify HMAC signatures locally in your browser.",
     tips: [
       "Paste a JWT token to decode its header and payload.",
       "Enter your secret key and click Verify Signature to validate it.",
@@ -305,34 +328,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Decode and inspect JSON Web Tokens locally in your browser. Use the JWT Debugger to view token headers, payload claims, expiration data, and HMAC signature status while debugging authentication and authorization flows.",
+        "JWT Debugger is a browser-based tool for decoding JSON Web Tokens, inspecting token headers and payload claims, and verifying HMAC signatures. Use it to debug authentication flows, inspect expiration data, and understand token structure during development. Token processing happens locally in your browser, so your JWT data is not uploaded to a server.",
       useCases: [
-        "Inspect JWT header and payload claims",
-        "Check token expiration and issued-at timestamps",
-        "Debug API authentication issues",
-        "Verify HMAC JWT signatures with a secret key",
+        "Inspect JWT headers, payload claims, and signature structure",
+        "Check token expiration, issued-at values, and auth metadata",
+        "Debug API authentication and authorization issues",
+        "Verify HMAC JWT signatures with a local secret key",
       ],
       faq: [
         {
-          question: "Is JWT decoding secure?",
+          question: "Can I decode a JWT token without sending it to a server?",
           answer:
-            "Decoding is done locally in your browser. The token is not uploaded to a server.",
+            "Yes. JWT decoding and verification run locally in your browser, so the token is not uploaded for processing.",
         },
         {
-          question:
-            "What is the difference between decoding and verifying a JWT?",
+          question: "What is the difference between decoding and verifying a JWT?",
           answer:
-            "Decoding only reads the token contents. Verification checks whether the signature matches the provided secret.",
+            "Decoding reads the header and payload. Verification checks whether the token signature matches the provided secret.",
         },
         {
-          question: "Which JWT algorithms are supported?",
+          question: "Which JWT algorithms are supported for verification?",
           answer:
             "The tool supports local HMAC verification for HS256, HS384, and HS512 tokens.",
         },
         {
-          question: "Can a decoded JWT be trusted without verification?",
+          question: "Can I trust a decoded JWT without verifying it?",
           answer:
-            "No. JWT payloads are readable by design. Trust the token only after verifying its signature and claims.",
+            "No. JWT payloads are readable by design. You should verify the signature and validate claims before trusting the token.",
         },
       ],
       relatedTools: [
@@ -348,12 +370,12 @@ export const tools = [
     path: "/yaml-to-json",
     component: YamlToJson,
     description:
-      "Convert YAML configurations to clean, formatted JSON structures.",
+      "Convert YAML to formatted JSON directly in your browser.",
     tags: ["data", "yaml", "json", "convert"],
     icon: <Terminal size={40} strokeWidth={1.5} />,
     seoTitle: "YAML to JSON Converter - TransformJS",
     seoDesc:
-      "Convert YAML configurations and data structures into formatted JSON objects instantly.",
+      "Convert YAML configurations and structured YAML data to formatted JSON locally in your browser for developer workflows.",
     tips: [
       "Paste YAML on the left to get formatted JSON on the right.",
       "Output updates automatically as you type.",
@@ -362,18 +384,18 @@ export const tools = [
     ],
     content: {
       intro:
-        "Convert YAML configuration files and structured data into formatted JSON directly in your browser. This is useful when working with Docker, Kubernetes, CI config files, static site settings, or tools that require JSON instead of YAML.",
+        "YAML to JSON is a browser-based converter for turning YAML configuration files and structured YAML data into formatted JSON. Use it for Docker, Kubernetes, CI pipelines, static site configs, and other developer workflows that move between YAML and JSON. Conversion runs locally in your browser, so your input is not sent to a server.",
       useCases: [
-        "Convert YAML configs into JSON objects",
+        "Convert YAML configs into formatted JSON objects",
         "Inspect Docker, Kubernetes, or CI configuration data",
-        "Debug YAML indentation or syntax problems",
+        "Debug YAML indentation and parsing errors",
         "Move structured data between YAML-based and JSON-based tools",
       ],
       faq: [
         {
-          question: "Is YAML converted locally?",
+          question: "Is YAML converted locally in the browser?",
           answer:
-            "Yes. The conversion runs in your browser and the input is not sent to a server.",
+            "Yes. YAML parsing and conversion happen locally in your browser, so your input is not uploaded for server-side processing.",
         },
         {
           question: "Why does YAML indentation matter?",
@@ -381,9 +403,14 @@ export const tools = [
             "YAML uses indentation to define structure, so incorrect spacing can change the parsed result or cause errors.",
         },
         {
-          question: "Can this convert large YAML files?",
+          question: "Can I use this for Docker Compose or Kubernetes YAML files?",
           answer:
-            "It is designed for typical developer configs and includes safety limits to avoid expensive YAML expansion.",
+            "Yes. It is useful for inspecting and converting common developer configuration files such as Docker, Kubernetes, and CI YAML.",
+        },
+        {
+          question: "Can this handle very large YAML files?",
+          answer:
+            "It is designed for normal developer workflows and includes safety limits to reduce the risk of expensive YAML expansion.",
         },
       ],
       relatedTools: ["/json", "/csv-to-json", "/diff-checker", "/markdown"],
@@ -393,12 +420,13 @@ export const tools = [
     name: "SQL Formatter",
     path: "/sql-formatter",
     component: SqlFormatter,
-    description: "Format and prettify SQL queries for better readability.",
+    description:
+      "Format SQL queries for cleaner structure and better readability.",
     tags: ["data", "sql", "database", "format"],
     icon: <Database size={40} strokeWidth={1.5} />,
     seoTitle: "SQL Formatter & Query Beautifier - TransformJS",
     seoDesc:
-      "Format and structure complex SQL queries to improve readability with syntax formatting.",
+      "Format SQL queries for readability, inspect generated SQL, and review destructive statements more clearly in your browser.",
     tips: [
       "Paste any SQL query to format it with proper indentation.",
       "Supports SELECT, INSERT, UPDATE, DELETE, JOIN and more.",
@@ -407,28 +435,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Format and clean up SQL queries for better readability. Use this SQL formatter to inspect SELECT statements, JOINs, nested queries, generated SQL, and database snippets before sharing, reviewing, or debugging them.",
+        "SQL Formatter is a browser-based tool for formatting and cleaning SQL queries so they are easier to read and review. Use it to inspect SELECT statements, JOINs, nested queries, and generated SQL copied from logs, consoles, or ORMs. The tool only formats SQL text and does not execute queries or connect to a database.",
       useCases: [
-        "Beautify compressed or generated SQL queries",
-        "Make SELECT, JOIN, INSERT, UPDATE, and DELETE statements easier to read",
-        "Review database queries before sharing them with a team",
-        "Spot destructive SQL operations more clearly",
+        "Beautify compressed or machine-generated SQL queries",
+        "Review SELECT, JOIN, INSERT, UPDATE, and DELETE statements more easily",
+        "Inspect SQL copied from logs, ORMs, or database consoles",
+        "Spot destructive SQL operations more clearly before execution",
       ],
       faq: [
         {
-          question: "Does this execute SQL queries?",
+          question: "Does this SQL formatter execute queries?",
           answer:
-            "No. It only formats SQL text. It does not connect to a database or run any query.",
+            "No. It only formats SQL text for readability and does not connect to a database or execute any query.",
         },
         {
-          question: "Can this format generated SQL?",
+          question: "Can I use this tool to format SQL copied from logs or ORMs?",
           answer:
-            "Yes. It is useful for cleaning up SQL copied from ORMs, logs, database consoles, or debugging output.",
+            "Yes. It is useful for cleaning up generated SQL from logs, database consoles, ORMs, and debugging output.",
         },
         {
-          question: "Why does the tool warn about destructive queries?",
+          question: "Why does the tool warn about DROP, DELETE, TRUNCATE, or ALTER?",
           answer:
-            "Statements like DROP, DELETE, TRUNCATE, and ALTER can change or remove data, so the warning helps you review them carefully.",
+            "These are destructive SQL operations that can change or remove data, so the warning helps you review risky queries more carefully.",
+        },
+        {
+          question: "Can I use this SQL formatter in the browser without installing anything?",
+          answer:
+            "Yes. The tool runs directly in your browser with no installation or database connection required.",
         },
       ],
       relatedTools: ["/csv-to-json", "/json", "/regex", "/diff-checker"],
@@ -439,12 +472,12 @@ export const tools = [
     path: "/hash-generator",
     component: HashGenerator,
     description:
-      "Generate secure MD5, SHA-1, SHA-256 and SHA-512 hashes for any input.",
+      "Generate SHA-1, SHA-256, and SHA-512 hashes locally in your browser.",
     tags: ["security", "hash", "md5", "sha256"],
     icon: <Hash size={40} strokeWidth={1.5} />,
-    seoTitle: "Cryptographic Hash Generator (SHA, MD5) - TransformJS",
+    seoTitle: "Hash Generator - SHA-1, SHA-256, SHA-512 - TransformJS",
     seoDesc:
-      "Generate secure cryptographic hashes like SHA-1, SHA-256, SHA-512, or MD5 using client-side Crypto API.",
+      "Generate SHA-1, SHA-256, and SHA-512 hashes locally in your browser for checksums, fingerprints, and quick developer workflows.",
     tips: [
       "Type or paste any text to generate its hash instantly.",
       "Switch between MD5, SHA-1, SHA-256 and SHA-512 algorithms.",
@@ -453,12 +486,12 @@ export const tools = [
     ],
     content: {
       intro:
-        "Generate hashes for text using common algorithms such as MD5, SHA-1, SHA-256, and SHA-512. This tool helps compare values, create checksums, inspect fingerprints, and test hashing behavior locally in the browser.",
+        "Hash Generator is a browser-based tool for generating text hashes using common algorithms such as SHA-1, SHA-256, and SHA-512. Use it to compare values, create checksums, inspect fingerprints, and test hashing behavior during development. Hashing runs locally in your browser, so your input is not sent to a server.",
       useCases: [
-        "Generate SHA-256 or SHA-512 hashes for text",
-        "Compare checksums during debugging",
-        "Create quick fingerprints for small snippets",
-        "Test how different hash algorithms output values",
+        "Generate SHA-256 or SHA-512 hashes for text values",
+        "Compare checksums during debugging and verification",
+        "Create quick fingerprints for snippets and identifiers",
+        "Test how different hashing algorithms produce output",
       ],
       faq: [
         {
@@ -467,14 +500,19 @@ export const tools = [
             "No. Hashing is one-way. You can generate a hash from input, but you cannot safely reverse a hash back to the original value.",
         },
         {
-          question: "Should I use MD5 or SHA-1 for security?",
+          question: "Should I use SHA-1 for security-sensitive workflows?",
           answer:
-            "No. MD5 and SHA-1 are considered broken for security use. Prefer SHA-256 or SHA-512 when security matters.",
+            "No. SHA-1 is considered broken for modern security use. Prefer SHA-256 or SHA-512 when security matters.",
         },
         {
-          question: "Is hashing done locally?",
+          question: "Is hashing done locally in the browser?",
           answer:
-            "Yes. Hash generation runs in your browser using local code and browser APIs.",
+            "Yes. Hash generation runs locally in your browser using native browser APIs.",
+        },
+        {
+          question: "Can I use this tool for checksums and fingerprints?",
+          answer:
+            "Yes. It is useful for quick checksum comparisons, text fingerprints, and development-time hash inspection.",
         },
       ],
       relatedTools: [
@@ -489,12 +527,13 @@ export const tools = [
     name: "Password Generator",
     path: "/password-generator",
     component: PasswordGenerator,
-    description: "Generate secure, random passwords with custom requirements.",
+    description:
+      "Generate strong random passwords locally with custom length and options.",
     tags: ["security", "password", "secure"],
     icon: <Lock size={40} strokeWidth={1.5} />,
     seoTitle: "Secure Password Generator - TransformJS",
     seoDesc:
-      "Generate strong, randomized, and highly secure passwords with custom lengths and criteria locally.",
+      "Generate strong random passwords locally in your browser with custom length, character options, and entropy feedback.",
     tips: [
       "Adjust the slider to set the password length (12-64 characters).",
       "Toggle uppercase, lowercase, numbers and symbols as needed.",
@@ -503,44 +542,49 @@ export const tools = [
     ],
     content: {
       intro:
-        "Generate strong random passwords locally in your browser with customizable length and character options. The tool uses browser cryptographic randomness where available and helps create safer credentials for accounts, testing, and development workflows.",
+        "Password Generator is a browser-based tool for creating strong random passwords with customizable length and character options. Use it to generate secure credentials for accounts, test environments, and developer workflows. Password generation happens locally in your browser, so generated values are not uploaded or stored by TransformJS.",
       useCases: [
-        "Generate strong passwords for new accounts",
-        "Create random credentials for development environments",
+        "Generate strong passwords for new accounts and services",
+        "Create random credentials for development and staging environments",
         "Customize password length and character sets",
         "Estimate password strength with entropy feedback",
       ],
       faq: [
         {
-          question: "Are generated passwords stored anywhere?",
+          question: "Are generated passwords stored or uploaded anywhere?",
           answer:
-            "No. Passwords are generated locally in your browser and are not saved or uploaded by TransformJS.",
+            "No. Passwords are generated locally in your browser and are not uploaded, stored, or processed on a server.",
         },
         {
           question: "What makes a password strong?",
           answer:
-            "Longer passwords with enough randomness are stronger. Length usually matters more than complicated but short patterns.",
+            "Longer passwords with enough randomness are stronger. In most cases, length and unpredictability matter more than short complex patterns.",
         },
         {
-          question: "Can I use this for production credentials?",
+          question: "Can I use this password generator for real accounts?",
           answer:
-            "You can generate strong passwords with it, but you should still store them in a trusted password manager.",
+            "Yes. It can generate strong passwords, but you should still store them in a trusted password manager.",
+        },
+        {
+          question: "Does this use cryptographically secure randomness?",
+          answer:
+            "Yes. The tool uses browser cryptographic randomness where available to generate stronger passwords.",
         },
       ],
       relatedTools: ["/hash-generator", "/jwt", "/base64", "/uuid-generator"],
     },
   },
   {
-    name: "CSV To JSON",
+    name: "CSV to JSON",
     path: "/csv-to-json",
     component: CsvToJson,
     description:
-      "Convert complex CSV data to clean JSON with full RFC 4180 compliance.",
+      "Convert CSV data into structured JSON arrays directly in your browser.",
     tags: ["data", "csv", "json", "convert"],
     icon: <FileText size={40} strokeWidth={1.5} />,
     seoTitle: "CSV to JSON Converter - TransformJS",
     seoDesc:
-      "Transform CSV sheets and comma-separated rows into clean, structured JSON arrays and objects.",
+      "Convert CSV data to structured JSON arrays locally in your browser, including quoted fields, multiline cells, and header rows.",
     tips: [
       "Paste CSV with a header row, the first row becomes the JSON keys.",
       "Handles quoted fields, commas inside values, and multiline cells.",
@@ -549,28 +593,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Convert CSV rows and spreadsheet-style data into structured JSON arrays and objects. This tool helps developers transform exported data, quick datasets, and comma-separated values into a format that works better with APIs and JavaScript.",
+        "CSV to JSON is a browser-based converter for transforming CSV rows and spreadsheet-style data into structured JSON arrays and objects. Use it for exports, quick datasets, API testing, and frontend or backend development workflows. Parsing happens locally in your browser, so your CSV data is not uploaded to a server.",
       useCases: [
-        "Convert CSV exports into JSON arrays",
-        "Transform spreadsheet data for API testing",
+        "Convert CSV exports into JSON arrays for APIs and applications",
+        "Transform spreadsheet data into a JSON-friendly format",
         "Parse quoted fields, commas inside values, and multiline cells",
-        "Prepare tabular data for frontend or backend development",
+        "Prepare tabular data for frontend or backend development workflows",
       ],
       faq: [
         {
           question: "Does the first CSV row become JSON keys?",
           answer:
-            "Yes. The first row is treated as the header row and is used as the object keys in the JSON output.",
+            "Yes. The first row is treated as the header row and becomes the object keys in the JSON output.",
         },
         {
-          question: "Can this handle commas inside quoted values?",
+          question: "Can this handle commas inside quoted CSV values?",
           answer:
-            "Yes. The parser is designed to handle common CSV cases such as quoted fields and commas inside values.",
+            "Yes. The parser supports common CSV cases such as quoted fields, commas inside values, and multiline cells.",
         },
         {
           question: "What happens to empty CSV fields?",
           answer:
-            "Empty fields are converted to null so the JSON output keeps a clear structure.",
+            "Empty fields are converted to null so the JSON output keeps a consistent structure.",
+        },
+        {
+          question: "Is CSV converted locally in the browser?",
+          answer:
+            "Yes. CSV parsing and JSON conversion happen locally in your browser without uploading your input to a server.",
         },
       ],
       relatedTools: [
@@ -586,12 +635,12 @@ export const tools = [
     path: "/regex",
     component: RegexTester,
     description:
-      "Test regular expressions with real-time match highlighting and flag support.",
+      "Test JavaScript regular expressions with live matches and group details.",
     tags: ["code", "regex", "pattern", "test"],
     icon: <Terminal size={40} strokeWidth={1.5} />,
-    seoTitle: "Regex Tester & Matcher - TransformJS",
+    seoTitle: "Regex Tester & JavaScript Pattern Matcher - TransformJS",
     seoDesc:
-      "Test regular expressions with real-time text matching, flag options, and capturing groups.",
+      "Test JavaScript regular expressions with live match highlighting, flags, indexes, and capture group inspection in your browser.",
     tips: [
       "Enter your pattern between the / slashes and set flags (g, i, m).",
       "Matches are highlighted in real-time in the preview section.",
@@ -600,28 +649,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Test JavaScript regular expressions with live match highlighting, flags, indexes, and capture group inspection. Use it to debug validation patterns, text extraction logic, search rules, and parsing workflows safely in the browser.",
+        "RegEx Tester is a browser-based tool for testing JavaScript regular expressions with live match highlighting, flags, indexes, and capture group inspection. Use it to debug validation patterns, parsing logic, search rules, and extraction workflows. Regex execution runs in an isolated worker to keep the main interface responsive.",
       useCases: [
-        "Test regex patterns against sample text",
-        "Debug capture groups and match indexes",
-        "Validate patterns for emails, URLs, IDs, or logs",
-        "Check JavaScript regex flags like g, i, and m",
+        "Test regex patterns against real sample text",
+        "Inspect capture groups and match indexes",
+        "Validate patterns for emails, URLs, IDs, and logs",
+        "Check JavaScript regex behavior with flags like g, i, and m",
       ],
       faq: [
         {
-          question: "Which regex engine does this use?",
+          question: "Which regex engine does this tool use?",
           answer:
-            "It uses the JavaScript regular expression engine available in the browser.",
+            "It uses the JavaScript regular expression engine available in your browser.",
         },
         {
-          question: "Can this show capture groups?",
+          question: "Can I inspect regex capture groups and match indexes?",
           answer:
-            "Yes. Capture groups are displayed separately for each match when the pattern includes groups.",
+            "Yes. The tool shows each match, its index, and any capture groups produced by the pattern.",
         },
         {
-          question: "Does it protect against slow regex patterns?",
+          question: "Does this regex tester protect against catastrophic backtracking?",
           answer:
-            "Yes. Regex execution is handled with timeout protection to reduce the risk of freezing the main UI.",
+            "Yes. Regex execution is isolated with timeout protection to reduce the risk of freezing the main interface.",
+        },
+        {
+          question: "Is regex testing done locally in the browser?",
+          answer:
+            "Yes. Pattern testing runs locally in your browser and does not send your input text to a server.",
         },
       ],
       relatedTools: ["/json", "/url-parser", "/markdown", "/diff-checker"],
@@ -631,12 +685,13 @@ export const tools = [
     name: "FTL Previewer",
     path: "/ftl-previewer",
     component: FtlPreviewer,
-    description: "Preview FreeMarker templates with mock JSON data.",
+    description:
+      "Preview FreeMarker FTL templates with mock JSON data in your browser.",
     tags: ["code", "ftl", "freemarker", "template"],
     icon: <FileCode size={40} />,
-    seoTitle: "FreeMarker (FTL) Template Previewer - TransformJS",
+    seoTitle: "FreeMarker FTL Previewer - TransformJS",
     seoDesc:
-      "Mock and render Apache FreeMarker templates using local JSON context datasets.",
+      "Preview FreeMarker FTL templates with mock JSON data locally in your browser to test rendering, variables, and conditions.",
     tips: [
       "Paste your FTL template on the left and mock JSON data below it.",
       "Click Render to see the HTML output in the Preview tab.",
@@ -645,28 +700,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Preview Apache FreeMarker FTL templates with mock JSON data directly in your browser. This tool helps test template logic, rendered HTML, variables, conditions, and list output without needing a backend rendering environment.",
+        "FTL Previewer is a browser-based tool for previewing Apache FreeMarker templates with mock JSON data. Use it to test template logic, rendered HTML, variables, conditions, and list output without needing a backend rendering environment. Rendering happens locally in your browser, so your templates and data stay on your device.",
       useCases: [
-        "Render FTL templates with mock JSON data",
+        "Render FreeMarker FTL templates with mock JSON data",
         "Debug missing variables and conditional output",
-        "Preview generated HTML before integrating templates",
-        "Test simple #assign, #if, #else, and #list logic locally",
+        "Preview generated HTML before backend integration",
+        "Test practical subsets of #assign, #if, #else, and #list logic locally",
       ],
       faq: [
         {
-          question: "Does this use a real FreeMarker server?",
+          question: "Does this use a real FreeMarker server engine?",
           answer:
-            "No. It is a local previewer with custom mock rendering for common FTL patterns.",
+            "No. It is a local previewer that supports a practical subset of FreeMarker behavior for template testing.",
         },
         {
-          question: "Can I test templates with JSON data?",
+          question: "Can I test FreeMarker templates with JSON data?",
           answer:
-            "Yes. Paste mock JSON data and render the template against that local data context.",
+            "Yes. You can paste mock JSON data and render the template against that local data context.",
         },
         {
           question: "Is every FreeMarker feature supported?",
           answer:
-            "No. The previewer supports a practical subset for local template testing, not the full FreeMarker engine.",
+            "No. The previewer supports a focused subset for local testing, not the full FreeMarker engine.",
+        },
+        {
+          question: "Are my templates uploaded anywhere?",
+          answer:
+            "No. Template rendering happens locally in your browser and is not sent to a server.",
         },
       ],
       relatedTools: ["/json", "/html-preview", "/diff-checker", "/markdown"],
@@ -677,12 +737,12 @@ export const tools = [
     path: "/case-converter",
     component: CaseConverter,
     description:
-      "Convert text between camelCase, snake_case, kebab-case, PascalCase and more.",
+      "Convert text between camelCase, snake_case, kebab-case, PascalCase, and more.",
     tags: ["code", "case", "convert", "text"],
     icon: <ArrowLeftRight size={40} strokeWidth={1.5} />,
     seoTitle: "String Case Converter - TransformJS",
     seoDesc:
-      "Convert text casing between camelCase, snake_case, PascalCase, kebab-case, UPPERCASE, and lowercase.",
+      "Convert text between camelCase, PascalCase, snake_case, kebab-case, title case, uppercase, and lowercase in your browser.",
     tips: [
       "Type or paste any text in any format - the tool detects it automatically.",
       "Supports camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE and more.",
@@ -691,28 +751,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Convert words, labels, and identifiers between common string case formats such as camelCase, PascalCase, snake_case, kebab-case, title case, and uppercase. Use it when renaming variables, routes, filenames, constants, or UI labels.",
+        "Case Converter is a browser-based tool for converting text between common naming and casing formats such as camelCase, PascalCase, snake_case, kebab-case, title case, lowercase, and uppercase. Use it for variables, routes, filenames, constants, and UI labels during development. Conversion happens locally in your browser, so your text stays on your device.",
       useCases: [
         "Convert variable names between camelCase and snake_case",
-        "Generate kebab-case strings for URLs or filenames",
-        "Create SCREAMING_SNAKE constants",
+        "Generate kebab-case strings for URLs, slugs, or filenames",
+        "Create SCREAMING_SNAKE constants for codebases",
         "Normalize copied labels into developer-friendly identifiers",
       ],
       faq: [
         {
-          question: "Can this convert existing camelCase text?",
+          question: "Can this convert existing camelCase or snake_case text?",
           answer:
             "Yes. The tool detects common case boundaries and converts the input into multiple output formats.",
         },
         {
-          question: "Does it remove special characters?",
+          question: "Does the case converter remove special characters?",
           answer:
-            "Yes. Special symbols are stripped so the output is cleaner for identifiers and filenames.",
+            "Yes. Special symbols are stripped so the output is cleaner for identifiers, filenames, and code-friendly text.",
         },
         {
           question: "Can I copy only one case format?",
           answer:
             "Yes. Each output card has its own copy button for copying a single format.",
+        },
+        {
+          question: "Is text conversion done locally in the browser?",
+          answer:
+            "Yes. The tool runs locally in your browser and does not upload your input text for processing.",
         },
       ],
       relatedTools: ["/regex", "/diff-checker", "/markdown", "/url-encode"],
@@ -723,12 +788,12 @@ export const tools = [
     path: "/uuid-generator",
     component: UuidGenerator,
     description:
-      "Generate cryptographically secure UUID v4 identifiers instantly.",
+      "Generate UUID v4 values locally in your browser, one or many at once.",
     tags: ["text", "uuid", "guid", "generate"],
     icon: <Fingerprint size={40} strokeWidth={1.5} />,
-    seoTitle: "UUID v4 Generator - Bulk Unique Identifiers - TransformJS",
+    seoTitle: "UUID v4 Generator - Bulk Unique IDs - TransformJS",
     seoDesc:
-      "Generate cryptographically secure version 4 UUIDs in bulk instantly inside your browser.",
+      "Generate UUID v4 values locally in your browser for databases, fixtures, APIs, logs, and development workflows.",
     tips: [
       "Set the count (1-100) and click Generate to create multiple UUIDs at once.",
       "Each UUID is generated with crypto.randomUUID() - cryptographically secure.",
@@ -737,28 +802,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Generate cryptographically secure UUID v4 identifiers directly in your browser. Use this tool to create unique IDs for databases, fixtures, logs, test data, mock APIs, and development workflows that need random identifiers.",
+        "UUID Generator is a browser-based tool for creating UUID v4 identifiers for development and technical workflows. Use it to generate unique IDs for databases, test fixtures, mock APIs, logs, and sample data. UUID generation happens locally in your browser, so nothing is uploaded or stored by TransformJS.",
       useCases: [
-        "Generate one or many UUID v4 identifiers",
-        "Create IDs for mock data and test fixtures",
-        "Copy unique identifiers for database records",
-        "Produce random GUID-style values without a backend",
+        "Generate one or many UUID v4 identifiers instantly",
+        "Create IDs for mock data, fixtures, and test records",
+        "Produce unique identifiers for APIs and database entries",
+        "Copy single UUIDs or full generated lists for development workflows",
       ],
       faq: [
         {
-          question: "What version of UUID does this generate?",
+          question: "What version of UUID does this tool generate?",
           answer:
-            "It generates UUID v4 values, which are random UUIDs commonly used for unique identifiers.",
+            "It generates UUID v4 values, which are random UUIDs commonly used as unique identifiers.",
+        },
+        {
+          question: "Can I generate multiple UUIDs at once?",
+          answer:
+            "Yes. You can generate UUIDs in bulk and copy either individual values or the full list.",
         },
         {
           question: "Are generated UUIDs guaranteed to be unique?",
           answer:
-            "UUID v4 values are random with an extremely low collision probability, but no random ID system can promise absolute uniqueness.",
+            "UUID v4 values have an extremely low collision probability, but no random identifier system can promise absolute uniqueness.",
         },
         {
-          question: "Can I generate UUIDs in bulk?",
+          question: "Is UUID generation done locally in the browser?",
           answer:
-            "Yes. You can generate multiple UUIDs at once and copy individual values or the full list.",
+            "Yes. UUIDs are generated locally in your browser using browser APIs.",
         },
       ],
       relatedTools: ["/hash-generator", "/jwt", "/json", "/password-generator"],
@@ -769,12 +839,12 @@ export const tools = [
     path: "/url-parser",
     component: UrlParser,
     description:
-      "Break down any URL into protocol, host, path, query params and hash.",
+      "Parse URLs into protocol, host, path, query parameters, and hash values.",
     tags: ["text", "url", "parse", "query"],
     icon: <Link2 size={40} strokeWidth={1.5} />,
-    seoTitle: "URL Parser & Query String Decoder - TransformJS",
+    seoTitle: "URL Parser & Query Parameter Inspector - TransformJS",
     seoDesc:
-      "Deconstruct any URL into protocol, domain, parameters, and query key-value pairs easily.",
+      "Parse URLs into protocol, host, port, path, query parameters, and hash values directly in your browser.",
     tips: [
       "Paste any full URL including http:// or https://.",
       "Query parameters are shown as individual key=value pairs.",
@@ -783,28 +853,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Parse and break down URLs into protocol, hostname, port, path, query parameters, and hash fragments. This tool is useful for debugging links, API endpoints, redirects, tracking parameters, and encoded query strings.",
+        "URL Parser is a browser-based tool for breaking down URLs into protocol, hostname, port, pathname, query parameters, and hash fragments. Use it to inspect links, API endpoints, redirects, and tracking parameters during debugging. URL parsing happens locally in your browser, so your input is not uploaded to a server.",
       useCases: [
-        "Inspect query parameters from long URLs",
-        "Debug API endpoints and redirect links",
-        "Separate protocol, host, path, port, and hash values",
-        "Copy individual query parameter values quickly",
+        "Inspect query parameters from long or complex URLs",
+        "Debug API endpoints, redirects, and callback links",
+        "Separate protocol, host, path, port, and hash values quickly",
+        "Copy individual query parameter pairs during debugging",
       ],
       faq: [
         {
-          question: "Does the URL need http:// or https://?",
+          question: "Does the URL need http:// or https:// to be parsed correctly?",
           answer:
-            "A full URL with a protocol works best because the browser URL parser can identify all parts correctly.",
+            "A full URL with a protocol works best because the browser URL parser can identify all parts more reliably.",
         },
         {
-          question: "Can this decode query parameters?",
+          question: "Can this parse query parameters into key-value pairs?",
           answer:
-            "It separates query parameters into key-value rows. For manual percent-encoding or decoding, use the URL Encoder / Decoder.",
+            "Yes. The tool separates query parameters into individual key-value rows for easier inspection.",
         },
         {
           question: "Why is the port sometimes empty?",
           answer:
             "The port is shown only when it is explicitly present in the URL, such as :8080.",
+        },
+        {
+          question: "Is URL parsing done locally in the browser?",
+          answer:
+            "Yes. URL parsing happens locally in your browser without sending the URL to a server.",
         },
       ],
       relatedTools: ["/url-encode", "/regex", "/base64", "/json"],
@@ -815,12 +890,12 @@ export const tools = [
     path: "/diff-checker",
     component: DiffChecker,
     description:
-      "Compare two text blocks and highlight line-by-line differences.",
+      "Compare two text blocks and highlight line-by-line differences instantly.",
     tags: ["code", "diff", "compare", "text"],
     icon: <GitCompare size={40} strokeWidth={1.5} />,
-    seoTitle: "Diff Checker - Compare Text & Code Differences - TransformJS",
+    seoTitle: "Diff Checker - Compare Text and Code - TransformJS",
     seoDesc:
-      "Compare two blocks of text or source code side-by-side to track additions, deletions, and inline modifications.",
+      "Compare two text blocks, code snippets, or config files side by side and highlight added, removed, and unchanged lines.",
     tips: [
       "Paste the original text on the left and the modified version on the right.",
       "Added lines are highlighted in green, removed lines in red.",
@@ -829,28 +904,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Compare two text blocks and highlight line-by-line differences. Use this diff checker for source code, JSON, SQL, Markdown, configuration files, logs, or any text where you need to see what changed.",
+        "Diff Checker is a browser-based tool for comparing two text blocks and highlighting line-by-line differences. Use it for source code, JSON, SQL, Markdown, configuration files, logs, or any plain text where you need to see what changed. Comparison happens locally in your browser, so your text is not uploaded to a server.",
       useCases: [
         "Compare original and modified code snippets",
         "Review changes in JSON, SQL, Markdown, or config files",
-        "Find added and removed lines in copied text",
+        "Find added and removed lines in pasted text",
         "Check whether two text blocks are identical",
       ],
       faq: [
         {
-          question: "Does this compare files or text?",
+          question: "Does this tool compare files or pasted text?",
           answer:
             "It compares pasted text blocks. You can paste file contents into both panels to inspect differences.",
         },
         {
-          question: "Can I compare code with this tool?",
+          question: "Can I compare source code with this diff checker?",
           answer:
-            "Yes. It works with any plain text, including code, JSON, SQL, Markdown, and logs.",
+            "Yes. It works with any plain text, including source code, JSON, SQL, Markdown, logs, and config files.",
         },
         {
-          question: "How are changes shown?",
+          question: "How are changes shown in the diff output?",
           answer:
-            "Added lines are marked separately from removed lines, and unchanged lines remain visible for context.",
+            "Added lines, removed lines, and unchanged lines are displayed separately so you can review changes with context.",
+        },
+        {
+          question: "Is text comparison done locally in the browser?",
+          answer:
+            "Yes. The comparison runs locally in your browser and does not upload your text to a server.",
         },
       ],
       relatedTools: ["/json", "/markdown", "/html-preview", "/sql-formatter"],
@@ -860,12 +940,13 @@ export const tools = [
     name: "Color Converter",
     path: "/color-converter",
     component: ColorConverter,
-    description: "Convert colors between HEX, RGB, and HSL formats instantly.",
+    description:
+      "Convert colors between HEX, RGB, and HSL and copy CSS-ready values.",
     tags: ["code", "color", "convert", "frontend", "css"],
     icon: <Palette size={40} strokeWidth={1.5} />,
-    seoTitle: "Color Converter & Palette Picker - TransformJS",
+    seoTitle: "Color Converter - HEX, RGB, HSL - TransformJS",
     seoDesc:
-      "Convert color formats between HEX, RGB, HSL, and CMYK with built-in accessibility testing previews.",
+      "Convert colors between HEX, RGB, and HSL, adjust channels visually, and copy CSS-ready color values in your browser.",
     tips: [
       "Type a HEX value to auto convert to RGB and HSL.",
       "Edit any RGB or HSL channel - all formats update live.",
@@ -874,28 +955,33 @@ export const tools = [
     ],
     content: {
       intro:
-        "Pick and convert colors between HEX, RGB, and HSL formats for CSS and frontend development. Use it to inspect color values, adjust channels visually, copy CSS-ready color strings, and move between common web color formats.",
+        "Color Converter is a browser-based tool for converting colors between HEX, RGB, and HSL formats. Use it to inspect color values, adjust channels visually, copy CSS-ready strings, and move between common frontend color formats. Everything runs locally in your browser for fast, private workflow support.",
       useCases: [
-        "Convert HEX colors to RGB and HSL",
-        "Adjust color values with a visual picker",
-        "Copy CSS-ready color strings",
-        "Translate design colors into frontend-friendly formats",
+        "Convert HEX colors to RGB and HSL for frontend work",
+        "Adjust color values visually with live updates",
+        "Copy CSS-ready color strings into stylesheets or components",
+        "Translate design colors into developer-friendly web formats",
       ],
       faq: [
         {
           question: "Which color formats are supported?",
           answer:
-            "The tool supports HEX, RGB, and HSL conversion with live updates between formats.",
+            "The tool supports HEX, RGB, and HSL conversion with live updates between all supported formats.",
         },
         {
           question: "Can I type a HEX value manually?",
           answer:
-            "Yes. You can enter a HEX value and the RGB and HSL values update automatically when the HEX is valid.",
+            "Yes. You can enter a HEX value manually and the RGB and HSL values update automatically when the HEX is valid.",
         },
         {
-          question: "Is this useful for CSS?",
+          question: "Can I use these values directly in CSS?",
           answer:
-            "Yes. The output values are formatted so they can be copied directly into CSS.",
+            "Yes. The generated values are formatted so they can be copied directly into CSS and frontend code.",
+        },
+        {
+          question: "Is color conversion done locally in the browser?",
+          answer:
+            "Yes. Color conversion and visual updates happen locally in your browser.",
         },
       ],
       relatedTools: ["/html-preview", "/markdown", "/case-converter"],
