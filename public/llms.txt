@@ -1,152 +1,51 @@
 # TransformJS
 
-TransformJS is a free, privacy-first, browser-based developer toolkit.
-
-Website: https://transformjs.com
-GitHub: https://github.com/Tzioan4/transformJS
-
-## What it does
-
-TransformJS provides lightweight web tools for developers who need to format, convert, preview, debug, parse, and generate common development data directly in the browser.
-
-All tools run locally in the user's browser. TransformJS does not require accounts, does not use analytics, does not track users, and does not send user input to a server.
+TransformJS is a privacy-first browser-based developer toolkit.
 
 ## Main tools
 
-- JSON Formatter: format, validate, beautify, and minify JSON.
-- Base64 Tool: encode and decode Base64 strings.
-- URL Encoder / Decoder: encode and decode URL-safe text.
-- HTML Preview: preview HTML and CSS snippets in a sandboxed iframe.
-- Markdown Preview: preview Markdown as sanitized HTML.
-- JWT Debugger: decode JWT tokens and verify HMAC signatures locally.
-- YAML to JSON: convert YAML input into JSON.
-- SQL Formatter: format SQL queries.
-- Hash Generator: generate MD5, SHA-1, SHA-256, and SHA-512 hashes.
-- Password Generator: generate secure random passwords.
-- CSV to JSON: convert CSV data into JSON.
-- RegEx Tester: test regular expressions with match highlighting.
-- FTL Previewer: preview FreeMarker templates with mock JSON data.
-- Case Converter: convert text between camelCase, PascalCase, snake_case, kebab-case, and more.
-- UUID Generator: generate UUID values.
-- URL Parser: inspect URL parts such as protocol, host, path, query params, and hash.
-- Diff Checker: compare two text blocks line by line.
-- Color Converter: convert colors between HEX, RGB, and HSL.
-
-## Important URLs
-
-- Homepage: https://transformjs.com/
-- About: https://transformjs.com/about
-- Privacy: https://transformjs.com/privacy
-
-## Tool URLs
-
-- https://transformjs.com/json
-- https://transformjs.com/base64
-- https://transformjs.com/url-encoder-decoder
-- https://transformjs.com/html-preview
-- https://transformjs.com/markdown-preview
-- https://transformjs.com/jwt-debugger
-- https://transformjs.com/yaml-to-json
-- https://transformjs.com/sql-formatter
-- https://transformjs.com/hash-generator
-- https://transformjs.com/password-generator
-- https://transformjs.com/csv-to-json
-- https://transformjs.com/regex
-- https://transformjs.com/ftl-previewer
-- https://transformjs.com/case-converter
-- https://transformjs.com/uuid-generator
-- https://transformjs.com/url-parser
-- https://transformjs.com/diff-checker
-- https://transformjs.com/color-converter
-
-## Key facts
-
-- Free to use.
-- Open source.
-- Built with React and Vite.
-- Runs in the browser.
-- Privacy-first.
-- No accounts.
-- No analytics.
-- No tracking.
-- No server-side processing of user input.
-- Designed for developers and technical users.
-
-## Common search intents
-
-TransformJS is relevant for searches such as:
-
-- transformjs
-- TransformJS
-- transform js
-- fast developer tools
-- open source tools
-- free online developer tools
-- online JSON formatter
-- JWT debugger
-- regex tester
-- markdown preview
-- HTML preview
-- Base64 encoder decoder
-- SQL formatter
-- YAML to JSON converter
-- CSV to JSON converter
-- password generator
-- hash generator
-- browser-based developer toolkit
-- privacy-first developer tools
-- DevToys alternative
-- CyberChef alternative
-
+- JSON Formatter: https://transformjs.com/json
+- YAML to JSON: https://transformjs.com/yaml-to-json
+- CSV to JSON: https://transformjs.com/csv-to-json
+- SQL Formatter: https://transformjs.com/sql-formatter
+- JWT Debugger: https://transformjs.com/jwt-debugger
+- Base64 Tool: https://transformjs.com/base64
+- Hash Generator: https://transformjs.com/hash-generator
+- Password Generator: https://transformjs.com/password-generator
+- URL Encoder / Decoder: https://transformjs.com/url-encoder-decoder
+- URL Parser: https://transformjs.com/url-parser
+- UUID Generator: https://transformjs.com/uuid-generator
+- Regex Tester: https://transformjs.com/regex-tester
+- Markdown Preview: https://transformjs.com/markdown-preview
+- HTML Preview: https://transformjs.com/html-preview
+- Case Converter: https://transformjs.com/case-converter
+- Diff Checker: https://transformjs.com/diff-checker
+- Color Converter: https://transformjs.com/color-converter
+- FTL Previewer: https://transformjs.com/ftl-previewer
 ## Alternative pages
 
-- DevToys alternative:
-  https://transformjs.com/alternatives/devtoys
-
-- CyberChef alternative:
-  https://transformjs.com/alternatives/cyberchef
-
-- Online JSON formatter alternative:
-  https://transformjs.com/alternatives/jsonformatter
+- Best DevToys Alternative: https://transformjs.com/alternatives/devtoys
+- Best CyberChef Alternative: https://transformjs.com/alternatives/cyberchef
+- Best Online JSON Formatter Alternative: https://transformjs.com/alternatives/jsonformatter
 
 ## Use-case pages
 
-- JSON debugging:
-  https://transformjs.com/use-cases/json-debugging
-
-- Frontend development:
-  https://transformjs.com/use-cases/frontend-development
-
-- API testing:
-  https://transformjs.com/use-cases/api-testing
-
-- Data formatting:
-  https://transformjs.com/use-cases/data-formatting
+- JSON Debugging Tools: https://transformjs.com/use-cases/json-debugging
+- Frontend Development Tools: https://transformjs.com/use-cases/frontend-development
+- API Testing Tools: https://transformjs.com/use-cases/api-testing
+- Data Formatting Tools: https://transformjs.com/use-cases/data-formatting
 
 ## Tool groups
 
-- JSON tools:
-  https://transformjs.com/groups/json-tools
+- JSON Tools: https://transformjs.com/groups/json-tools
+- Encoding Tools: https://transformjs.com/groups/encoding-tools
+- Text Tools: https://transformjs.com/groups/text-tools
+- Preview Tools: https://transformjs.com/groups/preview-tools
 
-- Encoding tools:
-  https://transformjs.com/groups/encoding-tools
+## Key facts
 
-- Text tools:
-  https://transformjs.com/groups/text-tools
-
-- Preview tools:
-  https://transformjs.com/groups/preview-tools
-
-## Search intent coverage
-
-TransformJS is useful for:
-- browser-based developer tools
-- privacy-first developer utilities
-- online JSON formatting
-- JWT debugging
-- Base64 encoding and decoding
-- regex testing
-- API debugging workflows
-- frontend development utilities
-- markdown and HTML previewing
-- browser-based data formatting
+- Browser-based
+- Privacy-first
+- No installation
+- No tracking
+- Developer-focused utilities
