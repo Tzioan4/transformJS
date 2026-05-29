@@ -6,54 +6,43 @@ All notable changes to TransformJS are documented here.
 
 ### Added
 
-* Added modular tool architecture split across:
+* Introduced a dedicated tool registry architecture using `src/tools/registry.js`.
+* Split the previous monolithic tool definition file into:
 
-  * `src/tools/registry.js`
-  * `src/tools/toolComponents.jsx`
-  * `src/tools/toolIcons.jsx`
-* Added centralized component registry for lazy-loaded tool imports.
-* Added centralized icon registry for reusable Lucide icons.
-* Added workflow documentation for adding future tools safely.
+  * `registry.js`
+  * `toolComponents.jsx`
+  * `toolIcons.jsx`
+* Centralized tool metadata management.
 
 ### Changed
 
-* Refactored the old monolithic `src/tools/index.jsx` architecture into separated registry layers.
-* Kept the public `tools` export API stable to avoid breaking:
+* Refactored `src/content/toolRoutes.js` to derive tool routes directly from the tool registry.
+* Refactored `scripts/generate-llms.js` to generate main tool entries from the tool registry instead of maintaining a hardcoded list.
+* Simplified route generation flow across sitemap and AI discoverability assets.
 
-  * homepage cards
-  * filters/search
-  * tool routes
-  * SEO metadata
-  * FAQ rendering
-  * related tools
-  * tips system
-* Updated internal imports to use the new modular registry structure.
+### Architecture
+
+Tool route generation now follows:
+
+toolRegistry
+→ toolRoutes
+→ siteRoutes
+→ sitemap.xml
+
+Tool AI metadata generation now follows:
+
+toolRegistry
+→ generate-llms.js
+→ llms.txt
 
 ### Verified
 
 * `npm run build` passed successfully.
-* `npm run test:run` passed successfully.
-* Sitemap and llms generation verified after migration.
-* Manual route verification completed for:
-
-  * tools
-  * use-case pages
-  * alternatives pages
-  * grouped hub pages
-
-### Notes
-
-* The registry architecture is now production-safe and significantly easier to scale.
-* Future improvement planned:
-
-  * make `registry.js` the single source of truth for:
-
-    * sitemap generation
-    * llms generation
-    * tool routes
-    * indexing systems
-  * remove remaining hardcoded tool route duplication.
-
+* `npm run test:run` passed successfully (56 tests).
+* `npm run generate:sitemap` generated valid sitemap output.
+* `npm run generate:llms` generated valid llms.txt output.
+* No production routes changed.
+* No UI behavior changed.
 
 ## SprintAI 4 — Content Discoverability Expansion
 
