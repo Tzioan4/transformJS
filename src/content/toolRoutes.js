@@ -1,20 +1,3 @@
-export const toolRoutes = [
-  "/json",
-  "/yaml-to-json",
-  "/csv-to-json",
-  "/sql-formatter",
-  "/jwt-debugger",
-  "/base64",
-  "/hash-generator",
-  "/password-generator",
-  "/url-encoder-decoder",
-  "/url-parser",
-  "/uuid-generator",
-  "/regex-tester",
-  "/markdown-preview",
-  "/html-preview",
-  "/case-converter",
-  "/diff-checker",
-  "/color-converter",
-  "/ftl-previewer",
-];
+import { toolRegistry } from "../tools/registry.js";
+
+export const toolRoutes = toolRegistry.map((tool) => tool.path);
