@@ -2,62 +2,50 @@
 
 All notable changes to TransformJS are documented here.
 
-## SprintAI 5 — Registry Architecture Migration
+## SprintAI 5 — Registry Consolidation & Automation
 
 ### Added
 
-* Added modular tool architecture split across:
-
-  * `src/tools/registry.js`
-  * `src/tools/toolComponents.jsx`
-  * `src/tools/toolIcons.jsx`
-* Added centralized component registry for lazy-loaded tool imports.
-* Added centralized icon registry for reusable Lucide icons.
-* Added workflow documentation for adding future tools safely.
+- Introduced a centralized tool registry using `src/tools/registry.js`.
+- Split component references into `src/tools/toolComponents.jsx`.
+- Split icon references into `src/tools/toolIcons.jsx`.
+- Centralized tool metadata management.
 
 ### Changed
 
-* Refactored the old monolithic `src/tools/index.jsx` architecture into separated registry layers.
-* Kept the public `tools` export API stable to avoid breaking:
+- Refactored `src/content/toolRoutes.js` to derive tool routes from the tool registry.
+- Refactored `scripts/generate-llms.js` to generate tool entries from registry data.
+- Simplified route and metadata generation flows.
+- Reduced duplication between tool metadata, routes, sitemap generation, and AI discoverability assets.
 
-  * homepage cards
-  * filters/search
-  * tool routes
-  * SEO metadata
-  * FAQ rendering
-  * related tools
-  * tips system
-* Updated internal imports to use the new modular registry structure.
+### Architecture
+
+Tool route generation now follows:
+
+toolRegistry
+→ toolRoutes
+→ siteRoutes
+→ sitemap.xml
+
+Tool AI metadata generation now follows:
+
+toolRegistry
+→ generate-llms.js
+→ llms.txt
 
 ### Verified
 
-* `npm run build` passed successfully.
-* `npm run test:run` passed successfully.
-* Sitemap and llms generation verified after migration.
-* Manual route verification completed for:
-
-  * tools
-  * use-case pages
-  * alternatives pages
-  * grouped hub pages
-
-### Notes
-
-* The registry architecture is now production-safe and significantly easier to scale.
-* Future improvement planned:
-
-  * make `registry.js` the single source of truth for:
-
-    * sitemap generation
-    * llms generation
-    * tool routes
-    * indexing systems
-  * remove remaining hardcoded tool route duplication.
-
+- `npm run build` passed successfully.
+- `npm run test:run` passed successfully.
+- `npm run generate:sitemap` generated valid sitemap output.
+- `npm run generate:llms` generated valid llms.txt output.
+- No production routes changed.
+- No user-facing behavior changed.
 
 ## SprintAI 4 — Content Discoverability Expansion
 
 ### Added
+
 - Added reusable alternative comparison page architecture.
 - Added registry-driven alternative content system.
 - Added comparison routes for:
@@ -75,22 +63,24 @@ All notable changes to TransformJS are documented here.
 - Expanded sitemap.xml with semantic content routes.
 
 ### Changed
+
 - Improved SEO and GEO discoverability outside individual tool pages.
 - Improved semantic topical authority for developer workflows.
 - Improved cross-page discoverability through contextual internal linking.
 - Improved browser-based and privacy-first positioning messaging across content pages.
 
 ### SEO / AI Discoverability
+
 - Expanded competitor-intent search coverage.
 - Expanded long-tail search surface area.
 - Improved AI-readable workflow and comparison content.
 - Improved semantic clustering between tools and workflows.
 - Strengthened TransformJS ecosystem positioning for AI search systems.
 
-
 ## SprintAI 3 — Semantic Content Expansion System
 
 ### Added
+
 - Added richer SEO and GEO-focused descriptions across the centralized tool registry.
 - Added improved tool-level semantic intros for all TransformJS tools.
 - Added stronger use-case content targeting real developer workflows and search intent.
@@ -99,6 +89,7 @@ All notable changes to TransformJS are documented here.
 - Added FAQ structured metadata to tool routes through the shared SEO system.
 
 ### Changed
+
 - Rewrote tool descriptions to better align with search intent and semantic clarity.
 - Rewrote tool SEO descriptions for stronger metadata quality and better SERP readability.
 - Improved tool FAQ copy for answer extraction, long-tail search relevance, and AI discoverability.
@@ -106,14 +97,17 @@ All notable changes to TransformJS are documented here.
 - Strengthened privacy-first and local-browser processing messaging across tool content.
 
 ### SEO / AI Discoverability
+
 - Improved machine-readable question-and-answer extraction for tool pages.
 - Improved structured discoverability for search engines and AI parsers through `FAQPage` schema.
 - Improved entity clarity for individual tools and their practical developer use cases.
 - Improved long-tail keyword coverage across metadata, tool intros, and FAQ content.
 - Increased alignment between on-page semantic content and JSON-LD structured data.
 
-- 
+-
+
 ### Added
+
 - Added reusable semantic content support for all tool pages.
 - Extended the centralized tool registry with:
   - `content.intro`
@@ -126,6 +120,7 @@ All notable changes to TransformJS are documented here.
 - Added reusable related tools section with automatic path-to-name resolution.
 
 ### Changed
+
 - Integrated `ToolSeoContent` into tool route rendering in `App.jsx`.
 - Expanded tool pages with AI-readable semantic sections:
   - About
@@ -137,16 +132,17 @@ All notable changes to TransformJS are documented here.
 - Kept existing flat route architecture unchanged.
 
 ### SEO / AI Discoverability
+
 - Improved long-tail keyword coverage across tool pages.
 - Improved semantic crawlability for AI crawlers and search engines.
 - Improved contextual relationships between tools through internal linking.
 - Improved structured content density without overengineering the architecture.
 - Strengthened registry-driven metadata architecture for future automation.
 
-
 ## SprintAI 2 — SEO Metadata Foundation
 
 ### Added
+
 - Added reusable SEO metadata component using `react-helmet-async`.
 - Added canonical URL support for the homepage, static pages, and tool pages.
 - Added JSON-LD structured data helpers for:
@@ -157,22 +153,25 @@ All notable changes to TransformJS are documented here.
 - Added tool page structured data generated from the central tool registry.
 
 ### Changed
+
 - Replaced inline Helmet metadata in `App.jsx` with the reusable `SEO` component.
 - Kept existing flat tool routes unchanged to avoid indexing disruption.
-
 
 ## SprintAI 1 — AI Discoverability Foundation
 
 ### Added
+
 - Added AI-aware robots.txt rules
 - Added llms.txt
 - Synced sitemap.xml with tool registry routes
 - Added AI crawler discoverability support
 
 ### SEO / Infrastructure
+
 - Resubmitted sitemap to Google Search Console
 - Submitted sitemap to Bing Webmaster Tools
 - Requested indexing for core pages and tools
+
 ---
 
 ## Sprint 4 — Testing, Error Boundaries & Lint Cleanup
