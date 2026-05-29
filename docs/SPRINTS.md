@@ -84,11 +84,12 @@ Replaced framer-motion library with CSS animations.
 - Sprint 4 focused on maintainability and correctness confidence.
 - No unverified performance or coverage metrics are claimed.
 
-
 # SprintAI Roadmap
+
 ## SprintAI 1 — Static AI Discoverability
 
 Completed:
+
 - Added AI-aware robots.txt rules
 - Added llms.txt
 - Synced sitemap.xml with real tool routes
@@ -97,6 +98,7 @@ Completed:
 - Requested indexing for core pages
 
 Goals:
+
 - improve crawlability
 - improve AI crawler discoverability
 - improve machine-readable project understanding
@@ -107,6 +109,7 @@ Goals:
 ## SprintAI 2 — Structured Metadata System
 
 Planned:
+
 - reusable JSON-LD component
 - SoftwareApplication schema for tools
 - metadata automation from tool registry
@@ -115,6 +118,7 @@ Planned:
 - shared SEO utilities
 
 Goals:
+
 - improve semantic understanding
 - improve rich search compatibility
 - reduce duplicated SEO logic
@@ -125,6 +129,7 @@ Goals:
 ## SprintAI 3 — AI-Readable Content Expansion
 
 Planned:
+
 - richer tool descriptions
 - AI-readable content sections
 - FAQ sections
@@ -133,6 +138,7 @@ Planned:
 - improved long-tail keyword coverage
 
 Goals:
+
 - improve content depth
 - improve contextual indexing
 - improve search intent matching
@@ -143,6 +149,7 @@ Goals:
 ## SprintAI 4 — Content & Discoverability Expansion
 
 Planned:
+
 - alternative comparison pages
 - use-case pages
 - developer workflow pages
@@ -151,64 +158,65 @@ Planned:
 - advanced internal SEO linking
 
 Examples:
+
 - /alternatives/devtoys
 - /alternatives/cyberchef
 - /use-cases/json-debugging
 - /use-cases/frontend-development
 
 Goals:
+
 - improve discoverability outside tool pages
 - improve topical authority
 - improve external search coverage
 - improve ecosystem positioning
+
 ---
 
-## SprintAI 5 — Registry Architecture Migration
+## SprintAI 5 — Registry Consolidation & Automation
 
 ### Goal
 
-Remove remaining route and metadata duplication by establishing the tool registry as the single source of truth for tool definitions.
+Establish the tool registry as the single source of truth for tool metadata, routes, SEO content, sitemap generation, and AI discoverability assets.
 
 ### Completed
 
-#### Tool Registry Extraction
+#### Registry Consolidation
 
-* Moved tool metadata into `src/tools/registry.js`.
-* Split tool component references into `toolComponents.jsx`.
-* Split tool icon references into `toolIcons.jsx`.
+- Centralized tool metadata in `src/tools/registry.js`.
+- Split component references into `toolComponents.jsx`.
+- Split icon references into `toolIcons.jsx`.
 
-#### Route Centralization
+#### Route Automation
 
-* Refactored `toolRoutes.js` to generate tool routes directly from the registry.
-* Preserved existing production URLs.
+- Refactored `toolRoutes.js` to derive routes directly from registry data.
+- Preserved all existing production URLs.
 
 #### AI Discoverability Integration
 
-* Refactored `generate-llms.js` to use registry data instead of hardcoded tool lists.
-* Connected AI discoverability assets to registry-managed metadata.
+- Refactored `generate-llms.js` to consume registry data instead of maintaining separate tool metadata.
+- Connected AI discoverability assets to registry-managed tool definitions.
 
 #### Sitemap Integration
 
-* Registry now feeds:
+Registry data now feeds:
 
-  * toolRoutes
-  * siteRoutes
-  * sitemap generation
+- toolRoutes
+- siteRoutes
+- sitemap generation
 
 ### Outcome
 
-Adding a new tool now requires updates only to:
+Core tool registration is centralized through:
 
-* `src/tools/toolComponents.jsx`
-* `src/tools/toolIcons.jsx`
-* `src/tools/registry.js`
+- `src/tools/registry.js`
+- `src/tools/toolComponents.jsx`
+- `src/tools/toolIcons.jsx`
 
-Tool route generation, sitemap generation, and llms generation update automatically from registry data.
+Tool routes, sitemap generation, and llms generation are automatically derived from registry-managed metadata.
 
 ### Status
 
 Completed.
-
-
 
 _Last updated: May 2026_
