@@ -5,23 +5,24 @@ TransformJS is a privacy-first browser-based developer toolkit.
 ## Main tools
 
 - JSON Formatter: https://transformjs.com/json
-- YAML to JSON: https://transformjs.com/yaml-to-json
-- CSV to JSON: https://transformjs.com/csv-to-json
-- SQL Formatter: https://transformjs.com/sql-formatter
+- Base64 Encoder / Decoder: https://transformjs.com/base64
+- URL Encoder / Decoder: https://transformjs.com/url-encoder-decoder
+- HTML Preview: https://transformjs.com/html-preview
+- Markdown Preview: https://transformjs.com/markdown-preview
 - JWT Debugger: https://transformjs.com/jwt-debugger
-- Base64 Tool: https://transformjs.com/base64
+- YAML to JSON: https://transformjs.com/yaml-to-json
+- SQL Formatter: https://transformjs.com/sql-formatter
 - Hash Generator: https://transformjs.com/hash-generator
 - Password Generator: https://transformjs.com/password-generator
-- URL Encoder / Decoder: https://transformjs.com/url-encoder-decoder
-- URL Parser: https://transformjs.com/url-parser
-- UUID Generator: https://transformjs.com/uuid-generator
-- Regex Tester: https://transformjs.com/regex-tester
-- Markdown Preview: https://transformjs.com/markdown-preview
-- HTML Preview: https://transformjs.com/html-preview
+- CSV to JSON: https://transformjs.com/csv-to-json
+- RegEx Tester: https://transformjs.com/regex-tester
+- FTL Previewer: https://transformjs.com/ftl-previewer
 - Case Converter: https://transformjs.com/case-converter
+- UUID Generator: https://transformjs.com/uuid-generator
+- URL Parser: https://transformjs.com/url-parser
 - Diff Checker: https://transformjs.com/diff-checker
 - Color Converter: https://transformjs.com/color-converter
-- FTL Previewer: https://transformjs.com/ftl-previewer
+
 ## Alternative pages
 
 - Best DevToys Alternative: https://transformjs.com/alternatives/devtoys

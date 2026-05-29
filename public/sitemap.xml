@@ -14,19 +14,25 @@
     <loc>https://transformjs.com/json</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/yaml-to-json</loc>
+    <loc>https://transformjs.com/base64</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/csv-to-json</loc>
+    <loc>https://transformjs.com/url-encoder-decoder</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/sql-formatter</loc>
+    <loc>https://transformjs.com/html-preview</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/markdown-preview</loc>
   </url>
   <url>
     <loc>https://transformjs.com/jwt-debugger</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/base64</loc>
+    <loc>https://transformjs.com/yaml-to-json</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/sql-formatter</loc>
   </url>
   <url>
     <loc>https://transformjs.com/hash-generator</loc>
@@ -35,34 +41,28 @@
     <loc>https://transformjs.com/password-generator</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/url-encoder-decoder</loc>
-  </url>
-  <url>
-    <loc>https://transformjs.com/url-parser</loc>
-  </url>
-  <url>
-    <loc>https://transformjs.com/uuid-generator</loc>
+    <loc>https://transformjs.com/csv-to-json</loc>
   </url>
   <url>
     <loc>https://transformjs.com/regex-tester</loc>
   </url>
   <url>
-    <loc>https://transformjs.com/markdown-preview</loc>
-  </url>
-  <url>
-    <loc>https://transformjs.com/html-preview</loc>
+    <loc>https://transformjs.com/ftl-previewer</loc>
   </url>
   <url>
     <loc>https://transformjs.com/case-converter</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/uuid-generator</loc>
+  </url>
+  <url>
+    <loc>https://transformjs.com/url-parser</loc>
   </url>
   <url>
     <loc>https://transformjs.com/diff-checker</loc>
   </url>
   <url>
     <loc>https://transformjs.com/color-converter</loc>
-  </url>
-  <url>
-    <loc>https://transformjs.com/ftl-previewer</loc>
   </url>
   <url>
     <loc>https://transformjs.com/alternatives/devtoys</loc>
