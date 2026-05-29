@@ -167,57 +167,48 @@ Goals:
 
 ### Goal
 
-Refactor the tool system into a scalable modular registry architecture without breaking the existing production UI or routes.
+Remove remaining route and metadata duplication by establishing the tool registry as the single source of truth for tool definitions.
 
 ### Completed
 
-* Split the old monolithic `src/tools/index.jsx`.
-* Moved lazy component imports into:
+#### Tool Registry Extraction
 
-  * `src/tools/toolComponents.jsx`
-* Moved reusable Lucide icons into:
+* Moved tool metadata into `src/tools/registry.js`.
+* Split tool component references into `toolComponents.jsx`.
+* Split tool icon references into `toolIcons.jsx`.
 
-  * `src/tools/toolIcons.jsx`
-* Moved tool metadata/content into:
+#### Route Centralization
 
-  * `src/tools/registry.js`
-* Reduced `src/tools/index.jsx` to a simple export layer.
+* Refactored `toolRoutes.js` to generate tool routes directly from the registry.
+* Preserved existing production URLs.
 
-### Result
+#### AI Discoverability Integration
 
-The app now uses a cleaner production-safe architecture where:
+* Refactored `generate-llms.js` to use registry data instead of hardcoded tool lists.
+* Connected AI discoverability assets to registry-managed metadata.
 
-* tool metadata is centralized
-* components are isolated
-* icons are reusable
-* future tools are easier to add
-* SEO/content systems are easier to scale
+#### Sitemap Integration
 
-### Current Architecture
+* Registry now feeds:
 
-```txt
-src/tools/
-├─ index.jsx
-├─ registry.js
-├─ toolComponents.jsx
-└─ toolIcons.jsx
-```
+  * toolRoutes
+  * siteRoutes
+  * sitemap generation
 
+### Outcome
 
-### Future Planned Cleanup
+Adding a new tool now requires updates only to:
 
-Convert `registry.js` into the single source of truth for:
+* `src/tools/toolComponents.jsx`
+* `src/tools/toolIcons.jsx`
+* `src/tools/registry.js`
 
-* sitemap generation
-* llms generation
-* tool route generation
-* indexing/discoverability systems
+Tool route generation, sitemap generation, and llms generation update automatically from registry data.
 
-This will remove duplicated route definitions across:
+### Status
 
-* `toolRoutes.js`
-* `generate-llms.js`
-* sitemap generators
+Completed.
+
 
 
 _Last updated: May 2026_
