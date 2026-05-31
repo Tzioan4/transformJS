@@ -1,4 +1,5 @@
 import "@styles/tools/tools.css";
+
 export default function ToolLayout({
   header,
   input,

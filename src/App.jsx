@@ -17,6 +17,7 @@ import AlternativePage from "./pages/AlternativePage";
 import { tools } from "./tools";
 import UseCasePage from "./pages/UseCasePage";
 import ToolGroupPage from "./pages/groups/ToolGroupPage";
+import ToolSwitcherMount from "./components/ToolSwitcherMount";
 import {
   createBreadcrumbSchema,
   createFaqSchema,
@@ -91,7 +92,7 @@ function AppRoutes({ searchTerm }) {
             element={
               <>
                 <SEO jsonLd={createWebApplicationSchema()} />
-                <Home searchTerm={searchTerm} />
+                <Home searchTerm="" />
               </>
             }
           />
@@ -197,6 +198,7 @@ function AppContent() {
         }}
       >
         <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <ToolSwitcherMount />
 
         <main style={{ flex: 1 }}>
           <AppRoutes searchTerm={searchTerm} />

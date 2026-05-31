@@ -3,6 +3,7 @@ import "@styles/components/searchbar.css";
 import { Link } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../ThemeContext";
+import ToolSearchDropdown from "./ToolSearchDropdown";
 
 export default function Navbar({ searchTerm, setSearchTerm }) {
   const { theme, toggleTheme } = useTheme();
@@ -14,13 +15,11 @@ export default function Navbar({ searchTerm, setSearchTerm }) {
       </Link>
 
       <div className="nav-right">
-        <input
-          type="text"
-          placeholder="(Ctrl+K) Search.. "
-          className="search-input"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+        <ToolSearchDropdown
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
+
         <button
           onClick={toggleTheme}
           className="theme-toggle"
