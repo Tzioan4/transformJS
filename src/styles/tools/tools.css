@@ -481,7 +481,26 @@ textarea:focus {
   display: none;
 }
 
+.drop-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px dashed var(--color-accent);
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+}
 @media (max-width: 800px) {
   .tool-workspace {
     grid-template-columns: 1fr;

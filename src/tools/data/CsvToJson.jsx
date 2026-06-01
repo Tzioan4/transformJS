@@ -4,6 +4,7 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
+import DropOverlay from "../../components/DropOverlay";
 
 function inferType(raw) {
   if (raw === undefined || raw === null) return null;
@@ -94,6 +95,8 @@ export default function CsvToJson({ tips }) {
   };
 
   const handleFileLoad = async (file) => {
+    if (!file) return;
+
     try {
       const text = await readTextFile(file, {
         allowedExtensions: [".csv"],
@@ -167,9 +170,11 @@ export default function CsvToJson({ tips }) {
             handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
+          {isDragging && <DropOverlay label="Drop .csv file here" />}
+
           <textarea
             className="tool-textarea"
-            placeholder="Paste CSV here or drop a .csv file."
+            placeholder="Paste CSV here, upload a .csv file, or drag and drop it."
             value={csv}
             onChange={(e) => setCsv(e.target.value)}
           />
