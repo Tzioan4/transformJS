@@ -4,7 +4,7 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
-
+import DropOverlay from "../../components/DropOverlay";
 
 
 export default function JsonFormatter({ tips }) {
@@ -159,9 +159,10 @@ const [output, setOutput] = useState("");
             handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
+          {isDragging && <DropOverlay label="Drop .json file here" />}
           <textarea
             className="tool-textarea"
-            placeholder="Paste JSON here or drop a .json file."
+            placeholder="Paste JSON here, upload a .json file, or drag and drop it."
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
@@ -177,7 +178,6 @@ const [output, setOutput] = useState("");
               onChange={(e) => handleFileLoad(e.target.files[0])}
             />
           </label>
-
         </div>
       }
       output={

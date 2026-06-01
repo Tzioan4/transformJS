@@ -4,6 +4,7 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
+import DropOverlay from "../../components/DropOverlay";
 
 export function detectDestructiveKeywords(sql) {
   if (!sql) return [];
@@ -181,9 +182,10 @@ export default function SqlFormatter({ tips }) {
             handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
+          {isDragging && <DropOverlay label="Drop .sql file here" />}
           <textarea
             className="tool-textarea"
-            placeholder="Paste SQL here or drop a .sql file."
+            placeholder="Paste SQL here, upload a .sql file, or drag and drop it."
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />

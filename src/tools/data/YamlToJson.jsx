@@ -3,6 +3,7 @@ import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
 import "../../styles/tools/yaml.css";
+import DropOverlay from "../../components/DropOverlay";
 
 const TIMEOUT_MS = 2000;
 const MAX_INPUT_SIZE = 50_000;
@@ -160,9 +161,10 @@ export default function YamlToJson({ tips }) {
             handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
+          {isDragging && <DropOverlay label="Drop .yaml file here" />}
           <textarea
             className="tool-textarea"
-            placeholder="Paste YAML here or drop a .yaml file."
+            placeholder="Paste YAML here, upload a .yaml file, or drag and drop it."
             value={yamlInput}
             onChange={(e) => setYamlInput(e.target.value)}
           />
