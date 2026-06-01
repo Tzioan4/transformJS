@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import ToolInfo from "../../components/ToolInfo";
+import DropOverlay from "../../components/DropOverlay";
+import { readTextFile } from "../../utils/file";
 import "@styles/tools/diff.css";
 
 export function computeDiff(a, b) {
@@ -9,8 +11,8 @@ export function computeDiff(a, b) {
   const m = linesA.length;
   const n = linesB.length;
 
-  //LCS via DP
   const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
       if (linesA[i - 1] === linesB[j - 1]) {
@@ -21,10 +23,10 @@ export function computeDiff(a, b) {
     }
   }
 
-  //backtrack to build diff
   const result = [];
-  let i = m,
-    j = n;
+  let i = m;
+  let j = n;
+
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0 && linesA[i - 1] === linesB[j - 1]) {
       result.push({ type: "same", text: linesA[i - 1] });
@@ -42,69 +44,168 @@ export function computeDiff(a, b) {
   return result.reverse();
 }
 
-const EXAMPLE_A = `function greet(name) {
-  console.log("Hello, " + name);
-  return true;
-}`;
-
-const EXAMPLE_B = `function greet(name, greeting = "Hello") {
-  console.log(greeting + ", " + name + "!");
-  return name;
-}`;
+const ALLOWED_FILE_TYPES = [
+  ".txt",
+  ".json",
+  ".md",
+  ".markdown",
+  ".html",
+  ".htm",
+  ".css",
+  ".js",
+  ".jsx",
+  ".ts",
+  ".tsx",
+  ".sql",
+  ".yaml",
+  ".yml",
+  ".csv",
+];
 
 export default function DiffChecker({ tips }) {
-  const [left, setLeft] = useState(EXAMPLE_A);
-  const [right, setRight] = useState(EXAMPLE_B);
+  const [left, setLeft] = useState("");
+  const [right, setRight] = useState("");
+  const [error, setError] = useState(null);
+  const [leftDragging, setLeftDragging] = useState(false);
+  const [rightDragging, setRightDragging] = useState(false);
 
   const diff = useMemo(() => computeDiff(left, right), [left, right]);
 
-  const added = diff.filter((l) => l.type === "added").length;
-  const removed = diff.filter((l) => l.type === "removed").length;
-  const unchanged = diff.filter((l) => l.type === "same").length;
+  const added = diff.filter((line) => line.type === "added").length;
+  const removed = diff.filter((line) => line.type === "removed").length;
+  const unchanged = diff.filter((line) => line.type === "same").length;
 
-  //texts are considered identical when no additions/removals
-  //AND at least one panel has content (to avoid showing banner in empty state)
   const hasContent = left.length > 0 || right.length > 0;
   const isIdentical = added === 0 && removed === 0 && hasContent;
 
-  const leftLines = diff.filter((l) => l.type !== "added");
-  const rightLines = diff.filter((l) => l.type !== "removed");
+  const leftLines = diff.filter((line) => line.type !== "added");
+  const rightLines = diff.filter((line) => line.type !== "removed");
+
+  const handleFileLoad = async (file, side) => {
+    if (!file) return;
+
+    try {
+      const text = await readTextFile(file, {
+        allowedExtensions: ALLOWED_FILE_TYPES,
+        maxSize: 2 * 1024 * 1024,
+      });
+
+      if (side === "left") {
+        setLeft(text);
+      } else {
+        setRight(text);
+      }
+
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleClear = () => {
+    setLeft("");
+    setRight("");
+    setError(null);
+    setLeftDragging(false);
+    setRightDragging(false);
+  };
 
   return (
     <div className="tool-container">
       <div className="tool-header">
         <h1>Diff Checker</h1>
         <p>
-          Compare two text blocks and highlight the differences line by line.
+          Compare two text blocks or local files and highlight the differences
+          line by line.
         </p>
+
+        {error && <div className="error-badge">{error}</div>}
+
         {tips && <ToolInfo tips={tips} />}
       </div>
 
-      {/*inputs */}
       <div className="tool-workspace">
-        <div className="diff-panel">
+        <div
+          className={`diff-panel file-drop-wrap ${
+            leftDragging ? "dragging" : ""
+          }`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setLeftDragging(true);
+          }}
+          onDragLeave={() => setLeftDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setLeftDragging(false);
+            handleFileLoad(e.dataTransfer.files[0], "left");
+          }}
+        >
+          {leftDragging && <DropOverlay label="Drop original file here" />}
+
           <span className="diff-panel-label">Original</span>
+
           <textarea
             className="tool-textarea"
             value={left}
-            onChange={(e) => setLeft(e.target.value)}
-            placeholder="Paste original text..."
+            onChange={(e) => {
+              setLeft(e.target.value);
+              setError(null);
+            }}
+            placeholder="Paste original text, upload a file, or drag and drop it."
             spellCheck={false}
           />
+
+          <label className="file-load-btn">
+            Load file
+            <input
+              type="file"
+              accept={ALLOWED_FILE_TYPES.join(",")}
+              onChange={(e) => handleFileLoad(e.target.files[0], "left")}
+            />
+          </label>
         </div>
-        <div className="diff-panel">
+
+        <div
+          className={`diff-panel file-drop-wrap ${
+            rightDragging ? "dragging" : ""
+          }`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setRightDragging(true);
+          }}
+          onDragLeave={() => setRightDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setRightDragging(false);
+            handleFileLoad(e.dataTransfer.files[0], "right");
+          }}
+        >
+          {rightDragging && <DropOverlay label="Drop modified file here" />}
+
           <span className="diff-panel-label">Modified</span>
+
           <textarea
             className="tool-textarea"
             value={right}
-            onChange={(e) => setRight(e.target.value)}
-            placeholder="Paste modified text..."
+            onChange={(e) => {
+              setRight(e.target.value);
+              setError(null);
+            }}
+            placeholder="Paste modified text, upload a file, or drag and drop it."
             spellCheck={false}
           />
+
+          <label className="file-load-btn">
+            Load file
+            <input
+              type="file"
+              accept={ALLOWED_FILE_TYPES.join(",")}
+              onChange={(e) => handleFileLoad(e.target.files[0], "right")}
+            />
+          </label>
         </div>
       </div>
 
-      {/*identical banner OR stats */}
       {isIdentical ? (
         <div
           style={{
@@ -121,7 +222,6 @@ export default function DiffChecker({ tips }) {
             justifyContent: "center",
           }}
         >
-          <span style={{ fontSize: "1.1rem" }}></span>
           <span>
             <strong>Texts are identical</strong> — no differences found
           </span>
@@ -138,13 +238,13 @@ export default function DiffChecker({ tips }) {
         </div>
       )}
 
-      {/*output */}
       <div className="diff-output">
         <div className="diff-output-panel">
           <span className="diff-panel-label">Original</span>
+
           <div className="diff-lines">
-            {leftLines.map((line, i) => (
-              <div key={i} className={`diff-line diff-line--${line.type}`}>
+            {leftLines.map((line, index) => (
+              <div key={index} className={`diff-line diff-line--${line.type}`}>
                 <span className="diff-line-gutter">
                   {line.type === "removed" ? "−" : " "}
                 </span>
@@ -153,11 +253,13 @@ export default function DiffChecker({ tips }) {
             ))}
           </div>
         </div>
+
         <div className="diff-output-panel">
           <span className="diff-panel-label">Modified</span>
+
           <div className="diff-lines">
-            {rightLines.map((line, i) => (
-              <div key={i} className={`diff-line diff-line--${line.type}`}>
+            {rightLines.map((line, index) => (
+              <div key={index} className={`diff-line diff-line--${line.type}`}>
                 <span className="diff-line-gutter">
                   {line.type === "added" ? "+" : " "}
                 </span>
@@ -169,13 +271,7 @@ export default function DiffChecker({ tips }) {
       </div>
 
       <div className="tool-actions">
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            setLeft("");
-            setRight("");
-          }}
-        >
+        <button className="btn btn-danger" onClick={handleClear}>
           Clear <span className="btn-hint">Esc</span>
         </button>
       </div>
