@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
+import { readTextFile } from "../../utils/file";
 import "../../styles/tools/yaml.css";
+import DropOverlay from "../../components/DropOverlay";
 
 const TIMEOUT_MS = 2000;
 const MAX_INPUT_SIZE = 50_000;
-const DEFAULT_YAML =
-  "server:\n  port: 8080\n  host: localhost\n  enabled: true\ntags:\n  - docker\n  - react";
 
 export default function YamlToJson({ tips }) {
-  const [yamlInput, setYamlInput] = useState(DEFAULT_YAML);
+  const [yamlInput, setYamlInput] = useState("");
   const [jsonOutput, setJsonOutput] = useState("");
   const [error, setError] = useState(null);
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { copied, copy } = useCopy();
   const workerRef = useRef(null);
@@ -36,7 +37,24 @@ export default function YamlToJson({ tips }) {
       timeoutRef.current = null;
     }
 
-    if (!yamlInput.trim() || yamlInput.length > MAX_INPUT_SIZE) return;
+    if (!yamlInput.trim()) {
+      setJsonOutput("");
+      setError(null);
+      setIsRunning(false);
+      return;
+    }
+
+    if (yamlInput.length > MAX_INPUT_SIZE) {
+      setError(
+        `Input too large — maximum allowed size is ${MAX_INPUT_SIZE / 1000}KB`,
+      );
+      setJsonOutput("");
+      setIsRunning(false);
+      return;
+    }
+
+    setIsRunning(true);
+    setError(null);
 
     const worker = new Worker("/yamlWorker.js");
     workerRef.current = worker;
@@ -74,35 +92,44 @@ export default function YamlToJson({ tips }) {
     worker.postMessage({ input: yamlInput });
   }, [yamlInput]);
 
-  const handleYamlChange = (e) => {
-    const nextInput = e.target.value;
-    setYamlInput(nextInput);
-
-    if (!nextInput.trim()) {
-      setJsonOutput("");
-      setError(null);
-      setIsRunning(false);
-      return;
-    }
-
-    if (nextInput.length > MAX_INPUT_SIZE) {
-      setError(
-        `Input too large — maximum allowed size is ${MAX_INPUT_SIZE / 1000}KB`,
-      );
-      setJsonOutput("");
-      setIsRunning(false);
-      return;
-    }
-
-    setError(null);
-    setIsRunning(true);
-  };
-
   const handleClear = () => {
     setYamlInput("");
     setJsonOutput("");
     setError(null);
     setIsRunning(false);
+    setIsDragging(false);
+  };
+
+  const handleFileLoad = async (file) => {
+    try {
+      const text = await readTextFile(file, {
+        allowedExtensions: [".yaml", ".yml"],
+        maxSize: 2 * 1024 * 1024,
+      });
+
+      setYamlInput(text);
+      setJsonOutput("");
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!jsonOutput) return;
+
+    const blob = new Blob([jsonOutput], {
+      type: "application/json",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "converted.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -110,57 +137,79 @@ export default function YamlToJson({ tips }) {
       <div className="tool-header">
         <h1>YAML to JSON</h1>
         <p>Convert your YAML configuration to a clean JSON object.</p>
+
+        {isRunning && (
+          <div className="status-badge status-pretty">Parsing YAML...</div>
+        )}
+
+        {error && <div className="error-badge">{error}</div>}
+
         {tips && <ToolInfo tips={tips} />}
       </div>
 
-      {error && (
-        <div className="error-badge" style={{ marginBottom: "15px" }}>
-          {error}
-        </div>
-      )}
-
-      {isRunning && (
+      <div className="tool-workspace">
         <div
-          className="status-badge"
-          style={{
-            marginBottom: "15px",
-            display: "inline-block",
-            color: "#94a3b8",
-            borderColor: "#333",
+          className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setIsDragging(false);
+            handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
-          PARSING...
+          {isDragging && <DropOverlay label="Drop .yaml file here" />}
+          <textarea
+            className="tool-textarea"
+            placeholder="Paste YAML here, upload a .yaml file, or drag and drop it."
+            value={yamlInput}
+            onChange={(e) => setYamlInput(e.target.value)}
+          />
+
+          <label className="file-load-btn">
+            Load .yaml file
+            <input
+              type="file"
+              accept=".yaml,.yml,text/yaml,text/x-yaml"
+              onChange={(e) => handleFileLoad(e.target.files[0])}
+            />
+          </label>
         </div>
-      )}
 
-      <div className="tool-workspace">
-        <textarea
-          className="tool-textarea"
-          value={yamlInput}
-          onChange={handleYamlChange}
-          placeholder="Paste your YAML here..."
-          style={error ? { borderColor: "#ef4444" } : {}}
-        />
+        <div className="file-drop-wrap">
+          <textarea
+            className="tool-textarea"
+            placeholder="JSON output..."
+            value={jsonOutput}
+            readOnly
+          />
 
-        <textarea
-          className="tool-textarea yaml-output"
-          value={jsonOutput}
-          readOnly
-          placeholder="JSON output will appear here..."
-        />
+          {jsonOutput && (
+            <button
+              type="button"
+              className="file-download-btn"
+              onClick={handleDownload}
+            >
+              Download
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="tool-actions">
         <button
-          disabled={!!error || !jsonOutput || isRunning}
           onClick={() => copy(jsonOutput)}
           className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+          disabled={!jsonOutput}
         >
           {copied ? "Copied" : "Copy JSON"}
           <span className="btn-hint">Ctrl+Shift+C</span>
         </button>
 
-        <button className="btn btn-danger" onClick={handleClear}>
+        <button onClick={handleClear} className="btn btn-danger">
           Clear <span className="btn-hint">Esc</span>
         </button>
       </div>

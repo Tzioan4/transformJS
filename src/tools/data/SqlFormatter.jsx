@@ -3,25 +3,23 @@ import { format } from "sql-formatter";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
-
-const SQL_EXAMPLE =
-  "select id, name, email from users where active = 1 and created_at > '2024-01-01' order by name asc limit 10;";
+import { readTextFile } from "../../utils/file";
+import DropOverlay from "../../components/DropOverlay";
 
 export function detectDestructiveKeywords(sql) {
   if (!sql) return [];
 
-  //strip single-line comments (-- ...) and block comments (/* ... */)
-  //so we don't false-positive on "-- DROP this column later"
   const stripped = sql
     .replace(/--[^\n]*/g, "")
     .replace(/\/\*[\s\S]*?\*\//g, "");
 
-  //strip string literals so 'DELETE me' inside a string doesn't trigger
   const noStrings = stripped.replace(/'(?:[^'\\]|\\.)*'/g, "''");
 
   const found = new Set();
   const globalRegex = /\b(DROP|DELETE|TRUNCATE|ALTER)\b/gi;
+
   let match;
+
   while ((match = globalRegex.exec(noStrings)) !== null) {
     found.add(match[1].toUpperCase());
   }
@@ -44,10 +42,11 @@ function formatSqlInput(sql) {
 }
 
 export default function SqlFormatter({ tips }) {
-  const [input, setInput] = useState(SQL_EXAMPLE);
-  const [output, setOutput] = useState(() => formatSqlInput(SQL_EXAMPLE));
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { copied, copy } = useCopy();
 
@@ -55,7 +54,7 @@ export default function SqlFormatter({ tips }) {
 
   const handleFormat = () => {
     try {
-      if (!input) return;
+      if (!input.trim()) return;
 
       setOutput(formatSqlInput(input));
       setIsMinified(false);
@@ -68,7 +67,7 @@ export default function SqlFormatter({ tips }) {
 
   const handleMinify = () => {
     try {
-      if (!input) return;
+      if (!input.trim()) return;
 
       const minified = format(input, {
         language: "sql",
@@ -80,8 +79,8 @@ export default function SqlFormatter({ tips }) {
       setOutput(minified);
       setIsMinified(true);
       setError(null);
-    } catch {
-      setError("Error minifying SQL");
+    } catch (err) {
+      setError("SQL Error: " + err.message);
       setOutput("");
     }
   };
@@ -91,6 +90,50 @@ export default function SqlFormatter({ tips }) {
     setOutput("");
     setError(null);
     setIsMinified(false);
+    setIsDragging(false);
+  };
+
+  const handleFileLoad = async (file) => {
+    try {
+      const text = await readTextFile(file, {
+        allowedExtensions: [".sql"],
+        maxSize: 2 * 1024 * 1024,
+      });
+
+      const cleanText = text.trim();
+
+      setInput(cleanText);
+      setIsMinified(false);
+
+      if (!cleanText) {
+        setOutput("");
+        setError("The selected SQL file is empty.");
+        return;
+      }
+
+      setOutput(formatSqlInput(cleanText));
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setOutput("");
+    }
+  };
+
+  const handleDownload = () => {
+    if (!output) return;
+
+    const blob = new Blob([output], {
+      type: "text/sql",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = isMinified ? "minified.sql" : "formatted.sql";
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -105,86 +148,97 @@ export default function SqlFormatter({ tips }) {
 
           {output && !error && (
             <div
-              className={`status-badge ${isMinified ? "status-min" : "status-pretty"}`}
-              style={{
-                marginTop: "10px",
-                display: "inline-block",
-                padding: "2px 8px",
-                fontSize: "11px",
-                borderRadius: "4px",
-                textTransform: "uppercase",
-                fontWeight: "600",
-                fontFamily: "'JetBrains Mono', monospace",
-                letterSpacing: "0.05em",
-              }}
+              className={`status-badge ${
+                isMinified ? "status-min" : "status-pretty"
+              }`}
             >
-              STATUS: {isMinified ? "Minified" : "Formatted"}
-            </div>
-          )}
-
-          {/*destructive keywords warning */}
-          {destructiveKeywords.length > 0 && (
-            <div
-              style={{
-                marginTop: "12px",
-                padding: "10px 14px",
-                background: "rgba(245, 158, 11, 0.08)",
-                border: "1px solid rgba(245, 158, 11, 0.4)",
-                borderRadius: "6px",
-                color: "#fbbf24",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.85rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                lineHeight: "1.5",
-              }}
-            >
-              <span style={{ fontSize: "1.1rem", flexShrink: 0 }}>WARNING</span>
-              <span>
-                <strong>Destructive SQL detected:</strong>{" "}
-                {destructiveKeywords.join(", ")}. Review carefully before
-                executing on production databases.
-              </span>
+              STATUS: <strong>{isMinified ? "MINIFIED" : "FORMATTED"}</strong>
             </div>
           )}
 
           {error && <div className="error-badge">{error}</div>}
+
+          {destructiveKeywords.length > 0 && (
+            <div className="input-warning">
+              Warning: destructive SQL keyword detected:{" "}
+              <strong>{destructiveKeywords.join(", ")}</strong>
+            </div>
+          )}
+
           {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
-        <textarea
-          className="tool-textarea"
-          placeholder="Paste your SQL query here..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
+        <div
+          className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setIsDragging(false);
+            handleFileLoad(e.dataTransfer.files[0]);
+          }}
+        >
+          {isDragging && <DropOverlay label="Drop .sql file here" />}
+          <textarea
+            className="tool-textarea"
+            placeholder="Paste SQL here, upload a .sql file, or drag and drop it."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+
+          <label className="file-load-btn">
+            Load .sql file
+            <input
+              type="file"
+              accept=".sql,text/sql"
+              onChange={(e) => handleFileLoad(e.target.files[0])}
+            />
+          </label>
+        </div>
       }
       output={
-        <textarea
-          className="tool-textarea"
-          placeholder="Formatted SQL will appear here..."
-          value={output}
-          readOnly
-        />
+        <div className="file-drop-wrap">
+          <textarea
+            className="tool-textarea"
+            placeholder="Formatted SQL will appear here..."
+            value={output}
+            readOnly
+          />
+
+          {output && (
+            <button
+              type="button"
+              className="file-download-btn"
+              onClick={handleDownload}
+            >
+              Download
+            </button>
+          )}
+        </div>
       }
       actions={
         <div className="tool-actions">
           <button onClick={handleFormat} className="btn btn-primary">
-            Format SQL
+            Beautify
           </button>
+
           <button onClick={handleMinify} className="btn btn-secondary">
             Minify
           </button>
+
           <button
             onClick={() => copy(output)}
             className={`btn ${copied ? "btn-success" : "btn-copy"}`}
             disabled={!output}
           >
-            {copied ? "Copied" : "Copy Output"}
+            {copied ? "Copied" : "Copy"}
             <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
+
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>

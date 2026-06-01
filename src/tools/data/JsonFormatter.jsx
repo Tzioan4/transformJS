@@ -4,20 +4,13 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
+import DropOverlay from "../../components/DropOverlay";
 
-const jsonExample = {
-  project: "transformJS",
-  status: "active",
-  features: ["Minify", "Beautify", "Run"],
-  author: "John Doe.",
-  version: 1.0,
-};
 
 export default function JsonFormatter({ tips }) {
-  const [input, setInput] = useState(JSON.stringify(jsonExample, null, 2));
-  const [output, setOutput] = useState(() =>
-    formatJson(JSON.stringify(jsonExample)),
-  );
+const [input, setInput] = useState("");
+const [output, setOutput] = useState("");
+
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState([]);
@@ -166,9 +159,10 @@ export default function JsonFormatter({ tips }) {
             handleFileLoad(e.dataTransfer.files[0]);
           }}
         >
+          {isDragging && <DropOverlay label="Drop .json file here" />}
           <textarea
             className="tool-textarea"
-            placeholder="Paste JSON here or drop a .json file."
+            placeholder="Paste JSON here, upload a .json file, or drag and drop it."
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
@@ -184,7 +178,6 @@ export default function JsonFormatter({ tips }) {
               onChange={(e) => handleFileLoad(e.target.files[0])}
             />
           </label>
-
         </div>
       }
       output={
