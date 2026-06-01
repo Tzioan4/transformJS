@@ -219,4 +219,71 @@ Tool routes, sitemap generation, and llms generation are automatically derived f
 
 Completed.
 
-_Last updated: May 2026_
+## Sprint UX-1 — Workflow Efficiency Improvements
+
+Status: Mostly Complete
+
+### Completed
+
+#### Phase 1 — Global Tool Switcher
+- Added registry-driven ToolSwitcher
+- Added search and tool navigation
+- Integrated into shared ToolLayout
+- Mobile compatible
+- No tracking or persistence
+
+#### Phase 2 — Local File Workflow
+- Added local file loading utilities
+- Added drag & drop support
+- Added upload buttons
+- Added DropOverlay component
+- Added file validation and limits
+
+Updated tools:
+- JSON Formatter
+- CSV to JSON
+- YAML to JSON
+- SQL Formatter
+- Markdown Preview
+- HTML Preview
+- Diff Checker
+- Base64 Tool
+- URL Encoder / Decoder
+- Hash Generator
+- Case Converter
+
+#### Phase 3 — Download Output
+Added local browser downloads for supported tools.
+
+#### Additional Improvements
+- Removed example/dummy content from tools
+- Improved empty states
+- Improved drag & drop UX
+- Reduced copy/paste friction
+
+### Remaining
+
+#### Phase 4 — Workflow Polish
+- Category badges
+- Action consistency review
+- Mobile spacing review
+- Keyboard shortcut discoverability
+- General UI polish
+
+#### Phase 5 — Smart Detection
+- detectTool utility
+- JSON detection
+- JWT detection
+- Base64 detection
+- CSV detection
+- YAML detection
+- Markdown detection
+- HTML detection
+
+#### Phase 6 — Smart Start Hub
+- Homepage detection area
+- File drop support
+- Tool recommendation UI
+- Open Tool actions
+
+_Last updated: June 2026_
