@@ -2,23 +2,19 @@ import { useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import "../../styles/tools/case.css";
 import ToolInfo from "../../components/ToolInfo";
+import { readTextFile } from "../../utils/file";
+import DropOverlay from "../../components/DropOverlay";
 
-//converters
 export function toWords(input) {
-  return (
-    input
-      .trim()
-      //strip non-alphanumeric chars except whitespace, underscore, hyphen
-      //this prevents !@#$% from polluting the output identifiers
-      .replace(/[^a-zA-Z0-9\s_-]/g, "")
-      //split on spaces, underscores, hyphens
-      .replace(/([a-z])([A-Z])/g, "$1 $2") //camelCase / PascalCase to words
-      .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2") //ABCDef to ABC Def
-      .replace(/[-_]+/g, " ") //snake_case /kebab-case to words
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((w) => w.toLowerCase())
-  );
+  return input
+    .trim()
+    .replace(/[^a-zA-Z0-9\s_-]/g, "")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/[-_]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.toLowerCase());
 }
 
 const CASES = [
@@ -27,14 +23,16 @@ const CASES = [
     label: "camelCase",
     convert: (words) =>
       words
-        .map((w, i) => (i === 0 ? w : w[0].toUpperCase() + w.slice(1)))
+        .map((word, index) =>
+          index === 0 ? word : word[0].toUpperCase() + word.slice(1),
+        )
         .join(""),
   },
   {
     key: "pascal",
     label: "PascalCase",
     convert: (words) =>
-      words.map((w) => w[0].toUpperCase() + w.slice(1)).join(""),
+      words.map((word) => word[0].toUpperCase() + word.slice(1)).join(""),
   },
   {
     key: "snake",
@@ -65,7 +63,7 @@ const CASES = [
     key: "title",
     label: "Title Case",
     convert: (words) =>
-      words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" "),
+      words.map((word) => word[0].toUpperCase() + word.slice(1)).join(" "),
   },
   {
     key: "lower",
@@ -79,16 +77,36 @@ const CASES = [
   },
 ];
 
-//component
+const ALLOWED_FILE_TYPES = [
+  ".txt",
+  ".json",
+  ".md",
+  ".markdown",
+  ".html",
+  ".htm",
+  ".css",
+  ".js",
+  ".jsx",
+  ".ts",
+  ".tsx",
+  ".sql",
+  ".yaml",
+  ".yml",
+  ".csv",
+];
+
 export default function CaseConverter({ tips }) {
-  const [input, setInput] = useState("hello world example");
+  const [input, setInput] = useState("");
   const [copiedKey, setCopiedKey] = useState(null);
+  const [error, setError] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const words = toWords(input);
   const hasInput = words.length > 0;
 
   const handleCopy = async (key, text) => {
     if (!text) return;
+
     try {
       await navigator.clipboard.writeText(text);
       setCopiedKey(key);
@@ -96,6 +114,50 @@ export default function CaseConverter({ tips }) {
     } catch (err) {
       console.error("copy failed:", err);
     }
+  };
+
+  const handleFileLoad = async (file) => {
+    if (!file) return;
+
+    try {
+      const text = await readTextFile(file, {
+        allowedExtensions: ALLOWED_FILE_TYPES,
+        maxSize: 2 * 1024 * 1024,
+      });
+
+      setInput(text);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!hasInput) return;
+
+    const output = CASES.map(({ label, convert }) => {
+      return `${label}\n${convert(words)}\n`;
+    }).join("\n");
+
+    const blob = new Blob([output], {
+      type: "text/plain",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "case-conversions.txt";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  };
+
+  const handleClear = () => {
+    setInput("");
+    setError(null);
+    setCopiedKey(null);
+    setIsDragging(false);
   };
 
   return (
@@ -107,25 +169,59 @@ export default function CaseConverter({ tips }) {
             Convert text between camelCase, snake_case, kebab-case, PascalCase
             and more.
           </p>
+
+          {error && <div className="error-badge">{error}</div>}
+
           {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
         <div
-          className="tool-textarea"
-          style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+          className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setIsDragging(false);
+            handleFileLoad(e.dataTransfer.files[0]);
+          }}
         >
-          <label className="case-label">Input</label>
-          <textarea
-            className="case-input"
-            placeholder="Type or paste your text here..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            rows={4}
-          />
-          {!hasInput && input.length > 0 && (
-            <div className="error-badge">Could not parse input.</div>
-          )}
+          {isDragging && <DropOverlay label="Drop file here" />}
+
+          <div
+            className="tool-textarea"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <label className="case-label">Input</label>
+
+            <textarea
+              className="case-input"
+              placeholder="Type text, upload a file, or drag and drop it."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              rows={4}
+            />
+
+            <label className="file-load-btn">
+              Load file
+              <input
+                type="file"
+                accept={ALLOWED_FILE_TYPES.join(",")}
+                onChange={(e) => handleFileLoad(e.target.files[0])}
+              />
+            </label>
+
+            {!hasInput && input.length > 0 && (
+              <div className="error-badge">Could not parse input.</div>
+            )}
+          </div>
         </div>
       }
       output={
@@ -136,12 +232,15 @@ export default function CaseConverter({ tips }) {
           <div className="case-output-grid">
             {CASES.map(({ key, label, convert }) => {
               const result = hasInput ? convert(words) : "";
+
               return (
                 <div key={key} className="case-card">
                   <span className="case-card-label">{label}</span>
+
                   <div className="case-card-value">
                     {result || <span className="case-card-empty">—</span>}
                   </div>
+
                   <button
                     className="case-card-copy"
                     onClick={() => handleCopy(key, result)}
@@ -153,11 +252,21 @@ export default function CaseConverter({ tips }) {
               );
             })}
           </div>
+
+          {hasInput && (
+            <button
+              type="button"
+              className="file-download-btn"
+              onClick={handleDownload}
+            >
+              Download
+            </button>
+          )}
         </div>
       }
       actions={
         <div className="tool-actions">
-          <button onClick={() => setInput("")} className="btn btn-danger">
+          <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
         </div>
