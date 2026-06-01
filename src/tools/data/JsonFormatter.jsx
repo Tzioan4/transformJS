@@ -5,19 +5,12 @@ import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
 
-const jsonExample = {
-  project: "transformJS",
-  status: "active",
-  features: ["Minify", "Beautify", "Run"],
-  author: "John Doe.",
-  version: 1.0,
-};
+
 
 export default function JsonFormatter({ tips }) {
-  const [input, setInput] = useState(JSON.stringify(jsonExample, null, 2));
-  const [output, setOutput] = useState(() =>
-    formatJson(JSON.stringify(jsonExample)),
-  );
+const [input, setInput] = useState("");
+const [output, setOutput] = useState("");
+
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState([]);

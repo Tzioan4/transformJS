@@ -3,34 +3,33 @@ import Papa from "papaparse";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
+import { readTextFile } from "../../utils/file";
 
 function inferType(raw) {
-  //undefined/null → null (missing field)
   if (raw === undefined || raw === null) return null;
 
   if (typeof raw !== "string") return raw;
 
   const trimmed = raw.trim();
 
-  // JSON objects/arrays
   if (
     (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
     (trimmed.startsWith("[") && trimmed.endsWith("]"))
   ) {
-    try { return JSON.parse(trimmed); }
-    catch { return trimmed; }
+    try {
+      return JSON.parse(trimmed);
+    } catch {
+      return trimmed;
+    }
   }
 
-  //numbers
   if (trimmed !== "" && !isNaN(trimmed) && !isNaN(parseFloat(trimmed))) {
     return parseFloat(trimmed);
   }
 
-  //booleans
   if (trimmed.toLowerCase() === "true") return true;
   if (trimmed.toLowerCase() === "false") return false;
 
-  //empty string stays as empty string
   return trimmed;
 }
 
@@ -38,6 +37,8 @@ export default function CsvToJson({ tips }) {
   const [csv, setCsv] = useState("");
   const [json, setJson] = useState("");
   const [error, setError] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+
   const { copied, copy } = useCopy();
 
   const handleConvert = () => {
@@ -74,9 +75,11 @@ export default function CsvToJson({ tips }) {
       .filter((row) => Object.keys(row).length > 0)
       .map((row) => {
         const newRow = {};
+
         expectedKeys.forEach((key) => {
           newRow[key] = inferType(row[key]);
         });
+
         return newRow;
       });
 
@@ -87,6 +90,39 @@ export default function CsvToJson({ tips }) {
     setCsv("");
     setJson("");
     setError(null);
+    setIsDragging(false);
+  };
+
+  const handleFileLoad = async (file) => {
+    try {
+      const text = await readTextFile(file, {
+        allowedExtensions: [".csv"],
+        maxSize: 2 * 1024 * 1024,
+      });
+
+      setCsv(text);
+      setJson("");
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!json) return;
+
+    const blob = new Blob([json], {
+      type: "application/json",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "converted.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -113,28 +149,64 @@ export default function CsvToJson({ tips }) {
               {error}
             </div>
           )}
+
           {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
-        <textarea
-          className="tool-textarea"
-          placeholder="Paste CSV here..."
-          value={csv}
-          onChange={(e) => setCsv(e.target.value)}
-        />
+        <div
+          className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setIsDragging(true);
+          }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setIsDragging(false);
+            handleFileLoad(e.dataTransfer.files[0]);
+          }}
+        >
+          <textarea
+            className="tool-textarea"
+            placeholder="Paste CSV here or drop a .csv file."
+            value={csv}
+            onChange={(e) => setCsv(e.target.value)}
+          />
+
+          <label className="file-load-btn">
+            Load .csv file
+            <input
+              type="file"
+              accept=".csv,text/csv"
+              onChange={(e) => handleFileLoad(e.target.files[0])}
+            />
+          </label>
+        </div>
       }
       output={
-        <textarea
-          className="tool-textarea"
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "12px",
-          }}
-          placeholder="JSON output..."
-          value={json}
-          readOnly
-        />
+        <div className="file-drop-wrap">
+          <textarea
+            className="tool-textarea"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: "12px",
+            }}
+            placeholder="JSON output..."
+            value={json}
+            readOnly
+          />
+
+          {json && (
+            <button
+              type="button"
+              className="file-download-btn"
+              onClick={handleDownload}
+            >
+              Download
+            </button>
+          )}
+        </div>
       }
       actions={
         <div className="tool-actions">
