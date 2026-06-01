@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import "@styles/tools/color.css";
 
@@ -238,6 +238,10 @@ export default function ColorConverter({ tips }) {
   const rgb = hsvToRgb(hue, sat, val);
   const hex = rgbToHex(rgb);
   const hsl = rgbToHsl(rgb);
+  useEffect(() => {
+    setHexInput(hex);
+    setHexError(false);
+  }, [hex]);
 
   const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   const hslStr = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
