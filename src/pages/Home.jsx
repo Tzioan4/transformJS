@@ -7,6 +7,7 @@ import { tools } from "../tools";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Zap, Cpu } from "lucide-react";
 import SmartDetector from "../components/SmartDetector";
+import RevealOnScroll from "../components/RevealOnScroll";
 function StarIcon({ size = 16 }) {
   return (
     <svg
@@ -83,26 +84,34 @@ export default function Home({ searchTerm }) {
       {!isSearching && (
         <>
           <Hero />
-          <SmartDetector />
+          <RevealOnScroll>
+            <SmartDetector />
+          </RevealOnScroll>
 
-          <section className="promises-section">
-            <div className="promises-grid">
-              {PROMISES.map(({ key, icon, title, desc }) => (
-                <div key={key} className={`promise-card ${key}`}>
-                  <div className="promise-icon-wrapper">{icon}</div>
-                  <div className="promise-content">
-                    <h3 className="promise-title">{title}</h3>
-                    <p className="promise-desc">{desc}</p>
+          <RevealOnScroll>
+            <section className="promises-section">
+              <div className="promises-grid">
+                {PROMISES.map(({ key, icon, title, desc }) => (
+                  <div key={key} className={`promise-card ${key}`}>
+                    <div className="promise-icon-wrapper">{icon}</div>
+                    <div className="promise-content">
+                      <h3 className="promise-title">{title}</h3>
+                      <p className="promise-desc">{desc}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          </RevealOnScroll>
         </>
       )}
 
       <div className="tools-section-wrapper">
-        {!isSearching && <HomeFAQ />}
+        {!isSearching && (
+          <RevealOnScroll>
+            <HomeFAQ />
+          </RevealOnScroll>
+        )}
 
         <div id="tools-section" />
 
@@ -123,11 +132,11 @@ export default function Home({ searchTerm }) {
         <div className="tools-grid">
           {filteredTools.length > 0 ? (
             filteredTools.map((tool) => (
-              <Link to={tool.path} key={tool.path} className="tool-card">
-                <div className="tool-icon">{tool.icon}</div>
-                <h3>{tool.name}</h3>
-                <p>{tool.description}</p>
-              </Link>
+                <Link to={tool.path} key={tool.path} className="tool-card">
+                  <div className="tool-icon">{tool.icon}</div>
+                  <h3>{tool.name}</h3>
+                  <p>{tool.description}</p>
+                </Link>
             ))
           ) : (
             <p style={{ color: "#555", fontFamily: "var(--font-mono)" }}>
@@ -139,30 +148,32 @@ export default function Home({ searchTerm }) {
       </div>
 
       {!isSearching && (
-        <section className="contrib-section">
-          <div className="contrib-banner">
-            <div className="contrib-text">
-              <h3 className="contrib-title">
-                If TransformJS saved you time, A <StarIcon /> on GitHub means a
-                lot.
-              </h3>
-              <p className="contrib-desc">
-                TransformJS is open-source and free forever. A star helps others
-                discover it.
-              </p>
-            </div>
+        <RevealOnScroll>
+          <section className="contrib-section">
+            <div className="contrib-banner">
+              <div className="contrib-text">
+                <h3 className="contrib-title">
+                  If TransformJS saved you time, A <StarIcon /> on GitHub means
+                  a lot.
+                </h3>
+                <p className="contrib-desc">
+                  TransformJS is open-source and free forever. A star helps
+                  others discover it.
+                </p>
+              </div>
 
-            <a
-              href="https://github.com/Tzioan4/transformJS"
-              target="_blank"
-              rel="noreferrer"
-              className="contrib-btn"
-            >
-              <GitHubIcon />
-              Star on GitHub
-            </a>
-          </div>
-        </section>
+              <a
+                href="https://github.com/Tzioan4/transformJS"
+                target="_blank"
+                rel="noreferrer"
+                className="contrib-btn"
+              >
+                <GitHubIcon />
+                Star on GitHub
+              </a>
+            </div>
+          </section>
+        </RevealOnScroll>
       )}
     </div>
   );

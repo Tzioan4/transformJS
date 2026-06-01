@@ -18,6 +18,8 @@ import { tools } from "./tools";
 import UseCasePage from "./pages/UseCasePage";
 import ToolGroupPage from "./pages/groups/ToolGroupPage";
 import ToolSwitcherMount from "./components/ToolSwitcherMount";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import PageTransition from "./components/PageTransition";
 import {
   createBreadcrumbSchema,
   createFaqSchema,
@@ -86,95 +88,97 @@ function AppRoutes({ searchTerm }) {
           <div style={{ padding: "2rem", textAlign: "center" }}>Loading...</div>
         }
       >
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SEO jsonLd={createWebApplicationSchema()} />
-                <Home searchTerm="" />
-              </>
-            }
-          />
-          <Route path="/groups/:slug" element={<ToolGroupPage />} />
+        <PageTransition>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SEO jsonLd={createWebApplicationSchema()} />
+                  <Home searchTerm="" />
+                </>
+              }
+            />
+            <Route path="/groups/:slug" element={<ToolGroupPage />} />
 
-          {tools.map((tool) => {
-            const ToolComponent = tool.component;
-            const faqSchema = createFaqSchema(tool.content?.faq || []);
+            {tools.map((tool) => {
+              const ToolComponent = tool.component;
+              const faqSchema = createFaqSchema(tool.content?.faq || []);
 
-            return (
-              <Route
-                key={tool.path}
-                path={tool.path}
-                element={
-                  <>
-                    <SEO
-                      title={tool.seoTitle || `${tool.name} - TransformJS`}
-                      description={tool.seoDesc || tool.description}
-                      path={tool.path}
-                      jsonLd={[
-                        createToolSchema(tool),
-                        createBreadcrumbSchema([
-                          {
-                            name: "Home",
-                            path: "/",
-                          },
-                          {
-                            name: tool.name,
-                            path: tool.path,
-                          },
-                        ]),
-                        ...(faqSchema ? [faqSchema] : []),
-                      ]}
-                    />
-
-                    <div className="tool-page-content">
-                      <ToolComponent
-                        tips={tool.tips}
-                        category={tool.tags?.[0]}
+              return (
+                <Route
+                  key={tool.path}
+                  path={tool.path}
+                  element={
+                    <>
+                      <SEO
+                        title={tool.seoTitle || `${tool.name} - TransformJS`}
+                        description={tool.seoDesc || tool.description}
+                        path={tool.path}
+                        jsonLd={[
+                          createToolSchema(tool),
+                          createBreadcrumbSchema([
+                            {
+                              name: "Home",
+                              path: "/",
+                            },
+                            {
+                              name: tool.name,
+                              path: tool.path,
+                            },
+                          ]),
+                          ...(faqSchema ? [faqSchema] : []),
+                        ]}
                       />
-                      <ToolSeoContent tool={tool} />
-                    </div>
-                  </>
-                }
-              />
-            );
-          })}
 
-          <Route
-            path="/privacy"
-            element={
-              <>
-                <SEO
-                  title="Privacy Policy - TransformJS"
-                  description="Read our privacy policy. Your data never leaves your device because everything runs locally in your browser."
-                  path="/privacy"
+                      <div className="tool-page-content">
+                        <ToolComponent
+                          tips={tool.tips}
+                          category={tool.tags?.[0]}
+                        />
+                        <ToolSeoContent tool={tool} />
+                      </div>
+                    </>
+                  }
                 />
-                <Privacy />
-              </>
-            }
-          />
+              );
+            })}
 
-          <Route
-            path="/about"
-            element={
-              <>
-                <SEO
-                  title="About TransformJS - Developer Toolkit"
-                  description="Learn more about TransformJS, a fast, lightweight collection of browser-based developer utilities."
-                  path="/about"
-                />
-                <About />
-              </>
-            }
-          />
-          <Route path="/hub/:slug" element={<HubPage />} />
-          <Route path="/alternatives/:slug" element={<AlternativePage />} />
-          <Route path="/use-cases/:slug" element={<UseCasePage />} />
-          <Route path="/groups/:slug" element={<ToolGroupPage />} />
+            <Route
+              path="/privacy"
+              element={
+                <>
+                  <SEO
+                    title="Privacy Policy - TransformJS"
+                    description="Read our privacy policy. Your data never leaves your device because everything runs locally in your browser."
+                    path="/privacy"
+                  />
+                  <Privacy />
+                </>
+              }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route
+              path="/about"
+              element={
+                <>
+                  <SEO
+                    title="About TransformJS - Developer Toolkit"
+                    description="Learn more about TransformJS, a fast, lightweight collection of browser-based developer utilities."
+                    path="/about"
+                  />
+                  <About />
+                </>
+              }
+            />
+            <Route path="/hub/:slug" element={<HubPage />} />
+            <Route path="/alternatives/:slug" element={<AlternativePage />} />
+            <Route path="/use-cases/:slug" element={<UseCasePage />} />
+            <Route path="/groups/:slug" element={<ToolGroupPage />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
       </Suspense>
     </AppErrorBoundary>
   );
@@ -208,6 +212,7 @@ function AppContent() {
         </main>
 
         <Footer />
+        <ScrollToTopButton />
       </div>
     </>
   );
