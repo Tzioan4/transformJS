@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import DropOverlay from "../../components/DropOverlay";
 import { readTextFile } from "../../utils/file";
+import { TEXT_FILE_TYPES, FILE_SIZE_LIMIT } from "../../constants/fileTypes";
 import "@styles/tools/diff.css";
 
 export function computeDiff(a, b) {
@@ -44,24 +45,6 @@ export function computeDiff(a, b) {
   return result.reverse();
 }
 
-const ALLOWED_FILE_TYPES = [
-  ".txt",
-  ".json",
-  ".md",
-  ".markdown",
-  ".html",
-  ".htm",
-  ".css",
-  ".js",
-  ".jsx",
-  ".ts",
-  ".tsx",
-  ".sql",
-  ".yaml",
-  ".yml",
-  ".csv",
-];
-
 export default function DiffChecker({ tips }) {
   const [left, setLeft] = useState("");
   const [right, setRight] = useState("");
@@ -86,8 +69,8 @@ export default function DiffChecker({ tips }) {
 
     try {
       const text = await readTextFile(file, {
-        allowedExtensions: ALLOWED_FILE_TYPES,
-        maxSize: 2 * 1024 * 1024,
+        allowedExtensions: TEXT_FILE_TYPES,
+        maxSize: FILE_SIZE_LIMIT,
       });
 
       if (side === "left") {
@@ -159,7 +142,7 @@ export default function DiffChecker({ tips }) {
             Load file
             <input
               type="file"
-              accept={ALLOWED_FILE_TYPES.join(",")}
+              accept={TEXT_FILE_TYPES.join(",")}
               onChange={(e) => handleFileLoad(e.target.files[0], "left")}
             />
           </label>
@@ -199,7 +182,7 @@ export default function DiffChecker({ tips }) {
             Load file
             <input
               type="file"
-              accept={ALLOWED_FILE_TYPES.join(",")}
+              accept={TEXT_FILE_TYPES.join(",")}
               onChange={(e) => handleFileLoad(e.target.files[0], "right")}
             />
           </label>
