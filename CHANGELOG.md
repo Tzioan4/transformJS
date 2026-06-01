@@ -2,6 +2,46 @@
 
 All notable changes to TransformJS are documented here.
 
+## [Unreleased]
+
+### Added
+
+- Global Tool Switcher integrated into ToolLayout
+- Local file upload support
+- Drag and drop support
+- DropOverlay component
+- Local browser download support
+- File validation and size limits
+
+### Updated
+
+- JSON Formatter
+- CSV to JSON
+- YAML to JSON
+- SQL Formatter
+- Markdown Preview
+- HTML Preview
+- Diff Checker
+- Base64 Tool
+- URL Encoder / Decoder
+- Hash Generator
+- Case Converter
+
+### Improved
+
+- Removed example content from multiple tools
+- Improved empty states
+- Improved local-first workflow
+- Improved drag and drop UX
+- Reduced copy/paste friction
+
+### Security
+
+- Browser-only file processing
+- No uploads
+- No tracking
+- No backend processing
+
 ## SprintAI 5 — Registry Consolidation & Automation
 
 ### Added
