@@ -66,6 +66,7 @@ export default function HtmlPreview({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Code</span>
         <h1>HTML Preview</h1>
         <p>Real-time sandboxed rendering for HTML and CSS snippets.</p>
 

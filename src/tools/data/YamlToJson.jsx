@@ -135,6 +135,7 @@ export default function YamlToJson({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Data</span>
         <h1>YAML to JSON</h1>
         <p>Convert your YAML configuration to a clean JSON object.</p>
 

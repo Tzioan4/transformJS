@@ -14,7 +14,7 @@ function generateUUID() {
   });
 }
 
-export default function UuidGenerator({ tips }) {
+export default function UuidGenerator({ tips, category }) {
   const [uuids, setUuids] = useState(() => [generateUUID()]);
   const [count, setCount] = useState(1);
   const [copiedIndex, setCopiedIndex] = useState(null);
@@ -48,6 +48,7 @@ export default function UuidGenerator({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>UUID Generator</h1>

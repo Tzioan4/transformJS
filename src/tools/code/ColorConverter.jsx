@@ -326,6 +326,7 @@ export default function ColorConverter({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Code</span>
         <h1>Color Converter</h1>
         <p>Pick or convert colors between HEX, RGB, and HSL formats.</p>
         {tips && <ToolInfo tips={tips} />}

@@ -79,7 +79,7 @@ function getStrength(entropy) {
   return { label: "Very Strong", color: "#14b8a6" };
 }
 
-export default function PasswordGenerator({ tips }) {
+export default function PasswordGenerator({ tips, category }) {
   const [length, setLength] = useState(DEFAULT_LENGTH);
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
   const [password, setPassword] = useState(() =>
@@ -103,6 +103,7 @@ const generate = () => {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>Password Generator</h1>

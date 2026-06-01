@@ -4,9 +4,6 @@ import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
 
-const EXAMPLE_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-const EXAMPLE_SECRET = "your-256-bit-secret";
 
 function decodeJwtForDisplay(token) {
   const result = decodeJWT(token);
@@ -18,11 +15,10 @@ function decodeJwtForDisplay(token) {
 }
 
 export default function JWTDebugger({ tips }) {
-  const [token, setToken] = useState(EXAMPLE_TOKEN);
-  const [secret, setSecret] = useState(EXAMPLE_SECRET);
-  const initialDecoded = decodeJwtForDisplay(EXAMPLE_TOKEN);
-  const [header, setHeader] = useState(initialDecoded.header);
-  const [payload, setPayload] = useState(initialDecoded.payload);
+  const [token, setToken] = useState("");
+  const [secret, setSecret] = useState("");
+  const [header, setHeader] = useState("");
+  const [payload, setPayload] = useState("");
   const [verified, setVerified] = useState(null);
   const [error, setError] = useState(null);
 
@@ -73,6 +69,7 @@ export default function JWTDebugger({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Security</span>
         <h1>JWT Debugger</h1>
         <p>
           Decode JWT headers and payloads with instant signature verification

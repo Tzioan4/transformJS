@@ -132,6 +132,7 @@ const handleDownload = () => {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Code</span>
         <h1>Markdown Preview</h1>
         <p>Instant Markdown to HTML conversion with isolated preview.</p>
 

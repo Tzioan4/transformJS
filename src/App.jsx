@@ -129,7 +129,10 @@ function AppRoutes({ searchTerm }) {
                     />
 
                     <div className="tool-page-content">
-                      <ToolComponent tips={tool.tips} />
+                      <ToolComponent
+                        tips={tool.tips}
+                        category={tool.tags?.[0]}
+                      />
                       <ToolSeoContent tool={tool} />
                     </div>
                   </>

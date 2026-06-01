@@ -79,7 +79,7 @@ const CASES = [
 ];
 
 
-export default function CaseConverter({ tips }) {
+export default function CaseConverter({ tips, category }) {
   const [input, setInput] = useState("");
   const [copiedKey, setCopiedKey] = useState(null);
   const [error, setError] = useState(null);
@@ -146,6 +146,7 @@ export default function CaseConverter({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>Case Converter</h1>

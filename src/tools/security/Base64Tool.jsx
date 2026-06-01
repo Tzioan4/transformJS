@@ -24,7 +24,7 @@ const ALLOWED_FILE_TYPES = [
   ".csv",
 ];
 
-export default function Base64Tool({ tips }) {
+export default function Base64Tool({ tips, category }) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
@@ -156,6 +156,7 @@ export default function Base64Tool({ tips }) {
 
   return (
     <ToolLayout
+    category={category}
       header={
         <div>
           <h1>Base64 Tool</h1>
