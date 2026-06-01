@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import "@styles/tools/color.css";
 
@@ -238,6 +238,10 @@ export default function ColorConverter({ tips }) {
   const rgb = hsvToRgb(hue, sat, val);
   const hex = rgbToHex(rgb);
   const hsl = rgbToHsl(rgb);
+  useEffect(() => {
+    setHexInput(hex);
+    setHexError(false);
+  }, [hex]);
 
   const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   const hslStr = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
@@ -326,6 +330,7 @@ export default function ColorConverter({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Code</span>
         <h1>Color Converter</h1>
         <p>Pick or convert colors between HEX, RGB, and HSL formats.</p>
         {tips && <ToolInfo tips={tips} />}

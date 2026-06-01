@@ -96,6 +96,7 @@ export default function DiffChecker({ tips }) {
   return (
     <div className="tool-container">
       <div className="tool-header">
+        <span className="tool-category-badge">Code</span>
         <h1>Diff Checker</h1>
         <p>
           Compare two text blocks or local files and highlight the differences

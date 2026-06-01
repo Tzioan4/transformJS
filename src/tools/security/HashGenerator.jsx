@@ -43,7 +43,7 @@ async function computeHash(algo, input) {
     .join("");
 }
 
-export default function HashGenerator({ tips }) {
+export default function HashGenerator({ tips, category }) {
   const [input, setInput] = useState("");
   const [algo, setAlgo] = useState("SHA-256");
   const [output, setOutput] = useState("");
@@ -133,6 +133,7 @@ export default function HashGenerator({ tips }) {
 
   return (
     <ToolLayout
+    category={category}
       header={
         <div>
           <h1>Hash Generator</h1>

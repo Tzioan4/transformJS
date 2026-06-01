@@ -1,15 +1,31 @@
 import "@styles/tools/tools.css";
 
+const CATEGORY_LABELS = {
+  code: "Code",
+  data: "Data",
+  security: "Security",
+  text: "Text",
+};
+
 export default function ToolLayout({
   header,
+  category,
   input,
   output,
   actions,
   children,
 }) {
+  const categoryLabel = CATEGORY_LABELS[category];
+
   return (
     <div className="tool-container">
-      <div className="tool-header">{header}</div>
+      <div className="tool-header">
+        {categoryLabel && (
+          <span className="tool-category-badge">{categoryLabel}</span>
+        )}
+
+        {header}
+      </div>
 
       {children ? (
         <div className="tool-workspace">{children}</div>

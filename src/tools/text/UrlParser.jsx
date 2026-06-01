@@ -92,8 +92,8 @@ function Field({ label, value, empty = false, sensitive = false }) {
   );
 }
 
-export default function UrlParser({ tips }) {
-  const [input, setInput] = useState(EXAMPLE_URL);
+export default function UrlParser({ tips, category }) {
+  const [input, setInput] = useState("");
   const [copiedKey, setCopiedKey] = useState(null);
 
   const parsed = parseUrl(input);
@@ -112,6 +112,7 @@ export default function UrlParser({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>URL Parser</h1>
@@ -141,7 +142,7 @@ export default function UrlParser({ tips }) {
           <input
             type="text"
             className="urlp-input"
-            placeholder="https://example.com/path?query=value#hash"
+            placeholder="Paste a URL here (e.g. https://example.com:8080/path?query=123#hash)"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             autoCapitalize="none"

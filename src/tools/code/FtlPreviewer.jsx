@@ -605,9 +605,9 @@ function TabBar({ tabs, active, onChange }) {
   );
 }
 
-export default function FtlPreviewer({ tips }) {
-  const [template, setTemplate] = useState(DEFAULT_TEMPLATE);
-  const [mockData, setMockData] = useState(DEFAULT_DATA);
+export default function FtlPreviewer({ tips, category }) {
+  const [template, setTemplate] = useState("");
+  const [mockData, setMockData] = useState("");
   const [rendered, setRendered] = useState("");
   const [error, setError] = useState(null);
 
@@ -642,6 +642,7 @@ export default function FtlPreviewer({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>FTL Previewer</h1>

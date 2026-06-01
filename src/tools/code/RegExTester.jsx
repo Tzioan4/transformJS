@@ -45,7 +45,7 @@ function getRegexError(pattern, flags) {
   }
 }
 
-export default function RegexTester({ tips }) {
+export default function RegexTester({ tips, category }) {
   const [pattern, setPattern] = useState(
     "([a-z0-9_.-]+)@([\\da-z.-]+)\\.([a-z.]{2,6})",
   );
@@ -167,6 +167,7 @@ export default function RegexTester({ tips }) {
 
   return (
     <ToolLayout
+    category={category}
       header={
         <div>
           <h1>RegEx Tester</h1>

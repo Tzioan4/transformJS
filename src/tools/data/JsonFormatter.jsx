@@ -7,9 +7,10 @@ import { readTextFile } from "../../utils/file";
 import DropOverlay from "../../components/DropOverlay";
 
 
-export default function JsonFormatter({ tips }) {
-const [input, setInput] = useState("");
-const [output, setOutput] = useState("");
+
+export default function JsonFormatter({ tips, category }) {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
 
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
@@ -96,6 +97,7 @@ const [output, setOutput] = useState("");
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>JSON Formatter</h1>

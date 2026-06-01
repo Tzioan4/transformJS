@@ -34,7 +34,7 @@ function inferType(raw) {
   return trimmed;
 }
 
-export default function CsvToJson({ tips }) {
+export default function CsvToJson({ tips, category }) {
   const [csv, setCsv] = useState("");
   const [json, setJson] = useState("");
   const [error, setError] = useState(null);
@@ -130,6 +130,7 @@ export default function CsvToJson({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>CSV to JSON</h1>

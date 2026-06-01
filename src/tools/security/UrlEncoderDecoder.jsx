@@ -24,7 +24,7 @@ const ALLOWED_FILE_TYPES = [
   ".csv",
 ];
 
-export default function UrlEncoderDecoder({ tips }) {
+export default function UrlEncoderDecoder({ tips, category }) {
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const [mode, setMode] = useState("encode");
@@ -149,6 +149,7 @@ export default function UrlEncoderDecoder({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>URL Encoder / Decoder</h1>

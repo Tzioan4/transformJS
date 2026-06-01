@@ -1,0 +1,125 @@
+.smart-detector {
+  background: var(--color-bg);
+  padding: 40px 2rem 20px;
+}
+
+.smart-detector-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: transparent;
+}
+
+.smart-detector-header {
+  margin-bottom: 18px;
+}
+
+.smart-detector-header h2 {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  margin-bottom: 10px;
+  letter-spacing: -0.04em;
+}
+
+.smart-detector-header p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.smart-detector-input {
+  width: 100%;
+  min-height: 90px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.smart-detector-input:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.smart-detector-result {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.smart-detector-label {
+  display: inline-flex;
+  margin-bottom: 8px;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.smart-detector-result p {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+[data-theme="light"] .smart-detector-content {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .smart-detector-input {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #1e293b;
+}
+.smart-detector-drop {
+  position: relative;
+}
+
+.smart-detector-drop.dragging .smart-detector-input {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+}
+
+.smart-detector-error {
+  margin-top: 10px;
+  color: #ef4444;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 800px) {
+  .smart-detector {
+    padding: 28px 1rem 12px;
+  }
+
+  .smart-detector-content {
+    padding: 20px;
+  }
+
+  .smart-detector-result {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .smart-detector-result .btn {
+    width: 100%;
+  }
+}

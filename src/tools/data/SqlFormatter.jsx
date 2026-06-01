@@ -41,7 +41,7 @@ function formatSqlInput(sql) {
     .join("\n");
 }
 
-export default function SqlFormatter({ tips }) {
+export default function SqlFormatter({ tips, category }) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState(null);
@@ -138,6 +138,7 @@ export default function SqlFormatter({ tips }) {
 
   return (
     <ToolLayout
+      category={category}
       header={
         <div>
           <h1>SQL Formatter</h1>
