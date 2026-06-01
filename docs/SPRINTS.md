@@ -261,29 +261,51 @@ Added local browser downloads for supported tools.
 - Improved drag & drop UX
 - Reduced copy/paste friction
 
-### Remaining
+### Phase 4 — Workflow Polish
 
-#### Phase 4 — Workflow Polish
-- Category badges
-- Action consistency review
-- Mobile spacing review
-- Keyboard shortcut discoverability
-- General UI polish
+Completed:
 
-#### Phase 5 — Smart Detection
-- detectTool utility
-- JSON detection
-- JWT detection
-- Base64 detection
-- CSV detection
-- YAML detection
-- Markdown detection
-- HTML detection
+- Added category badges across tool pages
+- Removed example and dummy content from tools
+- Improved tool header consistency
+- Improved workflow polish and onboarding experience
+- Fixed Color Converter HEX synchronization
 
-#### Phase 6 — Smart Start Hub
-- Homepage detection area
-- File drop support
-- Tool recommendation UI
-- Open Tool actions
+### Phase 5 — Smart Detection
+
+Completed:
+
+- Added centralized detectTool utility
+- Added confidence-based detection scoring
+- Added detection support for:
+  - JSON
+  - JWT
+  - URL
+  - HTML
+  - CSV
+  - YAML
+  - Markdown
+  - SQL
+  - UUID
+  - Color values
+  - Base64
+
+### Phase 6 — Smart Start Hub
+
+Completed:
+
+- Added SmartDetector homepage component
+- Added paste-based tool detection
+- Added drag & drop file detection
+- Added text file validation
+- Added Escape-to-clear support
+- Added tool recommendation UI
+- Added direct navigation to suggested tools
+
+### Future Enhancements
+
+- Transfer detected content directly into destination tools
+- Expanded detector test coverage
+- Additional format detection improvements
 
 _Last updated: June 2026_
