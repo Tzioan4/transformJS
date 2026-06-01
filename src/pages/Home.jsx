@@ -6,7 +6,7 @@ import Hero from "../components/Hero";
 import { tools } from "../tools";
 import { Link } from "react-router-dom";
 import { ShieldCheck, Zap, Cpu } from "lucide-react";
-
+import SmartDetector from "../components/SmartDetector";
 function StarIcon({ size = 16 }) {
   return (
     <svg
@@ -83,6 +83,7 @@ export default function Home({ searchTerm }) {
       {!isSearching && (
         <>
           <Hero />
+          <SmartDetector />
 
           <section className="promises-section">
             <div className="promises-grid">

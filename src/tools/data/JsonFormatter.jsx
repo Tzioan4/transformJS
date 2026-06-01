@@ -7,6 +7,7 @@ import { readTextFile } from "../../utils/file";
 import DropOverlay from "../../components/DropOverlay";
 
 
+
 export default function JsonFormatter({ tips, category }) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
