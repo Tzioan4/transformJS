@@ -67,7 +67,7 @@ export default function JWTDebugger({ tips }) {
   };
 
   return (
-    <div className="tool-container">
+    <div className="tool-container jwt-debugger">
       <div className="tool-header">
         <span className="tool-category-badge">Security</span>
         <h1>JWT Debugger</h1>
