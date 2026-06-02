@@ -4,6 +4,15 @@
   padding: 20px 2rem 20px !important;
   background-color: #0a0a0a;
 }
+.jwt-debugger .tool-workspace {
+  display: block;
+  margin-bottom: 0;
+}
+
+.jwt-debugger .tool-workspace > div {
+  height: auto !important;
+  min-height: unset !important;
+}
 
 .jwt-grid-layout {
   display: grid;
@@ -31,12 +40,13 @@
 textarea.jwt-input-main {
   width: 100%;
   height: 300px;
+  min-height: 300px;
   background: transparent !important;
   border: 1px solid #222 !important;
   border-radius: 12px;
   padding: 1.25rem;
   color: #f1f5f9 !important;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.95rem;
   resize: none;
   outline: none !important;
@@ -92,15 +102,16 @@ textarea.jwt-input-main:focus {
 
 @media (max-width: 768px) {
   .jwt-grid-layout {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   textarea.jwt-input-main {
-    height: 200px !important; 
+    height: 200px !important;
+    min-height: 200px !important;
   }
 
   .jwt-debugger {
-  padding: 80px 1rem 20px;
-}
+    padding: 80px 1rem 20px;
+  }
 }
