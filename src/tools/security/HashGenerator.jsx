@@ -133,7 +133,7 @@ export default function HashGenerator({ tips, category }) {
 
   return (
     <ToolLayout
-    category={category}
+      category={category}
       header={
         <div>
           <h1>Hash Generator</h1>
@@ -147,9 +147,11 @@ export default function HashGenerator({ tips, category }) {
           </div>
 
           {WEAK_ALGOS.has(algo) && (
-            <div className="error-badge" style={{ marginTop: "8px" }}>
-              {algo} is cryptographically broken. Do not use for passwords or
-              signatures.
+            <div className="warning-badge">
+              <span>
+                <strong>{algo}</strong> is cryptographically broken. Do not use
+                for passwords or signatures.
+              </span>
             </div>
           )}
 

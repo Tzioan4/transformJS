@@ -160,9 +160,14 @@ export default function SqlFormatter({ tips, category }) {
           {error && <div className="error-badge">{error}</div>}
 
           {destructiveKeywords.length > 0 && (
-            <div className="input-warning">
-              Warning: destructive SQL keyword detected:{" "}
-              <strong>{destructiveKeywords.join(", ")}</strong>
+            <div className="warning-badge">
+              <span className="warning-badge-label">WARNING</span>
+
+              <span>
+                <strong>Destructive SQL detected:</strong>{" "}
+                {destructiveKeywords.join(", ")}. Review carefully before
+                executing on production databases.
+              </span>
             </div>
           )}
 
