@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import "@styles/tools/color.css";
+import ToolLayout from "../../layouts/ToolLayout";
 
 const DEFAULT_HUE = 217;
 const DEFAULT_SAT = 0.76;
@@ -328,181 +329,16 @@ export default function ColorConverter({ tips }) {
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <span className="tool-category-badge">Code</span>
-        <h1>Color Converter</h1>
-        <p>Pick or convert colors between HEX, RGB, and HSL formats.</p>
-        {tips && <ToolInfo tips={tips} />}
-      </div>
-
-      <div className="cp-wrapper">
-        {/*picker */}
-        <div
-          ref={pickerRef}
-          className="cp-canvas"
-          style={{ background: pureHue }}
-          onMouseDown={onPickerDown}
-          onTouchStart={onPickerDown}
-        >
-          <div className="cp-canvas-white" />
-          <div className="cp-canvas-black" />
-          <div
-            className="cp-cursor"
-            style={{
-              left: `${sat * 100}%`,
-              top: `${(1 - val) * 100}%`,
-              background: hex,
-              boxShadow: `0 0 0 2px ${val > 0.4 ? "#000" : "#fff"}`,
-            }}
-          />
-        </div>
-
-        {/*hue */}
-        <div
-          ref={hueRef}
-          className="cp-hue"
-          onMouseDown={onHueDown}
-          onTouchStart={onHueDown}
-        >
-          <div
-            className="cp-hue-thumb"
-            style={{ left: `${(hue / 359) * 100}%` }}
-          />
-        </div>
-
-        {/*preview */}
-        <div className="cp-swatch" style={{ background: hex }} />
-      </div>
-
-      {/* inputs */}
-      <div className="color-inputs">
-        {/*hex */}
-        <div className="color-group">
-          <span className="color-label">HEX</span>
-
-          <div className="color-row">
-            <input
-              className="color-input"
-              value={hexInput}
-              onChange={(e) => handleHexChange(e.target.value)}
-              spellCheck={false}
-              placeholder="#000000"
-              style={
-                hexError
-                  ? {
-                      borderColor: "#ef4444",
-                      boxShadow: "0 0 0 1px rgba(239, 68, 68, 0.2)",
-                    }
-                  : {}
-              }
-            />
-
-            <button
-              className={`btn ${copied === "hex" ? "btn-success" : "btn-copy"}`}
-              onClick={() => copy(hex, "hex")}
-            >
-              {copied === "hex" ? "Copied" : "Copy"}
-            </button>
-          </div>
-
-          {hexError && (
-            <div
-              style={{
-                color: "#f87171",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.75rem",
-                marginTop: "2px",
-              }}
-            >
-              Invalid HEX format. Use #RGB or #RRGGBB
-            </div>
-          )}
-        </div>
-
-        {/* RGB */}
-        <div className="color-group">
-          <span className="color-label">RGB</span>
-
-          <div className="color-row">
-            {["r", "g", "b"].map((f) => (
-              <div key={f} className="color-channel">
-                <span className="color-channel-label">{f.toUpperCase()}</span>
-                <input
-                  className="color-input color-input--sm"
-                  type="number"
-                  min={0}
-                  max={255}
-                  value={rgb[f]}
-                  onChange={(e) => handleRgb(f, e.target.value)}
-                />
-              </div>
-            ))}
-
-            <button
-              className={`btn ${copied === "rgb" ? "btn-success" : "btn-copy"}`}
-              onClick={() => copy(rgbStr, "rgb")}
-            >
-              {copied === "rgb" ? "Copied" : "Copy"}
-            </button>
-          </div>
-        </div>
-
-        {/* HSL */}
-        <div className="color-group">
-          <span className="color-label">HSL</span>
-
-          <div className="color-row">
-            {[
-              ["h", 360],
-              ["s", 100],
-              ["l", 100],
-            ].map(([f, max]) => (
-              <div key={f} className="color-channel">
-                <span className="color-channel-label">{f.toUpperCase()}</span>
-                <input
-                  className="color-input color-input--sm"
-                  type="number"
-                  min={0}
-                  max={max}
-                  value={hsl[f]}
-                  onChange={(e) => handleHsl(f, e.target.value)}
-                />
-              </div>
-            ))}
-
-            <button
-              className={`btn ${copied === "hsl" ? "btn-success" : "btn-copy"}`}
-              onClick={() => copy(hslStr, "hsl")}
-            >
-              {copied === "hsl" ? "Copied" : "Copy"}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* output cards */}
-      <div className="color-outputs">
-        {[
-          { key: "hex-c", label: "HEX", val: hex },
-          { key: "rgb-c", label: "RGB", val: rgbStr },
-          { key: "hsl-c", label: "HSL", val: hslStr },
-        ].map(({ key, label, val: v }) => (
-          <div
-            key={key}
-            className="color-output-card"
-            onClick={() => copy(v, key)}
-          >
-            <span className="color-output-label">{label}</span>
-            <span className="color-output-value">{v}</span>
-            <span className="color-output-hint">
-              {copied === key ? "✓ copied" : "click to copy"}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="tool-actions">
+    <ToolLayout
+      category="code"
+      header={
+        <>
+          <h1>Color Converter</h1>
+          <p>Pick or convert colors between HEX, RGB, and HSL formats.</p>
+          {tips && <ToolInfo tips={tips} />}
+        </>
+      }
+      actions={
         <button
           className="btn btn-danger"
           onClick={() => {
@@ -515,7 +351,175 @@ export default function ColorConverter({ tips }) {
         >
           Reset <span className="btn-hint">Esc</span>
         </button>
+      }
+    >
+      <div className="color-layout">
+        <div className="cp-wrapper">
+          {/*picker */}
+          <div
+            ref={pickerRef}
+            className="cp-canvas"
+            style={{ background: pureHue }}
+            onMouseDown={onPickerDown}
+            onTouchStart={onPickerDown}
+          >
+            <div className="cp-canvas-white" />
+            <div className="cp-canvas-black" />
+            <div
+              className="cp-cursor"
+              style={{
+                left: `${sat * 100}%`,
+                top: `${(1 - val) * 100}%`,
+                background: hex,
+                boxShadow: `0 0 0 2px ${val > 0.4 ? "#000" : "#fff"}`,
+              }}
+            />
+          </div>
+
+          {/*hue */}
+          <div
+            ref={hueRef}
+            className="cp-hue"
+            onMouseDown={onHueDown}
+            onTouchStart={onHueDown}
+          >
+            <div
+              className="cp-hue-thumb"
+              style={{ left: `${(hue / 359) * 100}%` }}
+            />
+          </div>
+
+          {/*preview */}
+          <div className="cp-swatch" style={{ background: hex }} />
+        </div>
+
+        {/* inputs */}
+        <div className="color-inputs">
+          {/*hex */}
+          <div className="color-group">
+            <span className="color-label">HEX</span>
+
+            <div className="color-row">
+              <input
+                className="color-input"
+                value={hexInput}
+                onChange={(e) => handleHexChange(e.target.value)}
+                spellCheck={false}
+                placeholder="#000000"
+                style={
+                  hexError
+                    ? {
+                        borderColor: "#ef4444",
+                        boxShadow: "0 0 0 1px rgba(239, 68, 68, 0.2)",
+                      }
+                    : {}
+                }
+              />
+
+              <button
+                className={`btn ${copied === "hex" ? "btn-success" : "btn-copy"}`}
+                onClick={() => copy(hex, "hex")}
+              >
+                {copied === "hex" ? "Copied" : "Copy"}
+              </button>
+            </div>
+
+            {hexError && (
+              <div
+                style={{
+                  color: "#f87171",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.75rem",
+                  marginTop: "2px",
+                }}
+              >
+                Invalid HEX format. Use #RGB or #RRGGBB
+              </div>
+            )}
+          </div>
+
+          {/* RGB */}
+          <div className="color-group">
+            <span className="color-label">RGB</span>
+
+            <div className="color-row">
+              {["r", "g", "b"].map((f) => (
+                <div key={f} className="color-channel">
+                  <span className="color-channel-label">{f.toUpperCase()}</span>
+                  <input
+                    className="color-input color-input--sm"
+                    type="number"
+                    min={0}
+                    max={255}
+                    value={rgb[f]}
+                    onChange={(e) => handleRgb(f, e.target.value)}
+                  />
+                </div>
+              ))}
+
+              <button
+                className={`btn ${copied === "rgb" ? "btn-success" : "btn-copy"}`}
+                onClick={() => copy(rgbStr, "rgb")}
+              >
+                {copied === "rgb" ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
+
+          {/* HSL */}
+          <div className="color-group">
+            <span className="color-label">HSL</span>
+
+            <div className="color-row">
+              {[
+                ["h", 360],
+                ["s", 100],
+                ["l", 100],
+              ].map(([f, max]) => (
+                <div key={f} className="color-channel">
+                  <span className="color-channel-label">{f.toUpperCase()}</span>
+                  <input
+                    className="color-input color-input--sm"
+                    type="number"
+                    min={0}
+                    max={max}
+                    value={hsl[f]}
+                    onChange={(e) => handleHsl(f, e.target.value)}
+                  />
+                </div>
+              ))}
+
+              <button
+                className={`btn ${copied === "hsl" ? "btn-success" : "btn-copy"}`}
+                onClick={() => copy(hslStr, "hsl")}
+              >
+                {copied === "hsl" ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* output cards */}
+        <div className="color-outputs">
+          {[
+            { key: "hex-c", label: "HEX", val: hex },
+            { key: "rgb-c", label: "RGB", val: rgbStr },
+            { key: "hsl-c", label: "HSL", val: hslStr },
+          ].map(({ key, label, val: v }) => (
+            <div
+              key={key}
+              className="color-output-card"
+              onClick={() => copy(v, key)}
+            >
+              <span className="color-output-label">{label}</span>
+              <span className="color-output-value">{v}</span>
+              <span className="color-output-hint">
+                {copied === key ? "✓ copied" : "click to copy"}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }
