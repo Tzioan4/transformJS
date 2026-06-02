@@ -324,11 +324,11 @@ export default function RegexTester({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
