@@ -220,7 +220,7 @@ export default function HashGenerator({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           {ALGORITHMS.map((algorithm) => (
             <button
               key={algorithm}
@@ -245,7 +245,7 @@ export default function HashGenerator({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );

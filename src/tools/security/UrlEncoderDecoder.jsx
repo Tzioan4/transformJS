@@ -244,7 +244,7 @@ export default function UrlEncoderDecoder({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button
             className={`btn ${
               mode === "encode" ? "btn-primary" : "btn-secondary"
@@ -279,7 +279,7 @@ export default function UrlEncoderDecoder({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
