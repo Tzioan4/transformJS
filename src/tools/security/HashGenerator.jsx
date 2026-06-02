@@ -142,7 +142,7 @@ export default function HashGenerator({ tips, category }) {
             API.
           </p>
 
-          <div className="mode-indicator encode" style={{ marginTop: "10px" }}>
+          <div className="mode-indicator encode hash-algorithm-indicator">
             ALGORITHM: <strong>{algo}</strong>
           </div>
 
@@ -156,7 +156,7 @@ export default function HashGenerator({ tips, category }) {
           )}
 
           {input !== input.trimEnd() && (
-            <div className="input-warning-text" style={{ marginTop: "8px" }}>
+            <div className="input-warning-text hash-input-warning">
               Trailing whitespace detected and stripped before hashing
             </div>
           )}
@@ -202,14 +202,10 @@ export default function HashGenerator({ tips, category }) {
       output={
         <div className="file-drop-wrap">
           <textarea
-            className="tool-textarea"
+            className="tool-textarea hash-output"
             placeholder="Hash output will appear here..."
             value={output}
             readOnly
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "12px",
-            }}
           />
 
           {output && (

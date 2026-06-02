@@ -236,6 +236,19 @@ textarea:focus {
   padding: 0 !important;
 }
 
+.hash-algorithm-indicator {
+  margin-top: 10px;
+}
+
+.hash-input-warning {
+  margin-top: 8px;
+}
+
+.hash-output {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
 /*buttons*/
 .tool-actions {
   display: flex;
