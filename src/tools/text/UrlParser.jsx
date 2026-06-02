@@ -3,9 +3,6 @@ import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import "../../styles/tools/urlparser.css";
 
-const EXAMPLE_URL =
-  "https://transformjs.com:8080/tools/search?query=hello+world&page=2&debug=true#results";
-
 //detects whether the raw URL string contains an explicit port (e.g. ":8080")
 //returns the port string if explicit, or null otherwise.
 //handles userinfo (user:pass@host) and IPv6 ([::1]:8080) edge cases.
@@ -33,7 +30,8 @@ export function extractExplicitPort(raw) {
     if (colonIdx === -1) return null;
 
     const portStr = hostAndPort.substring(colonIdx + 1);
-    //validate it's actually numeric (avoids matching weird inputs)
+
+    //validate it's actually numeric
     return /^\d+$/.test(portStr) ? portStr : null;
   } catch {
     return null;
@@ -44,6 +42,7 @@ function parseUrl(raw) {
   try {
     const url = new URL(raw);
     const params = [];
+
     url.searchParams.forEach((value, key) => {
       params.push({ key, value });
     });
@@ -77,13 +76,15 @@ function Field({ label, value, empty = false, sensitive = false }) {
   return (
     <div className={`urlp-field ${empty ? "urlp-field-empty" : ""}`}>
       <span className="urlp-field-label">{label}</span>
+
       <code className="urlp-field-value">
         {sensitive && !revealed ? "••••••••" : value || "—"}
       </code>
+
       {sensitive && (
         <button
           className="urlp-copy-btn"
-          onClick={() => setRevealed((r) => !r)}
+          onClick={() => setRevealed((current) => !current)}
         >
           {revealed ? "Hide" : "Show"}
         </button>
@@ -108,7 +109,10 @@ export default function UrlParser({ tips, category }) {
     }
   };
 
-  const handleClear = () => setInput("");
+  const handleClear = () => {
+    setInput("");
+    setCopiedKey(null);
+  };
 
   return (
     <ToolLayout
@@ -116,29 +120,26 @@ export default function UrlParser({ tips, category }) {
       header={
         <div>
           <h1>URL Parser</h1>
+
           <p>Break down any URL into its individual components instantly.</p>
+
           {!parsed.error && input && (
-            <div
-              className="status-badge status-pretty"
-              style={{ marginTop: 12, display: "inline-block" }}
-            >
+            <div className="status-badge status-pretty url-parser-status">
               STATUS: <strong>PARSED</strong>
             </div>
           )}
+
           {parsed.error && input && (
-            <div className="error-badge" style={{ marginTop: 12 }}>
-              {parsed.error}
-            </div>
+            <div className="error-badge url-parser-status">{parsed.error}</div>
           )}
+
           {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
-        <div
-          className="tool-textarea"
-          style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-        >
+        <div className="tool-textarea url-parser-input">
           <label className="urlp-label">URL Input</label>
+
           <input
             type="text"
             className="urlp-input"
@@ -149,8 +150,10 @@ export default function UrlParser({ tips, category }) {
             autoCorrect="off"
             spellCheck={false}
           />
+
           <div className="urlp-info">
             <span className="urlp-info-label">STRUCTURE</span>
+
             <code className="urlp-info-value">
               protocol://username:password@host:port/pathname?search#hash
             </code>
@@ -158,10 +161,7 @@ export default function UrlParser({ tips, category }) {
         </div>
       }
       output={
-        <div
-          className="tool-textarea urlp-output"
-          style={{ overflowY: "auto" }}
-        >
+        <div className="tool-textarea urlp-output url-parser-output">
           {!input && (
             <p className="urlp-empty">Paste a URL to see its components.</p>
           )}
@@ -170,28 +170,35 @@ export default function UrlParser({ tips, category }) {
             <>
               <div className="urlp-section">
                 <span className="urlp-section-title">COMPONENTS</span>
+
                 <div className="urlp-fields">
                   <Field label="Protocol" value={parsed.protocol} />
                   <Field label="Host" value={parsed.host} />
+
                   <Field
                     label="Port"
                     value={parsed.port}
                     empty={parsed.port === "—"}
                   />
+
                   <Field
                     label="Pathname"
                     value={parsed.pathname}
                     empty={parsed.pathname === "/"}
                   />
+
                   <Field
                     label="Hash"
                     value={parsed.hash}
                     empty={!parsed.hash}
                   />
+
                   <Field label="Origin" value={parsed.origin} />
+
                   {parsed.username && (
                     <Field label="Username" value={parsed.username} />
                   )}
+
                   {parsed.password && (
                     <Field
                       label="Password"
@@ -207,17 +214,21 @@ export default function UrlParser({ tips, category }) {
                   <span className="urlp-section-title">
                     QUERY PARAMS ({parsed.params.length})
                   </span>
+
                   <div className="urlp-params">
-                    {parsed.params.map(({ key, value }, i) => (
-                      <div key={i} className="urlp-param-row">
+                    {parsed.params.map(({ key, value }, index) => (
+                      <div key={index} className="urlp-param-row">
                         <code className="urlp-param-key">{key}</code>
+
                         <span className="urlp-param-eq">=</span>
+
                         <code className="urlp-param-value">{value}</code>
+
                         <button
                           className="urlp-copy-btn"
-                          onClick={() => handleCopy(`${key}=${value}`, i)}
+                          onClick={() => handleCopy(`${key}=${value}`, index)}
                         >
-                          {copiedKey === i ? "Copied!" : "Copy"}
+                          {copiedKey === index ? "Copied!" : "Copy"}
                         </button>
                       </div>
                     ))}
@@ -228,6 +239,7 @@ export default function UrlParser({ tips, category }) {
               {parsed.params.length === 0 && (
                 <div className="urlp-section">
                   <span className="urlp-section-title">QUERY PARAMS</span>
+
                   <p className="urlp-empty">No query parameters found.</p>
                 </div>
               )}
@@ -239,12 +251,15 @@ export default function UrlParser({ tips, category }) {
         <>
           <button
             onClick={() => handleCopy(input, "full")}
-            className={`btn ${copiedKey === "full" ? "btn-success" : "btn-copy"}`}
+            className={`btn ${
+              copiedKey === "full" ? "btn-success" : "btn-copy"
+            }`}
             disabled={!input || !!parsed.error}
           >
-            {copiedKey === "full" ? "Copied!" : "Copy URL"}{" "}
+            {copiedKey === "full" ? "Copied!" : "Copy URL"}
             <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
+
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>

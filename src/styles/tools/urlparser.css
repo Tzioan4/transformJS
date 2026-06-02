@@ -45,7 +45,29 @@
   font-size: 12px;
   color: var(--color-muted);
 }
+.url-parser-status .url-parser-output {
+  margin-top: 12px;
+  min-width: 0;
+}
+.urlp-info {
+  min-width: 0;
+}
+.urlp-info-value {
+  display: block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.url-parser-input {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
+.url-parser-output {
+  overflow-y: auto;
+}
 /*output */
 .urlp-output {
   padding: 16px !important;
@@ -191,5 +213,9 @@
   .urlp-param-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .urlp-info-value {
+    font-size: 0.72rem;
+    line-height: 1.5;
   }
 }
