@@ -241,11 +241,11 @@ export default function DiffChecker({ tips }) {
         </div>
       </div>
 
-      <div className="tool-actions">
+      <>
         <button className="btn btn-danger" onClick={handleClear}>
           Clear <span className="btn-hint">Esc</span>
         </button>
-      </div>
+      </>
     </div>
   );
 }

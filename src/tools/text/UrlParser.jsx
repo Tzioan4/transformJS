@@ -236,7 +236,7 @@ export default function UrlParser({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button
             onClick={() => handleCopy(input, "full")}
             className={`btn ${copiedKey === "full" ? "btn-success" : "btn-copy"}`}
@@ -248,7 +248,7 @@ export default function UrlParser({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );

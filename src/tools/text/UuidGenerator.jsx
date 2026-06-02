@@ -129,7 +129,7 @@ export default function UuidGenerator({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleGenerate} className="btn btn-primary">
             Generate
           </button>
@@ -150,7 +150,7 @@ export default function UuidGenerator({ tips, category }) {
           >
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
