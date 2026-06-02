@@ -1,3 +1,9 @@
+.diff-layout {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .diff-panel {
   display: flex;
   flex-direction: column;
