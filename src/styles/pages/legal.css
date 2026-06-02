@@ -79,7 +79,18 @@
 .about-link:hover {
   opacity: 0.8;
   text-decoration: none;
+
 }
+
+.policy-updated {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.policy-list {
+  margin-left: 20px;
+}
+
 [data-theme="light"] .policy-container h2 {
   color: #1e293b;
 }

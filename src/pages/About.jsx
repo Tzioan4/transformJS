@@ -2,7 +2,7 @@ export default function About() {
   return (
     <div className="policy-container">
       <h1>About the Project</h1>
-      <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>Last updated: May 2026</p>
+      <p className="policy-updated">Last updated: May 2026</p>
 
       <section>
         <h2>About me</h2>
@@ -43,7 +43,7 @@ export default function About() {
           Built with the fundamentals - no over-engineering, no unnecessary
           abstractions:
         </p>
-        <ul style={{ marginLeft: "20px" }}>
+        <ul className="policy-list">
           <li>
             <strong>React</strong> - component architecture and state management
           </li>

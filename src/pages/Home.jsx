@@ -132,14 +132,14 @@ export default function Home({ searchTerm }) {
         <div className="tools-grid">
           {filteredTools.length > 0 ? (
             filteredTools.map((tool) => (
-                <Link to={tool.path} key={tool.path} className="tool-card">
-                  <div className="tool-icon">{tool.icon}</div>
-                  <h3>{tool.name}</h3>
-                  <p>{tool.description}</p>
-                </Link>
+              <Link to={tool.path} key={tool.path} className="tool-card">
+                <div className="tool-icon">{tool.icon}</div>
+                <h3>{tool.name}</h3>
+                <p>{tool.description}</p>
+              </Link>
             ))
           ) : (
-            <p style={{ color: "#555", fontFamily: "var(--font-mono)" }}>
+            <p className="tools-empty-state">
               No tools found
               {searchTerm ? ` for "${searchTerm}"` : " in this category"}.
             </p>
