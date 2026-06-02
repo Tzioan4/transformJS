@@ -173,21 +173,7 @@ export default function UrlEncoderDecoder({ tips, category }) {
           )}
 
           {info && (
-            <div
-              style={{
-                marginTop: "12px",
-                padding: "10px 14px",
-                background: "rgba(59, 130, 246, 0.08)",
-                border: "1px solid rgba(59, 130, 246, 0.35)",
-                borderRadius: "6px",
-                color: "#60a5fa",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.85rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
+            <div className="info-badge">
               <span>{info}</span>
             </div>
           )}
