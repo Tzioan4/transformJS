@@ -242,7 +242,7 @@ const generate = () => {
         />
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button
             onClick={generate}
             className="btn btn-primary"
@@ -258,7 +258,7 @@ const generate = () => {
             {copied ? "Copied" : "Copy Password"}
             <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
-        </div>
+        </>
       }
     />
   );

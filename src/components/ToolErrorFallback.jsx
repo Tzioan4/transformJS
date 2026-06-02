@@ -18,7 +18,7 @@ export default function ToolErrorFallback({ error }) {
           </p>
         )}
 
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+        <div className="not-found-actions">
           <Link to="/" className="not-found-btn">
             Back to Home
           </Link>

@@ -53,10 +53,7 @@ export default function UuidGenerator({ tips, category }) {
         <div>
           <h1>UUID Generator</h1>
           <p>Generate cryptographically secure UUID v4 identifiers.</p>
-          <div
-            className="status-badge status-pretty"
-            style={{ marginTop: 12, display: "inline-block" }}
-          >
+          <div className="status-badge status-pretty status-badge-spaced">
             VERSION: <strong>v4</strong>
           </div>
           {tips && <ToolInfo tips={tips} />}
@@ -129,7 +126,7 @@ export default function UuidGenerator({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleGenerate} className="btn btn-primary">
             Generate
           </button>
@@ -150,7 +147,7 @@ export default function UuidGenerator({ tips, category }) {
           >
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );

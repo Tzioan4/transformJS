@@ -3,7 +3,7 @@ export default function Privacy() {
   return (
     <div className="policy-container">
       <h1>Privacy & Terms</h1>
-      <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>Last updated: May 2026</p>
+      <p className="policy-updated">Last updated: May 2026</p>
 
       <section>
         <h2>The App</h2>

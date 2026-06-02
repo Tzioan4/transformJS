@@ -1,3 +1,9 @@
+.diff-layout {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 .diff-panel {
   display: flex;
   flex-direction: column;
@@ -108,12 +114,29 @@
   min-width: 0;
   overflow-x: auto;
 }
+.diff-identical-banner {
+  padding: 14px 18px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: var(--radius-md);
+  color: #4ade80;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 /*light theme */
 [data-theme="light"] .diff-lines {
   border-color: #e2e8f0;
 }
-
+[data-theme="light"] .diff-identical-banner {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
 [data-theme="light"] .diff-line--same {
   color: #1e293b;
 }

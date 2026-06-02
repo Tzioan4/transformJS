@@ -5,6 +5,7 @@ import { readTextFile } from "../../utils/file";
 import { TEXT_FILE_TYPES, FILE_SIZE_LIMIT } from "../../constants/fileTypes";
 import "@styles/tools/diff.css";
 
+
 export function computeDiff(a, b) {
   const linesA = a.split("\n");
   const linesB = b.split("\n");
@@ -191,21 +192,7 @@ export default function DiffChecker({ tips }) {
       </div>
 
       {isIdentical ? (
-        <div
-          style={{
-            padding: "14px 18px",
-            background: "rgba(34, 197, 94, 0.08)",
-            border: "1px solid rgba(34, 197, 94, 0.35)",
-            borderRadius: "var(--radius-md)",
-            color: "#4ade80",
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.9rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            justifyContent: "center",
-          }}
-        >
+        <div className="diff-identical-banner">
           <span>
             <strong>Texts are identical</strong> — no differences found
           </span>
@@ -254,11 +241,11 @@ export default function DiffChecker({ tips }) {
         </div>
       </div>
 
-      <div className="tool-actions">
+      <>
         <button className="btn btn-danger" onClick={handleClear}>
           Clear <span className="btn-hint">Esc</span>
         </button>
-      </div>
+      </>
     </div>
   );
 }

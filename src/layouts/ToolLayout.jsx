@@ -14,11 +14,12 @@ export default function ToolLayout({
   output,
   actions,
   children,
+  className = "",
 }) {
   const categoryLabel = CATEGORY_LABELS[category];
 
   return (
-    <div className="tool-container">
+    <div className={`tool-container ${className}`}>
       <div className="tool-header">
         {categoryLabel && (
           <span className="tool-category-badge">{categoryLabel}</span>

@@ -4,6 +4,7 @@ import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
 import "../../styles/tools/yaml.css";
 import DropOverlay from "../../components/DropOverlay";
+import ToolLayout from "../../layouts/ToolLayout";
 
 const TIMEOUT_MS = 2000;
 const MAX_INPUT_SIZE = 50_000;
@@ -133,22 +134,23 @@ export default function YamlToJson({ tips }) {
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <span className="tool-category-badge">Data</span>
-        <h1>YAML to JSON</h1>
-        <p>Convert your YAML configuration to a clean JSON object.</p>
+    <ToolLayout
+      category="data"
+      header={
+        <>
+          <h1>YAML to JSON</h1>
+          <p>Convert your YAML configuration to a clean JSON object.</p>
 
-        {isRunning && (
-          <div className="status-badge status-pretty">Parsing YAML...</div>
-        )}
+          {isRunning && (
+            <div className="status-badge status-pretty">Parsing YAML...</div>
+          )}
 
-        {error && <div className="error-badge">{error}</div>}
+          {error && <div className="error-badge">{error}</div>}
 
-        {tips && <ToolInfo tips={tips} />}
-      </div>
-
-      <div className="tool-workspace">
+          {tips && <ToolInfo tips={tips} />}
+        </>
+      }
+      input={
         <div
           className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
           onDragOver={(e) => {
@@ -163,6 +165,7 @@ export default function YamlToJson({ tips }) {
           }}
         >
           {isDragging && <DropOverlay label="Drop .yaml file here" />}
+
           <textarea
             className="tool-textarea"
             placeholder="Paste YAML here, upload a .yaml file, or drag and drop it."
@@ -179,7 +182,8 @@ export default function YamlToJson({ tips }) {
             />
           </label>
         </div>
-
+      }
+      output={
         <div className="file-drop-wrap">
           <textarea
             className="tool-textarea"
@@ -198,22 +202,23 @@ export default function YamlToJson({ tips }) {
             </button>
           )}
         </div>
-      </div>
+      }
+      actions={
+        <>
+          <button
+            onClick={() => copy(jsonOutput)}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+            disabled={!jsonOutput}
+          >
+            {copied ? "Copied" : "Copy JSON"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
+          </button>
 
-      <div className="tool-actions">
-        <button
-          onClick={() => copy(jsonOutput)}
-          className={`btn ${copied ? "btn-success" : "btn-copy"}`}
-          disabled={!jsonOutput}
-        >
-          {copied ? "Copied" : "Copy JSON"}
-          <span className="btn-hint">Ctrl+Shift+C</span>
-        </button>
-
-        <button onClick={handleClear} className="btn btn-danger">
-          Clear <span className="btn-hint">Esc</span>
-        </button>
-      </div>
-    </div>
+          <button onClick={handleClear} className="btn btn-danger">
+            Clear <span className="btn-hint">Esc</span>
+          </button>
+        </>
+      }
+    />
   );
 }

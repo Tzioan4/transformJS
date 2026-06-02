@@ -3,6 +3,7 @@ import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { readTextFile } from "../../utils/file";
 import DropOverlay from "../../components/DropOverlay";
+import ToolLayout from "../../layouts/ToolLayout";
 
 export default function HtmlPreview({ tips }) {
   const [code, setCode] = useState("");
@@ -64,97 +65,90 @@ export default function HtmlPreview({ tips }) {
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <span className="tool-category-badge">Code</span>
-        <h1>HTML Preview</h1>
-        <p>Real-time sandboxed rendering for HTML and CSS snippets.</p>
+    <ToolLayout
+      category="code"
+      header={
+        <>
+          <h1>HTML Preview</h1>
+          <p>Real-time sandboxed rendering for HTML and CSS snippets.</p>
 
-        {error && <div className="error-badge">{error}</div>}
+          {error && <div className="error-badge">{error}</div>}
 
-        {tips && <ToolInfo tips={tips} />}
-      </div>
-
-      <div className="tool-workspace">
-        <div
-          className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setIsDragging(true);
-          }}
-          onDragLeave={() => setIsDragging(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setIsDragging(false);
-            handleFileLoad(e.dataTransfer.files[0]);
-          }}
-        >
-          {isDragging && <DropOverlay label="Drop .html file here" />}
-
-          <textarea
-            className="tool-textarea"
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-              setError(null);
-            }}
-            placeholder="Write HTML/CSS here, upload a .html file, or drag and drop it."
-          />
-
-          <label className="file-load-btn">
-            Load .html file
-            <input
-              type="file"
-              accept=".html,.htm,.txt,text/html,text/plain"
-              onChange={(e) => handleFileLoad(e.target.files[0])}
-            />
-          </label>
-        </div>
-
-        <div className="file-drop-wrap">
-          <div
-            style={{
-              background: "#ffffff",
-              borderRadius: "8px",
-              overflow: "hidden",
-              height: "100%",
-              border: "1px solid #1f2937",
-            }}
+          {tips && <ToolInfo tips={tips} />}
+        </>
+      }
+      actions={
+        <>
+          <button
+            onClick={() => copy(code)}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+            disabled={!code}
           >
-            <iframe
-              title="html-preview"
-              srcDoc={finalHtml}
-              sandbox=""
-              style={{ width: "100%", height: "100%", border: "none" }}
-            />
-          </div>
+            {copied ? "Copied" : "Copy HTML"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
+          </button>
 
-          {code.trim() && (
-            <button
-              type="button"
-              className="file-download-btn"
-              onClick={handleDownload}
-            >
-              Download
-            </button>
-          )}
+          <button onClick={handleClear} className="btn btn-danger">
+            Clear <span className="btn-hint">Esc</span>
+          </button>
+        </>
+      }
+    >
+      <div
+        className={`file-drop-wrap ${isDragging ? "dragging" : ""}`}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDragging(false);
+          handleFileLoad(e.dataTransfer.files[0]);
+        }}
+      >
+        {isDragging && <DropOverlay label="Drop .html file here" />}
+
+        <textarea
+          className="tool-textarea"
+          value={code}
+          onChange={(e) => {
+            setCode(e.target.value);
+            setError(null);
+          }}
+          placeholder="Write HTML/CSS here, upload a .html file, or drag and drop it."
+        />
+
+        <label className="file-load-btn">
+          Load .html file
+          <input
+            type="file"
+            accept=".html,.htm,.txt,text/html,text/plain"
+            onChange={(e) => handleFileLoad(e.target.files[0])}
+          />
+        </label>
+      </div>
+
+      <div className="file-drop-wrap">
+        <div className="preview-frame-wrap">
+          <iframe
+            title="html-preview"
+            srcDoc={finalHtml}
+            sandbox=""
+            className="preview-frame"
+          />
         </div>
-      </div>
 
-      <div className="tool-actions">
-        <button
-          onClick={() => copy(code)}
-          className={`btn ${copied ? "btn-success" : "btn-copy"}`}
-          disabled={!code}
-        >
-          {copied ? "Copied" : "Copy HTML"}
-          <span className="btn-hint">Ctrl+Shift+C</span>
-        </button>
-
-        <button onClick={handleClear} className="btn btn-danger">
-          Clear <span className="btn-hint">Esc</span>
-        </button>
+        {code.trim() && (
+          <button
+            type="button"
+            className="file-download-btn"
+            onClick={handleDownload}
+          >
+            Download
+          </button>
+        )}
       </div>
-    </div>
+    </ToolLayout>
   );
 }

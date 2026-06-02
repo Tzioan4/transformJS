@@ -3,7 +3,7 @@ import { useState } from "react";
 import ToolInfo from "../../components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
 import { decodeJWT, verifyJWT } from "../../utils/jwt";
-
+import ToolLayout from "../../layouts/ToolLayout";
 
 function decodeJwtForDisplay(token) {
   const result = decodeJWT(token);
@@ -67,36 +67,66 @@ export default function JWTDebugger({ tips }) {
   };
 
   return (
-    <div className="tool-container">
-      <div className="tool-header">
-        <span className="tool-category-badge">Security</span>
-        <h1>JWT Debugger</h1>
-        <p>
-          Decode JWT headers and payloads with instant signature verification
-          status.
-        </p>
+    <ToolLayout
+      category="security"
+      className="jwt-debugger"
+      header={
+        <>
+          <h1>JWT Debugger</h1>
 
-        {/*error badge*/}
-        {(error || isInvalidFormat || verified === false) && (
-          <div className="error-badge">
-            {isInvalidFormat
-              ? "Action Blocked: Invalid JWT format. Make sure it has 3 parts separated by dots."
-              : verified === false
-                ? "Invalid Signature: The secret provided does not match this token's signature."
-                : error}
-          </div>
-        )}
+          <p>
+            Decode JWT headers and payloads with instant signature verification
+            status.
+          </p>
 
-        {/*success*/}
-        {verified === true && !isInvalidFormat && (
-          <div className="status-badge status-success">Signature Verified</div>
-        )}
-        {tips && <ToolInfo tips={tips} />}
-      </div>
+          {(error || isInvalidFormat || verified === false) && (
+            <div className="error-badge">
+              {isInvalidFormat
+                ? "Action Blocked: Invalid JWT format. Make sure it has 3 parts separated by dots."
+                : verified === false
+                  ? "Invalid Signature: The secret provided does not match this token's signature."
+                  : error}
+            </div>
+          )}
 
+          {verified === true && !isInvalidFormat && (
+            <div className="status-badge status-success">
+              Signature Verified
+            </div>
+          )}
+
+          {tips && <ToolInfo tips={tips} />}
+        </>
+      }
+      actions={
+        <div className="jwt-actions">
+          <button onClick={handleDecode} className="btn btn-primary">
+            Decode
+          </button>
+
+          <button onClick={handleVerify} className="btn btn-secondary">
+            Verify Signature
+          </button>
+
+          <button
+            onClick={() => copy(payload)}
+            className={`btn ${copied ? "btn-success" : "btn-copy"}`}
+            disabled={!payload}
+          >
+            {copied ? "Copied" : "Copy Payload"}
+            <span className="btn-hint">Ctrl+Shift+C</span>
+          </button>
+
+          <button onClick={handleClear} className="btn btn-danger">
+            Clear <span className="btn-hint">Esc</span>
+          </button>
+        </div>
+      }
+    >
       <div className="jwt-grid-layout">
         <div className="jwt-field-group">
           <label className="jwt-label">JWT Token (Encoded)</label>
+
           <textarea
             className="jwt-input-main"
             value={token}
@@ -109,6 +139,7 @@ export default function JWTDebugger({ tips }) {
 
         <div className="jwt-field-group">
           <label className="jwt-label">Header (Decoded)</label>
+
           <textarea
             className="jwt-input-main"
             value={header}
@@ -119,6 +150,7 @@ export default function JWTDebugger({ tips }) {
 
         <div className="jwt-field-group">
           <label className="jwt-label">Secret / Verify Key</label>
+
           <textarea
             className="jwt-input-main jwt-secret-field"
             value={secret}
@@ -131,6 +163,7 @@ export default function JWTDebugger({ tips }) {
 
         <div className="jwt-field-group">
           <label className="jwt-label">Payload (Data)</label>
+
           <textarea
             className="jwt-input-main"
             value={payload}
@@ -139,26 +172,6 @@ export default function JWTDebugger({ tips }) {
           />
         </div>
       </div>
-
-      <div className="jwt-actions">
-        <button onClick={handleDecode} className="btn btn-primary">
-          Decode
-        </button>
-        <button onClick={handleVerify} className="btn btn-secondary">
-          Verify Signature
-        </button>
-        <button
-          onClick={() => copy(payload)}
-          className={`btn ${copied ? "btn-success" : "btn-copy"}`}
-          disabled={!payload}
-        >
-          {copied ? "Copied" : "Copy Payload"}
-          <span className="btn-hint">Ctrl+Shift+C</span>
-        </button>
-        <button onClick={handleClear} className="btn btn-danger">
-          Clear <span className="btn-hint">Esc</span>
-        </button>
-      </div>
-    </div>
+    </ToolLayout>
   );
 }

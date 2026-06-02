@@ -816,7 +816,7 @@ export default function FtlPreviewer({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleRender} className="btn btn-primary">
             Render
           </button>
@@ -831,7 +831,7 @@ export default function FtlPreviewer({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
