@@ -196,25 +196,12 @@ const handleDownload = () => {
       </div>
 
       <div className="file-drop-wrap">
-        <div
-          style={{
-            background: "#ffffff",
-            borderRadius: "8px",
-            overflow: "hidden",
-            height: "100%",
-            border: "1px solid #1f2937",
-          }}
-        >
+        <div className="preview-frame-wrap">
           <iframe
             title="markdown-preview"
             srcDoc={iframeSrcDoc}
             sandbox="allow-popups"
-            style={{
-              width: "100%",
-              height: "100%",
-              border: "none",
-              background: "#ffffff",
-            }}
+            className="preview-frame"
           />
         </div>
 

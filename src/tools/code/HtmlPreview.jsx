@@ -130,20 +130,12 @@ export default function HtmlPreview({ tips }) {
       </div>
 
       <div className="file-drop-wrap">
-        <div
-          style={{
-            background: "#ffffff",
-            borderRadius: "8px",
-            overflow: "hidden",
-            height: "100%",
-            border: "1px solid #1f2937",
-          }}
-        >
+        <div className="preview-frame-wrap">
           <iframe
             title="html-preview"
             srcDoc={finalHtml}
             sandbox=""
-            style={{ width: "100%", height: "100%", border: "none" }}
+            className="preview-frame"
           />
         </div>
 
