@@ -163,7 +163,15 @@ textarea:focus {
   color: #444;
 }
 
-/*badges*/
+.status-badge-spaced {
+  margin-top: 12px;
+}
+
+.tool-output-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
 .mode-indicator,
 .status-badge {
   display: inline-block;

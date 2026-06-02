@@ -140,18 +140,13 @@ export default function CsvToJson({ tips, category }) {
           </p>
 
           {json && !error && (
-            <div
-              className="status-badge status-pretty"
-              style={{ marginTop: 12 }}
-            >
+            <div className="status-badge status-pretty status-badge-spaced">
               STATUS: <strong>CONVERTED</strong>
             </div>
           )}
 
           {error && (
-            <div className="error-badge" style={{ marginTop: 12 }}>
-              {error}
-            </div>
+            <div className="error-badge status-badge-spaced">{error}</div>
           )}
 
           {tips && <ToolInfo tips={tips} />}
@@ -177,7 +172,11 @@ export default function CsvToJson({ tips, category }) {
             className="tool-textarea"
             placeholder="Paste CSV here, upload a .csv file, or drag and drop it."
             value={csv}
-            onChange={(e) => setCsv(e.target.value)}
+            onChange={(e) => {
+              setCsv(e.target.value);
+              setJson("");
+              setError(null);
+            }}
           />
 
           <label className="file-load-btn">
@@ -193,11 +192,7 @@ export default function CsvToJson({ tips, category }) {
       output={
         <div className="file-drop-wrap">
           <textarea
-            className="tool-textarea"
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "12px",
-            }}
+            className="tool-textarea tool-output-mono"
             placeholder="JSON output..."
             value={json}
             readOnly
@@ -215,7 +210,7 @@ export default function CsvToJson({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleConvert} className="btn btn-primary">
             Parse CSV
           </button>
@@ -232,7 +227,7 @@ export default function CsvToJson({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
