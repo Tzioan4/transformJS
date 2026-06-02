@@ -227,7 +227,7 @@ export default function SqlFormatter({ tips, category }) {
         </div>
       }
       actions={
-        <div className="tool-actions">
+        <>
           <button onClick={handleFormat} className="btn btn-primary">
             Beautify
           </button>
@@ -248,7 +248,7 @@ export default function SqlFormatter({ tips, category }) {
           <button onClick={handleClear} className="btn btn-danger">
             Clear <span className="btn-hint">Esc</span>
           </button>
-        </div>
+        </>
       }
     />
   );
