@@ -5,6 +5,15 @@
   margin-bottom: 4px;
   font-family: var(--font-mono);
 }
+.case-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-output-grid-wrapper {
+  overflow-y: auto;
+}
 
 .case-input {
   width: 100%;

@@ -176,14 +176,7 @@ export default function CaseConverter({ tips, category }) {
         >
           {isDragging && <DropOverlay label="Drop file here" />}
 
-          <div
-            className="tool-textarea"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
+          <div className="tool-textarea case-input-wrapper">
             <label className="case-label">Input</label>
 
             <textarea
@@ -210,10 +203,7 @@ export default function CaseConverter({ tips, category }) {
         </div>
       }
       output={
-        <div
-          className="tool-textarea case-output-grid-wrapper"
-          style={{ overflowY: "auto" }}
-        >
+        <div className="tool-textarea case-output-grid-wrapper">
           <div className="case-output-grid">
             {CASES.map(({ key, label, convert }) => {
               const result = hasInput ? convert(words) : "";
