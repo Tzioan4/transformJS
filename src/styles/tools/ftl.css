@@ -103,3 +103,12 @@
 [data-theme="light"] .ftl-source-view {
   color: #1e293b;
 }
+.ftl-render-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.85em;
+}
