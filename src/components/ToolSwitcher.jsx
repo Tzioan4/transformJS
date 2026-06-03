@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { tools } from "../tools";
 import "@styles/components/tool-switcher.css";
 
@@ -51,9 +52,33 @@ export default function ToolSwitcher() {
     );
   }, [groupedTools]);
 
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    setSearch("");
+    setActiveIndex(0);
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    const currentToolIndex = visibleTools.findIndex(
+      (tool) => tool.path === location.pathname,
+    );
+
+    setActiveIndex(currentToolIndex >= 0 ? currentToolIndex : 0);
+    setOpen(true);
+  }, [location.pathname, visibleTools]);
+
+  const handleToggle = useCallback(() => {
+    if (open) {
+      handleClose();
+      return;
+    }
+
+    handleOpen();
+  }, [handleClose, handleOpen, open]);
+
   useEffect(() => {
     function handleShortcut() {
-      setOpen(true);
+      handleToggle();
     }
 
     window.addEventListener(OPEN_TOOL_SWITCHER_EVENT, handleShortcut);
@@ -61,23 +86,20 @@ export default function ToolSwitcher() {
     return () => {
       window.removeEventListener(OPEN_TOOL_SWITCHER_EVENT, handleShortcut);
     };
-  }, []);
+  }, [handleToggle]);
 
   useEffect(() => {
     if (!open) return;
 
     inputRef.current?.focus();
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
   }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const currentToolIndex = visibleTools.findIndex(
-      (tool) => tool.path === location.pathname,
-    );
-
-    setActiveIndex(currentToolIndex >= 0 ? currentToolIndex : 0);
-  }, [open, search, visibleTools, location.pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -101,11 +123,10 @@ export default function ToolSwitcher() {
     return () => {
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [open]);
+  }, [handleClose, open]);
 
-  function handleClose() {
-    setOpen(false);
-    setSearch("");
+  function handleSearchChange(e) {
+    setSearch(e.target.value);
     setActiveIndex(0);
   }
 
@@ -148,21 +169,35 @@ export default function ToolSwitcher() {
     <div className="tool-switcher">
       <button
         type="button"
-        className="btn btn-secondary tool-switcher-btn"
-        onClick={() => setOpen(true)}
+        className={`tool-switcher-floating-toggle ${open ? "open" : ""}`}
+        onClick={handleToggle}
+        aria-label={open ? "Close tool switcher" : "Open tool switcher"}
+        aria-expanded={open}
+        aria-controls="tool-switcher-sidebar"
+        title="Switch Tool (Ctrl+Shift+K)"
       >
-        Switch Tool
-        <span className="btn-hint">Ctrl+Shift+K</span>
+        {open ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+
+        <span className="tool-switcher-toggle-tooltip">
+          Switch Tool
+          <kbd>Ctrl+Shift+K</kbd>
+        </span>
       </button>
 
       {open && (
-        <div className="tool-switcher-overlay" onMouseDown={handleClose}>
-          <div
-            className="tool-switcher-panel"
-            onMouseDown={(e) => e.stopPropagation()}
+        <>
+          <div className="tool-switcher-backdrop" onMouseDown={handleClose} />
+
+          <aside
+            id="tool-switcher-sidebar"
+            className="tool-switcher-sidebar"
+            aria-label="Tool switcher"
           >
             <div className="tool-switcher-header">
-              <h2>Switch Tool</h2>
+              <div>
+                <h2>Switch Tool</h2>
+                <span className="tool-switcher-shortcut">Ctrl+Shift+K</span>
+              </div>
 
               <button
                 type="button"
@@ -170,19 +205,21 @@ export default function ToolSwitcher() {
                 onClick={handleClose}
                 aria-label="Close tool switcher"
               >
-                ×
+                <X size={18} />
               </button>
             </div>
 
-            <input
-              ref={inputRef}
-              className="tool-switcher-search"
-              type="text"
-              placeholder="Search tools..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
+            <div className="tool-switcher-search-wrapper">
+              <input
+                ref={inputRef}
+                className="tool-switcher-search"
+                type="text"
+                placeholder="Search tools..."
+                value={search}
+                onChange={handleSearchChange}
+                onKeyDown={handleKeyDown}
+              />
+            </div>
 
             <div className="tool-switcher-list">
               {Object.entries(CATEGORY_LABELS).map(([category, label]) => {
@@ -229,8 +266,8 @@ export default function ToolSwitcher() {
                 <p className="tool-switcher-empty">No tools found.</p>
               )}
             </div>
-          </div>
-        </div>
+          </aside>
+        </>
       )}
     </div>
   );
