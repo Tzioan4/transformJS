@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/favicon.svg" alt="TransformJS logo" width="180" />
+  <img src="./public/github.png" alt="TransformJS logo" width="180" />
 
   <h1>TransformJS</h1>
 
