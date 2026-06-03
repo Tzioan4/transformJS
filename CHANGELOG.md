@@ -6,12 +6,62 @@ All notable changes to TransformJS are documented here.
 
 ### Added
 
-- Global Tool Switcher integrated into ToolLayout
+- Added shared CSS utilities for JSON Formatter and Password Generator states.
+- Added `src/styles/tools/ftl.css` for FTL-specific layout and tab styling.
+- Added `src/tools/code/ftl.evaluator.js`.
+- Added `src/tools/code/ftl.evaluator.test.js`.
+- Added visible FTL render error markers for evaluator failures.
+
+### Changed
+
+- Cleaned inline styles from JSON Formatter.
+- Cleaned inline styles from Password Generator.
+- Cleaned inline styles from RegEx Tester.
+- Moved FTL Previewer layout and tab styles into CSS classes.
+- Extracted FTL tokenizer, parser, evaluator and renderer logic from `FtlPreviewer.jsx`.
+- Fixed homepage search propagation from `AppRoutes` to `Home`.
+- Removed unused FTL dummy constants.
+- Removed unused JSON Formatter state value while preserving its setter.
+
+### Verified
+
+- `npm run test:run` passes successfully.
+- Current result: **9 test files passed, 82 tests passed**.
+
+### Remaining
+
+`npm run lint` currently reports 7 errors:
+
+- Fast refresh export cleanup:
+  - `src/ThemeContext.jsx`
+  - `src/tools/code/CaseConverter.jsx`
+  - `src/tools/code/DiffChecker.jsx`
+  - `src/tools/data/SqlFormatter.jsx`
+  - `src/tools/text/UrlParser.jsx`
+- Effect cleanup:
+  - `src/tools/code/ColorConverter.jsx`
+  - `src/tools/data/YamlToJson.jsx`
+
+---
+
+## Sprint UX-1 — Workflow Efficiency Improvements
+
+### Added
+
+- Global Tool Switcher
 - Local file upload support
 - Drag and drop support
 - DropOverlay component
 - Local browser download support
 - File validation and size limits
+- Category badges across tool pages
+- Centralized `detectTool` utility
+- Confidence-based smart detection
+- SmartDetector homepage component
+- Paste-based detection
+- File drop detection
+- Tool recommendation UI
+- Direct navigation to detected tools
 
 ### Updated
 
@@ -26,14 +76,18 @@ All notable changes to TransformJS are documented here.
 - URL Encoder / Decoder
 - Hash Generator
 - Case Converter
+- Color Converter
 
 ### Improved
 
-- Removed example content from multiple tools
+- Removed example and dummy content from tools
 - Improved empty states
 - Improved local-first workflow
 - Improved drag and drop UX
 - Reduced copy/paste friction
+- Improved tool header consistency
+- Improved action consistency
+- Added Smart Start Hub workflow
 
 ### Security
 
@@ -41,6 +95,8 @@ All notable changes to TransformJS are documented here.
 - No uploads
 - No tracking
 - No backend processing
+
+---
 
 ## SprintAI 5 — Registry Consolidation & Automation
 
@@ -56,22 +112,26 @@ All notable changes to TransformJS are documented here.
 - Refactored `src/content/toolRoutes.js` to derive tool routes from the tool registry.
 - Refactored `scripts/generate-llms.js` to generate tool entries from registry data.
 - Simplified route and metadata generation flows.
-- Reduced duplication between tool metadata, routes, sitemap generation, and AI discoverability assets.
+- Reduced duplication between tool metadata, routes, sitemap generation and AI discoverability assets.
 
 ### Architecture
 
 Tool route generation now follows:
 
+```text
 toolRegistry
 → toolRoutes
 → siteRoutes
 → sitemap.xml
+```
 
 Tool AI metadata generation now follows:
 
+```text
 toolRegistry
 → generate-llms.js
 → llms.txt
+```
 
 ### Verified
 
@@ -81,6 +141,8 @@ toolRegistry
 - `npm run generate:llms` generated valid llms.txt output.
 - No production routes changed.
 - No user-facing behavior changed.
+
+---
 
 ## SprintAI 4 — Content Discoverability Expansion
 
@@ -98,24 +160,18 @@ toolRegistry
   - API testing
   - Data formatting
 - Added reusable card-based layouts for alternative and use-case content pages.
-- Added semantic internal linking between alternatives, use-cases, groups, and tools.
-- Expanded llms.txt coverage with alternative pages, grouped pages, and workflow intent coverage.
-- Expanded sitemap.xml with semantic content routes.
+- Added semantic internal linking between alternatives, use-cases, groups and tools.
+- Expanded `llms.txt` coverage.
+- Expanded sitemap coverage with semantic content routes.
 
 ### Changed
 
 - Improved SEO and GEO discoverability outside individual tool pages.
 - Improved semantic topical authority for developer workflows.
 - Improved cross-page discoverability through contextual internal linking.
-- Improved browser-based and privacy-first positioning messaging across content pages.
+- Improved browser-based and privacy-first positioning messaging.
 
-### SEO / AI Discoverability
-
-- Expanded competitor-intent search coverage.
-- Expanded long-tail search surface area.
-- Improved AI-readable workflow and comparison content.
-- Improved semantic clustering between tools and workflows.
-- Strengthened TransformJS ecosystem positioning for AI search systems.
+---
 
 ## SprintAI 3 — Semantic Content Expansion System
 
@@ -123,94 +179,65 @@ toolRegistry
 
 - Added richer SEO and GEO-focused descriptions across the centralized tool registry.
 - Added improved tool-level semantic intros for all TransformJS tools.
-- Added stronger use-case content targeting real developer workflows and search intent.
-- Expanded tool FAQs with more query-shaped, AI-readable question and answer patterns.
-- Added `FAQPage` JSON-LD structured data generation for tool pages.
-- Added FAQ structured metadata to tool routes through the shared SEO system.
-
-### Changed
-
-- Rewrote tool descriptions to better align with search intent and semantic clarity.
-- Rewrote tool SEO descriptions for stronger metadata quality and better SERP readability.
-- Improved tool FAQ copy for answer extraction, long-tail search relevance, and AI discoverability.
-- Improved semantic consistency between visible FAQ content and structured metadata.
-- Strengthened privacy-first and local-browser processing messaging across tool content.
-
-### SEO / AI Discoverability
-
-- Improved machine-readable question-and-answer extraction for tool pages.
-- Improved structured discoverability for search engines and AI parsers through `FAQPage` schema.
-- Improved entity clarity for individual tools and their practical developer use cases.
-- Improved long-tail keyword coverage across metadata, tool intros, and FAQ content.
-- Increased alignment between on-page semantic content and JSON-LD structured data.
-
--
-
-### Added
-
-- Added reusable semantic content support for all tool pages.
-- Extended the centralized tool registry with:
+- Added stronger use-case content targeting real developer workflows.
+- Expanded tool FAQs with more query-shaped, AI-readable patterns.
+- Added FAQPage JSON-LD structured data generation.
+- Added reusable semantic content support for tool pages.
+- Extended registry content with:
   - `content.intro`
   - `content.useCases`
   - `content.faq`
   - `content.relatedTools`
-- Added structured long-tail SEO content to all TransformJS tools.
-- Added semantic internal linking between related developer tools.
+- Added semantic internal linking between related tools.
 - Added reusable FAQ accordion rendering through `ToolSeoContent`.
-- Added reusable related tools section with automatic path-to-name resolution.
 
 ### Changed
 
+- Rewrote tool descriptions for stronger semantic clarity.
+- Rewrote tool SEO descriptions for stronger metadata quality.
 - Integrated `ToolSeoContent` into tool route rendering in `App.jsx`.
-- Expanded tool pages with AI-readable semantic sections:
+- Expanded tool pages with:
   - About
   - Use Cases
   - FAQ
   - Related Tools
-- Improved internal linking graph for semantic discoverability.
-- Improved tool metadata consistency across the registry.
-- Kept existing flat route architecture unchanged.
 
-### SEO / AI Discoverability
-
-- Improved long-tail keyword coverage across tool pages.
-- Improved semantic crawlability for AI crawlers and search engines.
-- Improved contextual relationships between tools through internal linking.
-- Improved structured content density without overengineering the architecture.
-- Strengthened registry-driven metadata architecture for future automation.
+---
 
 ## SprintAI 2 — SEO Metadata Foundation
 
 ### Added
 
 - Added reusable SEO metadata component using `react-helmet-async`.
-- Added canonical URL support for the homepage, static pages, and tool pages.
+- Added canonical URL support for homepage, static pages and tool pages.
 - Added JSON-LD structured data helpers for:
   - `WebApplication`
   - `SoftwareApplication`
   - `BreadcrumbList`
 - Added site-level SEO constants in `src/seo/site.js`.
-- Added tool page structured data generated from the central tool registry.
+- Added tool page structured data generated from the central registry.
 
 ### Changed
 
 - Replaced inline Helmet metadata in `App.jsx` with the reusable `SEO` component.
-- Kept existing flat tool routes unchanged to avoid indexing disruption.
+- Kept existing flat tool routes unchanged.
+
+---
 
 ## SprintAI 1 — AI Discoverability Foundation
 
 ### Added
 
-- Added AI-aware robots.txt rules
-- Added llms.txt
-- Synced sitemap.xml with tool registry routes
-- Added AI crawler discoverability support
+- Added AI-aware `robots.txt` rules.
+- Added `llms.txt`.
+- Synced sitemap with registry routes.
+- Added AI crawler discoverability support.
 
 ### SEO / Infrastructure
 
-- Resubmitted sitemap to Google Search Console
-- Submitted sitemap to Bing Webmaster Tools
-- Requested indexing for core pages and tools
+- Resubmitted sitemap to Google Search Console.
+- Submitted sitemap to Bing Webmaster Tools.
+- Requested indexing for core pages and tools.
 
 ---
 
@@ -219,14 +246,24 @@ toolRegistry
 ### Added
 
 - Added Vitest testing setup for utility and tool-level pure logic.
-- Added utility test coverage for Base64, URL, JSON, and JWT helpers.
-- Added tests for extracted pure logic in selected tools.
+- Added utility test coverage for Base64, URL, JSON and JWT helpers.
+- Added tests for Case Converter, Diff Checker, SQL Formatter and URL Parser.
+- Added FTL evaluator test coverage.
+- Added error boundaries for safer runtime failure isolation.
 
-### Improved
+### Changed
 
-- Added error boundaries to improve runtime failure isolation.
-- Cleaned up meaningful ESLint issues in small focused batches.
-- Reduced hook, static component, and bug-like lint problems without changing tool behavior.
+- Extracted FTL evaluator logic into a dedicated pure module.
+- Moved repeated UI styles into shared or tool-specific CSS classes.
+- Reduced inline styles across multiple tools.
+
+### Verified
+
+- Current test result: **9 test files passed, 82 tests passed**.
+
+### Remaining
+
+- Complete the final 7 ESLint fixes.
 
 ---
 
@@ -234,10 +271,10 @@ toolRegistry
 
 ### Performance
 
-- Self-hosted fonts (replaced Google Fonts CDN)
-- Removed `framer-motion` dependency (-39 KB gzipped)
+- Self-hosted fonts
+- Removed `framer-motion`
 - Mobile PageSpeed: 81 → 95-98
-- Bundle size: 131 KB → 92 KB gzipped (-30%)
+- Bundle size: 131 KB → 92 KB gzipped
 - First Contentful Paint: 3.2s → 1.8s
 - Largest Contentful Paint: 3.2s → 2.1s
 
@@ -247,15 +284,15 @@ toolRegistry
 
 ### Fixed
 
-- Markdown Preview: Links now open in new tab
-- SQL Formatter: Warning banner for DROP/DELETE/TRUNCATE/ALTER
-- Password Generator: Minimum length raised from 6 to 12
-- Case Converter: Strips special symbols for valid identifiers
-- URL Parser: Shows port only when explicitly defined
-- Diff Checker: Success banner when texts are identical
-- Color Converter: Validation error for invalid HEX
-- Base64 Tool: Feedback on empty input
-- URL Encoder: Feedback on empty input
+- Markdown Preview: links open in new tab
+- SQL Formatter: warning banner for destructive queries
+- Password Generator: minimum length raised from 6 to 12
+- Case Converter: strips special symbols
+- URL Parser: shows port only when explicitly defined
+- Diff Checker: success banner when texts are identical
+- Color Converter: validation error for invalid HEX
+- Base64 Tool: empty input feedback
+- URL Encoder: empty input feedback
 
 ---
 
