@@ -167,7 +167,7 @@ export default function RegexTester({ tips, category }) {
 
   return (
     <ToolLayout
-    category={category}
+      category={category}
       header={
         <div>
           <h1>RegEx Tester</h1>
@@ -177,24 +177,11 @@ export default function RegexTester({ tips, category }) {
           </p>
 
           {isRunning && (
-            <div
-              className="status-badge"
-              style={{
-                marginTop: 12,
-                display: "inline-block",
-                color: "#94a3b8",
-                borderColor: "#333",
-              }}
-            >
-              RUNNING...
-            </div>
+            <div className="status-badge status-badge-running">RUNNING...</div>
           )}
 
           {matches.length > 0 && !error && !isRunning && (
-            <div
-              className="status-badge status-pretty"
-              style={{ marginTop: 12, display: "inline-block" }}
-            >
+            <div className="status-badge status-badge-spaced status-pretty">
               MATCHES FOUND: <strong>{matches.length}</strong>
             </div>
           )}
@@ -203,19 +190,13 @@ export default function RegexTester({ tips, category }) {
         </div>
       }
       input={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            overflowY: "auto",
-          }}
-        >
+        <div className="tool-textarea regex-panel">
           <div>
             <label className="regex-label">Regex Pattern & Flags</label>
+
             <div className="regex-pattern-bar">
               <span className="regex-slash">/</span>
+
               <input
                 type="text"
                 autoCapitalize="none"
@@ -226,7 +207,9 @@ export default function RegexTester({ tips, category }) {
                 value={pattern}
                 onChange={handlePatternChange}
               />
+
               <span className="regex-slash">/</span>
+
               <input
                 type="text"
                 autoCapitalize="none"
@@ -240,8 +223,9 @@ export default function RegexTester({ tips, category }) {
             </div>
           </div>
 
-          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          <div className="regex-test-area">
             <label className="regex-label">Test String</label>
+
             <textarea
               className="regex-test-input"
               placeholder="Type text to test against regex..."
@@ -250,31 +234,20 @@ export default function RegexTester({ tips, category }) {
             />
           </div>
 
-          {error && (
-            <div className="error-badge" style={{ wordBreak: "break-word" }}>
-              {error}
-            </div>
-          )}
+          {error && <div className="error-badge">{error}</div>}
         </div>
       }
       output={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            overflowY: "auto",
-          }}
-        >
+        <div className="tool-textarea regex-panel">
           <div>
             <label className="regex-label">Highlighted Preview</label>
+
             <div className="regex-highlight-box">
               <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
             </div>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto" }}>
+          <div className="regex-matches-list">
             <label className="regex-label">Match Details</label>
 
             {isRunning ? (
@@ -285,34 +258,29 @@ export default function RegexTester({ tips, category }) {
               matches.map((match, i) => (
                 <div key={i} className="regex-match-card">
                   <div className="regex-match-title">Match {i + 1}</div>
+
                   <div className="regex-match-value">
                     Value: <code>{match.value}</code>
                   </div>
+
                   <div className="regex-match-index">
                     Index: {match.index} — End:{" "}
                     {match.index + match.value.length}
                   </div>
 
                   {match.groups.length > 0 && (
-                    <div
-                      style={{
-                        marginTop: "5px",
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "4px",
-                      }}
-                    >
-                      <span style={{ fontSize: "11px", color: "#666" }}>
-                        Groups:{" "}
-                      </span>
+                    <div className="regex-groups">
+                      <span className="regex-groups-label">Groups: </span>
 
-                      {match.groups.map((g, gi) => (
+                      {match.groups.map((group, groupIndex) => (
                         <span
-                          key={gi}
+                          key={groupIndex}
                           className="regex-group-badge"
-                          style={{ color: g === null ? "#555" : undefined }}
+                          style={{
+                            color: group === null ? "#555" : undefined,
+                          }}
                         >
-                          {g === null ? "∅" : g}
+                          {group === null ? "∅" : group}
                         </span>
                       ))}
                     </div>
@@ -324,11 +292,9 @@ export default function RegexTester({ tips, category }) {
         </div>
       }
       actions={
-        <>
-          <button onClick={handleClear} className="btn btn-danger">
-            Clear <span className="btn-hint">Esc</span>
-          </button>
-        </>
+        <button onClick={handleClear} className="btn btn-danger">
+          Clear <span className="btn-hint">Esc</span>
+        </button>
       }
     />
   );
