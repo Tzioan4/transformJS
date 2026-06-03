@@ -40,19 +40,19 @@ Replaced Google Fonts CDN with self-hosted woff2 files.
 
 - Removed 2 DNS lookups + 2 TLS handshakes to Google servers
 - Added `font-display: swap` to prevent invisible text flash
-- Preload hints for critical fonts (Inter 400, JetBrains Mono 800)
+- Added preload hints for critical fonts
 
 **Result:** Mobile 81 → 96 (+15 points)
 
 ### Step 2 — Remove Framer Motion
 
-Replaced framer-motion library with CSS animations.
+Replaced framer-motion with CSS animations.
 
-- Library was 35 KB gzipped for 4 trivial animations
-- Replaced with CSS keyframes + transitions
-- Added `prefers-reduced-motion` for accessibility
+- Removed unnecessary library weight
+- Added CSS keyframes and transitions
+- Added `prefers-reduced-motion` support
 
-**Result:** Mobile 96 → 95-98 (+2 points)
+**Result:** Mobile 96 → 95-98
 
 ### Final Metrics (mobile, Slow 4G)
 
@@ -69,177 +69,164 @@ Replaced framer-motion library with CSS animations.
 
 ## Sprint 4 — Testing, Error Boundaries & Lint Cleanup
 
+**Status:** In progress
+
 **Focus:** Add a safer maintenance foundation without changing core tool behavior.
 
-### Work shipped
+### Completed
 
 - Added Vitest-based testing infrastructure.
-- Added utility tests for Base64, URL, JSON, and JWT logic.
-- Extracted and tested selected pure tool-specific logic.
+- Added utility tests for Base64, URL, JSON and JWT logic.
+- Added tool-level tests for Case Converter, Diff Checker, SQL Formatter and URL Parser.
+- Extracted FTL tokenizer, parser, evaluator and renderer logic into:
+  - `src/tools/code/ftl.evaluator.js`
+- Added FTL evaluator tests:
+  - `src/tools/code/ftl.evaluator.test.js`
 - Added error boundaries for safer runtime failure handling.
-- Cleaned up meaningful ESLint issues in small focused clusters.
+- Cleaned inline styles from:
+  - JSON Formatter
+  - Password Generator
+  - RegEx Tester
+  - FTL Previewer
+- Moved FTL-specific styles into:
+  - `src/styles/tools/ftl.css`
+- Fixed homepage search propagation from `AppRoutes` to `Home`.
 
-### Notes
+### Verification
 
-- Sprint 4 focused on maintainability and correctness confidence.
-- No unverified performance or coverage metrics are claimed.
+- `npm run test:run` passes.
+- Current result: **9 test files passed, 82 tests passed**.
+
+### Remaining lint cleanup
+
+`npm run lint` currently reports 7 errors:
+
+- `src/ThemeContext.jsx` — fast refresh export cleanup
+- `src/tools/code/CaseConverter.jsx` — fast refresh export cleanup
+- `src/tools/code/DiffChecker.jsx` — fast refresh export cleanup
+- `src/tools/data/SqlFormatter.jsx` — fast refresh export cleanup
+- `src/tools/text/UrlParser.jsx` — fast refresh export cleanup
+- `src/tools/code/ColorConverter.jsx` — state update inside effect
+- `src/tools/data/YamlToJson.jsx` — state update inside effect
+
+---
 
 # SprintAI Roadmap
 
 ## SprintAI 1 — Static AI Discoverability
 
-Completed:
+**Status:** Completed
 
-- Added AI-aware robots.txt rules
-- Added llms.txt
-- Synced sitemap.xml with real tool routes
+- Added AI-aware `robots.txt` rules
+- Added `llms.txt`
+- Synced sitemap with real routes
 - Submitted sitemap to Google Search Console
 - Submitted sitemap to Bing Webmaster Tools
 - Requested indexing for core pages
-
-Goals:
-
-- improve crawlability
-- improve AI crawler discoverability
-- improve machine-readable project understanding
-- establish SEO baseline
 
 ---
 
 ## SprintAI 2 — Structured Metadata System
 
-Planned:
+**Status:** Completed
 
-- reusable JSON-LD component
-- SoftwareApplication schema for tools
-- metadata automation from tool registry
-- canonical URL handling
-- improved semantic head tags
-- shared SEO utilities
-
-Goals:
-
-- improve semantic understanding
-- improve rich search compatibility
-- reduce duplicated SEO logic
-- centralize metadata handling
+- Added reusable SEO metadata component
+- Added canonical URL support
+- Added JSON-LD helpers
+- Added SoftwareApplication schema for tools
+- Added BreadcrumbList schema
+- Centralized site-level SEO constants
 
 ---
 
 ## SprintAI 3 — AI-Readable Content Expansion
 
-Planned:
+**Status:** Completed
 
-- richer tool descriptions
-- AI-readable content sections
-- FAQ sections
-- semantic tool explanations
-- internal linking between related tools
-- improved long-tail keyword coverage
-
-Goals:
-
-- improve content depth
-- improve contextual indexing
-- improve search intent matching
-- improve AI summarization quality
+- Added richer registry-driven tool descriptions
+- Added semantic tool content sections
+- Added FAQ sections
+- Added FAQPage JSON-LD
+- Added related tool links
+- Improved long-tail keyword coverage
 
 ---
 
 ## SprintAI 4 — Content & Discoverability Expansion
 
-Planned:
+**Status:** Completed
 
-- alternative comparison pages
-- use-case pages
-- developer workflow pages
-- grouped tool hub pages
-- dynamic sitemap generation
-- advanced internal SEO linking
+- Added alternative comparison pages
+- Added use-case pages
+- Added grouped tool pages
+- Added reusable content page layouts
+- Expanded semantic internal linking
+- Added dynamic sitemap generation
 
 Examples:
 
-- /alternatives/devtoys
-- /alternatives/cyberchef
-- /use-cases/json-debugging
-- /use-cases/frontend-development
-
-Goals:
-
-- improve discoverability outside tool pages
-- improve topical authority
-- improve external search coverage
-- improve ecosystem positioning
+- `/alternatives/devtoys`
+- `/alternatives/cyberchef`
+- `/alternatives/jsonformatter`
+- `/use-cases/json-debugging`
+- `/use-cases/frontend-development`
+- `/groups/json-tools`
 
 ---
 
 ## SprintAI 5 — Registry Consolidation & Automation
 
-### Goal
+**Status:** Completed
 
-Establish the tool registry as the single source of truth for tool metadata, routes, SEO content, sitemap generation, and AI discoverability assets.
+### Registry Consolidation
 
-### Completed
+- Centralized tool metadata in `src/tools/registry.js`
+- Split component references into `src/tools/toolComponents.jsx`
+- Split icon references into `src/tools/toolIcons.jsx`
 
-#### Registry Consolidation
+### Route Automation
 
-- Centralized tool metadata in `src/tools/registry.js`.
-- Split component references into `toolComponents.jsx`.
-- Split icon references into `toolIcons.jsx`.
+- Refactored `src/content/toolRoutes.js` to derive routes from registry data
+- Preserved existing production URLs
 
-#### Route Automation
+### AI Discoverability Integration
 
-- Refactored `toolRoutes.js` to derive routes directly from registry data.
-- Preserved all existing production URLs.
+- Refactored `scripts/generate-llms.js` to consume registry data
+- Connected registry metadata to AI discoverability assets
 
-#### AI Discoverability Integration
-
-- Refactored `generate-llms.js` to consume registry data instead of maintaining separate tool metadata.
-- Connected AI discoverability assets to registry-managed tool definitions.
-
-#### Sitemap Integration
+### Sitemap Integration
 
 Registry data now feeds:
 
-- toolRoutes
-- siteRoutes
+- tool routes
+- site routes
 - sitemap generation
+- llms generation
 
-### Outcome
+---
 
-Core tool registration is centralized through:
+# Sprint UX-1 — Workflow Efficiency Improvements
 
-- `src/tools/registry.js`
-- `src/tools/toolComponents.jsx`
-- `src/tools/toolIcons.jsx`
+**Status:** Complete
 
-Tool routes, sitemap generation, and llms generation are automatically derived from registry-managed metadata.
+## Phase 1 — Global Tool Switcher
 
-### Status
-
-Completed.
-
-## Sprint UX-1 — Workflow Efficiency Improvements
-
-Status: Mostly Complete
-
-### Completed
-
-#### Phase 1 — Global Tool Switcher
 - Added registry-driven ToolSwitcher
 - Added search and tool navigation
-- Integrated into shared ToolLayout
-- Mobile compatible
-- No tracking or persistence
+- Integrated it into the shared tool workflow
+- Added mobile-compatible behavior
+- Preserved privacy-first behavior with no tracking or persistence
 
-#### Phase 2 — Local File Workflow
+## Phase 2 — Local File Workflow
+
 - Added local file loading utilities
-- Added drag & drop support
+- Added drag and drop support
 - Added upload buttons
 - Added DropOverlay component
-- Added file validation and limits
+- Added file validation and size limits
 
 Updated tools:
+
 - JSON Formatter
 - CSV to JSON
 - YAML to JSON
@@ -252,30 +239,22 @@ Updated tools:
 - Hash Generator
 - Case Converter
 
-#### Phase 3 — Download Output
-Added local browser downloads for supported tools.
+## Phase 3 — Download Output
 
-#### Additional Improvements
-- Removed example/dummy content from tools
-- Improved empty states
-- Improved drag & drop UX
-- Reduced copy/paste friction
+- Added local browser downloads for supported tools
 
-### Phase 4 — Workflow Polish
-
-Completed:
+## Phase 4 — Workflow Polish
 
 - Added category badges across tool pages
 - Removed example and dummy content from tools
 - Improved tool header consistency
-- Improved workflow polish and onboarding experience
+- Improved empty states
+- Improved action consistency
 - Fixed Color Converter HEX synchronization
 
-### Phase 5 — Smart Detection
+## Phase 5 — Smart Detection
 
-Completed:
-
-- Added centralized detectTool utility
+- Added centralized `detectTool` utility
 - Added confidence-based detection scoring
 - Added detection support for:
   - JSON
@@ -290,22 +269,20 @@ Completed:
   - Color values
   - Base64
 
-### Phase 6 — Smart Start Hub
-
-Completed:
+## Phase 6 — Smart Start Hub
 
 - Added SmartDetector homepage component
 - Added paste-based tool detection
-- Added drag & drop file detection
+- Added drag and drop file detection
 - Added text file validation
 - Added Escape-to-clear support
 - Added tool recommendation UI
 - Added direct navigation to suggested tools
 
-### Future Enhancements
+## Future enhancements
 
 - Transfer detected content directly into destination tools
-- Expanded detector test coverage
-- Additional format detection improvements
+- Expand detector test coverage
+- Improve format detection edge cases
 
 _Last updated: June 2026_

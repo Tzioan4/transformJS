@@ -230,6 +230,7 @@ textarea:focus {
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   font-family: var(--font-mono);
+  word-break: break-word;
 }
 
 .input-warning-text,
@@ -533,6 +534,61 @@ textarea:focus {
 [data-theme="light"] [style*="background:#333"] {
   background: #e2e8f0 !important;
   color: #1e293b !important;
+}
+.password-strength-badge {
+  margin-top: 12px;
+  font-size: 11px;
+  padding: 2px 8px;
+  display: inline-block;
+}
+
+.password-entropy-hint {
+  color: var(--color-dim);
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.status-badge-pending {
+  margin-top: 12px;
+  color: var(--color-dim);
+  font-size: 11px;
+  border: 1px dashed var(--color-border-subtle);
+  display: inline-block;
+  padding: 2px 8px;
+}
+
+[data-theme="light"] .status-badge-pending {
+  border-color: #94a3b8;
+}
+
+.slider-range-hints {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-dim);
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.password-option-error {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
+[data-theme="light"] .password-option-error {
+  color: #dc2626;
+}
+
+.password-output-display {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  text-align: center;
+  padding-top: 60px;
+  height: 100%;
+  transition: var(--transition);
 }
 
 .btn-hint {

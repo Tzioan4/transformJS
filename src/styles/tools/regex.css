@@ -162,3 +162,43 @@
 [data-theme="light"] .regex-label {
   color: #64748b;
 }
+.regex-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.regex-test-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.regex-matches-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.regex-groups {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.regex-groups-label {
+  font-size: 11px;
+  color: #666;
+}
+
+.status-badge-running {
+  margin-top: 12px;
+  display: inline-block;
+  color: var(--color-muted);
+  border-color: var(--color-border-subtle);
+}
+
+[data-theme="light"] .regex-groups-label {
+  color: #94a3b8;
+}

@@ -15,7 +15,7 @@ export default function JsonFormatter({ tips, category }) {
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState([]);
-  const [fileMessage, setFileMessage] = useState("");
+  const [, setFileMessage] = useState("");
   const [isDragging, setIsDragging] = useState(false);
 
   const { copied, copy } = useCopy();
@@ -108,16 +108,9 @@ export default function JsonFormatter({ tips, category }) {
 
           {output && !error && (
             <div
-              className={`status-badge ${
+              className={`status-badge status-badge-spaced ${
                 isMinified ? "status-min" : "status-pretty"
               }`}
-              style={{
-                marginTop: "10px",
-                display: "inline-block",
-                fontSize: "0.75rem",
-                padding: "4px 12px",
-                borderRadius: "6px",
-              }}
             >
               STATUS: <strong>{isMinified ? "MINIFIED" : "FORMATTED"}</strong>
             </div>
@@ -126,15 +119,7 @@ export default function JsonFormatter({ tips, category }) {
           {error && <div className="error-badge">{error}</div>}
 
           {duplicateWarning.length > 0 && (
-            <div
-              className="error-badge"
-              style={{
-                marginTop: "8px",
-                background: "rgba(245, 158, 11, 0.05)",
-                borderColor: "rgba(245, 158, 11, 0.3)",
-                color: "rgba(251, 191, 36, 0.8)",
-              }}
-            >
+            <div className="warning-badge">
               Duplicate keys detected and overwritten:{" "}
               {duplicateWarning.map((key, index) => (
                 <strong key={index}>

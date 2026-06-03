@@ -1,0 +1,114 @@
+.ftl-tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--color-border-subtle);
+  overflow-x: auto;
+}
+
+.ftl-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-dim);
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.ftl-tab-btn:hover {
+  color: var(--color-muted);
+}
+
+.ftl-tab-btn.active {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ftl-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ftl-panel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.ftl-editor {
+  flex: 1;
+  min-height: 350px;
+  font-size: 12px;
+  resize: vertical;
+  border: none !important;
+}
+
+.ftl-output-body {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.ftl-empty-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dim);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-align: center;
+  padding: 20px;
+}
+
+.ftl-preview-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  border: none;
+  background: #ffffff;
+}
+
+.ftl-source-view {
+  margin: 0;
+  padding: 16px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: auto;
+}
+
+[data-theme="light"] .ftl-tab-btn {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .ftl-tab-btn.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+[data-theme="light"] .ftl-source-view {
+  color: #1e293b;
+}
+.ftl-render-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.85em;
+}

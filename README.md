@@ -1,120 +1,185 @@
-# transformJS
+<div align="center">
+  <img src="./public/favicon.svg" alt="TransformJS logo" width="180" />
+
+  <h1>TransformJS</h1>
+
+  <p>
+    Fast, privacy-first developer tools for everyday browser workflows.
+  </p>
+
+  <p>
+    <a href="https://transformjs.com/"><strong>Live Demo</strong></a>
+    ·
+    <a href="./CHANGELOG.md">Changelog</a>
+    ·
+    <a href="./docs/SPRINTS.md">Development Sprints</a>
+  </p>
+</div>
+
+<div align="center">
 
 [![PageSpeed Mobile](https://img.shields.io/badge/PageSpeed_Mobile-97-brightgreen)](https://pagespeed.web.dev/analysis?url=https://transformjs.com/)
 [![PageSpeed Desktop](https://img.shields.io/badge/PageSpeed_Desktop-100-brightgreen)](https://pagespeed.web.dev/analysis?url=https://transformjs.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Built with React](https://img.shields.io/badge/Built_with-React_19-61dafb)](https://react.dev/)
-[![Powered by Vite](https://img.shields.io/badge/Powered_by-Vite-646cff)](https://vitejs.dev/)
+[![Powered by Vite](https://img.shields.io/badge/Powered_by-Vite_8-646cff)](https://vite.dev/)
 
-Fast, private and modern developer tools — built for everyday workflows.
-
-TransformJS is a lightweight collection of browser-based utilities designed to help developers work faster without unnecessary complexity. Built with React and Vite, deployed on Vercel.
-
-**Live demo:** [transformjs.com](https://transformjs.com/)
+</div>
 
 ---
 
-## Philosophy
+## Overview
 
-TransformJS follows a simple idea:
+TransformJS is a browser-based developer toolkit for formatting, converting, debugging, previewing and parsing common developer data.
 
-- Fast tools
-- Clean interface
-- Zero clutter
-- Privacy first
+The project is designed around a simple rule: **your input stays on your device**. Tool processing runs locally in the browser, without accounts, tracking or server-side uploads.
 
-Everything runs entirely inside your browser. No accounts. No analytics. No tracking. No databases. No server-side processing. Your data never leaves your device.
+## Core Principles
 
----
-
-## Performance
-
-TransformJS is built for speed and privacy:
-
-- **Mobile PageSpeed:** 95-98 (top 5% of the web)
-- **Desktop PageSpeed:** 98-100
-- **First Contentful Paint:** 1.8s (mobile, Slow 4G)
-- **Largest Contentful Paint:** 2.1s (mobile, Slow 4G)
-- **100% client-side** — no servers, no tracking, no analytics
-- **Self-hosted fonts** — zero third-party requests
-- **Lazy-loaded routes** — each tool ships its own bundle
-
-See [`docs/SPRINTS.md`](./docs/SPRINTS.md) for the full optimization journey.
+- **Privacy first** — no accounts, analytics, tracking or backend processing
+- **Fast by default** — lightweight UI, self-hosted fonts and route-based lazy loading
+- **Focused workflows** — small, practical tools without unnecessary complexity
+- **Browser-native architecture** — Web APIs and Web Workers where they provide real value
+- **Scalable structure** — centralized tool registry and reusable UI patterns
 
 ---
 
-## Tools
+## Features
 
-| Tool                  | Description                                                     |
-| --------------------- | --------------------------------------------------------------- |
-| JSON Formatter        | Prettify, minify, and validate JSON with syntax highlighting    |
-| Base64 Tool           | Encode and decode Base64 strings (text + binary)                |
-| URL Encoder / Decoder | RFC 3986 compliant URL component encoding                       |
-| HTML Preview          | Sandboxed live rendering for HTML and CSS                       |
-| Markdown Preview      | GitHub Flavored Markdown to HTML conversion                     |
-| JWT Debugger          | Decode headers and payloads, verify HMAC signatures             |
-| YAML to JSON          | Convert YAML configurations to clean JSON                       |
-| SQL Formatter         | Format and prettify SQL queries with destructive query warnings |
-| Hash Generator        | SHA-1, SHA-256, SHA-512 via Web Crypto API                      |
-| Password Generator    | Cryptographically secure passwords with entropy meter           |
-| CSV to JSON           | RFC 4180 compliant CSV parsing                                  |
-| RegEx Tester          | Real-time pattern matching with capture group support           |
-| FTL Previewer         | Apache FreeMarker templates with mock JSON data                 |
-| Case Converter        | camelCase, snake_case, kebab-case, PascalCase, and more         |
-| UUID Generator        | Cryptographically secure UUID v4 in bulk                        |
-| URL Parser            | Decompose URLs into protocol, host, port, path, params          |
-| Diff Checker          | Line-by-line comparison with LCS algorithm                      |
-| Color Converter       | HEX, RGB, HSL conversion with live color picker                 |
-
-More tools are continuously being added.
+- 18 developer tools in one interface
+- Smart input detection from pasted text or dropped files
+- Global tool switcher with search
+- Local file loading and drag-and-drop support
+- Local browser downloads for supported tools
+- Dark and light themes
+- Keyboard shortcuts for common actions
+- Mobile-friendly layouts
+- Sandboxed preview tools
+- Worker-based processing for heavier operations
+- Vitest coverage for utility and tool-level logic
 
 ---
 
-## Tech Stack
+## Available Tools
 
-- **React 19** — Component architecture
-- **Vite 8** — Build tool and dev server
-- **React Router 7** — Client-side routing with lazy loading
-- **Web APIs** — Crypto, Clipboard, sandboxed iframes
-- **Web Workers** — Heavy parsing offloaded from main thread (YAML, RegEx)
-- **Custom CSS** — Design system with CSS variables, no UI frameworks
-- **Vercel** — Edge CDN deployment
+| Category | Tool | Description |
+| --- | --- | --- |
+| Data | JSON Formatter | Format, minify and validate JSON |
+| Data | CSV to JSON | Parse CSV data into JSON |
+| Data | YAML to JSON | Convert YAML into JSON with safety checks |
+| Data | SQL Formatter | Format SQL queries and warn about destructive statements |
+| Security | Base64 Tool | Encode and decode Base64 values |
+| Security | URL Encoder / Decoder | Encode and decode URL components |
+| Security | JWT Debugger | Decode JWT data and verify HMAC signatures |
+| Security | Hash Generator | Generate SHA hashes with the Web Crypto API |
+| Security | Password Generator | Create secure passwords with entropy feedback |
+| Code | HTML Preview | Render HTML safely inside a sandboxed iframe |
+| Code | Markdown Preview | Convert Markdown into a sanitized browser preview |
+| Code | RegEx Tester | Test patterns with capture groups and worker-based execution |
+| Code | FTL Previewer | Preview FreeMarker-style templates with mock JSON data |
+| Code | Case Converter | Convert text between common naming conventions |
+| Code | Diff Checker | Compare text line by line |
+| Code | Color Converter | Convert HEX, RGB and HSL values with a live picker |
+| Text | UUID Generator | Generate UUID v4 values |
+| Text | URL Parser | Break URLs into protocol, host, port, path and parameters |
 
 ---
 
 ## Architecture
 
-The project uses a modular, tool-based architecture designed for scalability.
+TransformJS uses a modular tool-based architecture.
 
-### Structure highlights
+### Registry-driven setup
 
-- **Isolated tool components** — each tool is self-contained
-- **Centralized tool registry** — single source of truth in `src/tools/index.jsx`
-- **Automatic route generation** — routes derived from registry
-- **Reusable layouts and hooks** — `ToolLayout`, `useCopy`, `useKeyboardShortcuts`
-- **Separated styles architecture** — per-component and per-tool CSS files
-- **Lazy-loaded routes** — code splitting per tool for optimal bundle size
+Tool metadata is centralized in:
 
-### Project structure
-
+```text
+src/tools/registry.js
 ```
-src/
-├── components/      # Shared UI (Navbar, Footer, Hero, ToolCard)
-├── hooks/           # Custom React hooks
-├── layouts/         # Shared layout wrappers
-├── pages/           # Top-level pages (Home, About, Privacy, 404)
-├── styles/          # CSS architecture
-│   ├── components/
-│   ├── pages/
-│   └── tools/
-├── tools/           # Tool implementations
-│   ├── code/        # HTML, Markdown, RegEx, FTL, Case, Diff, Color
-│   ├── data/        # JSON, YAML, SQL, CSV
-│   ├── security/    # Base64, URL, JWT, Hash, Password
-│   └── text/        # UUID, URL Parser
-└── utils/           # Pure utility functions
+
+Component references and icons are split into:
+
+```text
+src/tools/toolComponents.jsx
+src/tools/toolIcons.jsx
+```
+
+The registry feeds:
+
+```text
+tool registry
+→ tool routes
+→ app routes
+→ sitemap generation
+→ llms.txt generation
+```
+
+This keeps tool registration, routing, metadata and discoverability assets in sync.
+
+### Shared UI
+
+Common UI patterns are reused across the app:
+
+```text
+src/layouts/ToolLayout.jsx
+src/components/ToolInfo.jsx
+src/components/ToolSwitcher.jsx
+src/components/SmartDetector.jsx
+src/hooks/useCopy.js
+src/hooks/useKeyboardShortcuts.js
+```
+
+### Styling
+
+The project uses custom CSS only.
+
+```text
+src/index.css                  # design tokens
+src/styles/components/         # shared component styles
+src/styles/pages/              # page styles
+src/styles/tools/              # shared and tool-specific styles
+```
+
+No Tailwind, styled-components or UI framework is used.
+
+### Browser-only processing
+
+Sensitive and heavy operations remain client-side:
+
+- HTML preview uses a sandboxed iframe
+- Markdown preview uses sanitization and iframe isolation
+- RegEx testing runs through a Web Worker
+- YAML conversion uses a Web Worker with safety limits
+- JWT handling stays local
+- File reading and downloading use browser APIs
+
+---
+
+## Project Structure
+
+```text
 public/
-└── fonts/           # Self-hosted Inter + JetBrains Mono (woff2)
+├── fonts/                 # self-hosted fonts
+├── regexWorker.js         # RegEx worker
+├── yamlWorker.js          # YAML worker
+├── sitemap.xml
+└── llms.txt
+
+scripts/
+├── generate-llms.js
+└── generate-sitemap.js
+
+src/
+├── components/            # shared UI components
+├── content/               # SEO and content route data
+├── data/                  # grouped tool data
+├── hooks/                 # reusable React hooks
+├── layouts/               # shared layouts
+├── pages/                 # top-level and content pages
+├── seo/                   # metadata and JSON-LD helpers
+├── styles/                # custom CSS architecture
+├── tools/                 # tool implementations
+└── utils/                 # reusable pure utilities
 ```
 
 ---
@@ -134,80 +199,112 @@ Install dependencies:
 npm install
 ```
 
-Start the dev server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Production build:
+Create a production build:
 
 ```bash
 npm run build
 ```
 
-Preview production build locally:
+Preview the production build:
 
 ```bash
 npm run preview
 ```
 
-Lint the codebase:
+Run the test suite:
+
+```bash
+npm run test:run
+```
+
+Run ESLint:
 
 ```bash
 npm run lint
 ```
 
----
+Generate discoverability assets:
 
-## Development History
-
-TransformJS has evolved through several focused development sprints:
-
-- **Sprint 1** — Critical bug fixes and correctness across all tools
-- **Sprint 2** — UX polish: input validation, feedback messages, safety warnings
-- **Sprint 3** — Mobile performance optimization (PageSpeed 81 → 97)
-- **Sprint 4** — Testing setup, utility coverage, error boundaries, and meaningful lint cleanup
-
-See [`CHANGELOG.md`](./CHANGELOG.md) for version history and [`docs/SPRINTS.md`](./docs/SPRINTS.md) for detailed retrospectives.
+```bash
+npm run generate:sitemap
+npm run generate:llms
+```
 
 ---
 
-## Future Plans
+## Performance
 
-- Better mobile UX refinements
-- Accessibility improvements (current score: 93, target: 100)
-- Additional tools (XML formatter, image to base64, cron parser, timestamp converter)
-- Expand automated testing beyond current Vitest utility/tool coverage
+TransformJS is optimized for fast browser delivery:
+
+- self-hosted fonts
+- route-based lazy loading
+- CSS animations instead of heavy animation libraries
+- browser-native APIs
+- Web Workers for heavier parsing tasks
+- no tracking scripts
+- no backend round trips for tool processing
+
+Detailed performance work is documented in [`docs/SPRINTS.md`](./docs/SPRINTS.md).
+
+---
+
+## Testing
+
+The project uses Vitest for utility and tool-level testing.
+
+Current tested areas include:
+
+- Base64 utilities
+- URL utilities
+- JSON utilities
+- JWT utilities
+- Case Converter logic
+- Diff Checker logic
+- SQL Formatter logic
+- URL Parser logic
+- FTL evaluator logic
+
+---
+
+## Roadmap
+
+Planned improvements include:
+
+- final ESLint cleanup
+- accessibility refinements
+- detector edge-case coverage
+- additional developer tools
+- further mobile polish
+- expanded automated tests
 
 ---
 
 ## Contributing
 
-Contributions, ideas and improvements are welcome.
-
-To contribute:
+Contributions are welcome.
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feat/your-feature`)
-3. Commit your changes with descriptive messages
-4. Push the branch (`git push origin feat/your-feature`)
-5. Open a pull request
+2. Create a feature branch
+3. Make a focused change
+4. Run build, tests and lint
+5. Commit with a clear message
+6. Open a pull request
 
----
+Example:
 
-## Purpose
-
-TransformJS started as a learning and portfolio project focused on:
-
-- React architecture and scalable frontend patterns
-- Reusable component systems
-- Modern build tooling and routing
-- Performance optimization
-- Git workflows and deployment pipelines
-- UI/UX design
-
-Over time, it evolved into a real-world utility platform used in everyday workflows.
+```bash
+git checkout -b feat/new-tool
+npm run build
+npm run test:run
+npm run lint
+git commit -m "feat: add new tool"
+```
 
 ---
 
