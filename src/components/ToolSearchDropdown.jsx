@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { tools } from "../tools";
 
 export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const wrapperRef = useRef(null);
+  const itemRefs = useRef([]);
+
   const location = useLocation();
+  const navigate = useNavigate();
 
   const filteredTools = useMemo(() => {
     const value = searchTerm.trim().toLowerCase();
@@ -13,46 +18,82 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
     if (!value) return [];
 
     return tools
-      .filter((tool) => {
-        return (
-          tool.name.toLowerCase().includes(value) ||
-          tool.description.toLowerCase().includes(value) ||
-          tool.tags.some((tag) => tag.toLowerCase().includes(value))
-        );
-      })
+      .filter((tool) => tool.name.toLowerCase().includes(value))
       .slice(0, 8);
   }, [searchTerm]);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    setActiveIndex(0);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    itemRefs.current[activeIndex]?.scrollIntoView({
+      block: "nearest",
+    });
+  }, [activeIndex]);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
         setOpen(false);
       }
-    };
+    }
 
-    const handleKeyDown = (e) => {
+    function handleEscape(e) {
       if (e.key === "Escape") {
         setOpen(false);
       }
-    };
+    }
 
     document.addEventListener("mousedown", handleClickOutside);
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleEscape);
     };
   }, []);
 
-function handleChange(e) {
-  setSearchTerm(e.target.value);
-  setOpen(true);
-}
+  function handleChange(e) {
+    setSearchTerm(e.target.value);
+    setOpen(true);
+  }
 
   function handleSelect() {
     setOpen(false);
     setSearchTerm("");
+    setActiveIndex(0);
+  }
+
+  function handleKeyDown(e) {
+    if (!open || filteredTools.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+
+      setActiveIndex((current) =>
+        current === filteredTools.length - 1 ? 0 : current + 1,
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+
+      setActiveIndex((current) =>
+        current === 0 ? filteredTools.length - 1 : current - 1,
+      );
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      const selectedTool = filteredTools[activeIndex];
+
+      if (!selectedTool) return;
+
+      handleSelect();
+      navigate(selectedTool.path);
+    }
   }
 
   return (
@@ -64,6 +105,7 @@ function handleChange(e) {
         className="search-input"
         value={searchTerm}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         onFocus={() => {
           if (searchTerm.trim()) {
             setOpen(true);
@@ -74,15 +116,22 @@ function handleChange(e) {
       {open && searchTerm.trim() && (
         <div className="nav-search-dropdown">
           {filteredTools.length > 0 ? (
-            filteredTools.map((tool) => {
-              const isActive = location.pathname === tool.path;
+            filteredTools.map((tool, index) => {
+              const isCurrentRoute = location.pathname === tool.path;
+              const isKeyboardActive = activeIndex === index;
 
               return (
                 <Link
                   key={tool.path}
+                  ref={(element) => {
+                    itemRefs.current[index] = element;
+                  }}
                   to={tool.path}
-                  className={`nav-search-item ${isActive ? "active" : ""}`}
+                  className={`nav-search-item ${
+                    isCurrentRoute ? "active" : ""
+                  } ${isKeyboardActive ? "keyboard-active" : ""}`}
                   onClick={handleSelect}
+                  onMouseEnter={() => setActiveIndex(index)}
                 >
                   <span>{tool.name}</span>
                   <small>{tool.description}</small>

@@ -101,7 +101,8 @@
 }
 
 .tool-switcher-item:hover,
-.tool-switcher-item.active {
+.tool-switcher-item.active,
+.tool-switcher-item.keyboard-active {
   border-color: var(--color-accent-border);
   background: var(--color-accent-bg);
 }

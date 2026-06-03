@@ -64,7 +64,8 @@
 }
 
 .nav-search-item:hover,
-.nav-search-item.active {
+.nav-search-item.active,
+.nav-search-item.keyboard-active {
   background: var(--color-accent-bg);
   color: var(--color-accent);
 }
