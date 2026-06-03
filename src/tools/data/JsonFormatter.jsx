@@ -15,7 +15,7 @@ export default function JsonFormatter({ tips, category }) {
   const [error, setError] = useState(null);
   const [isMinified, setIsMinified] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState([]);
-  const [fileMessage, setFileMessage] = useState("");
+  const [, setFileMessage] = useState("");
   const [isDragging, setIsDragging] = useState(false);
 
   const { copied, copy } = useCopy();

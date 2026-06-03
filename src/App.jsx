@@ -95,7 +95,7 @@ function AppRoutes({ searchTerm }) {
               element={
                 <>
                   <SEO jsonLd={createWebApplicationSchema()} />
-                  <Home searchTerm="" />
+                  <Home searchTerm={searchTerm} />
                 </>
               }
             />
