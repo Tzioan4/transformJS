@@ -174,7 +174,6 @@ function AppRoutes({ searchTerm }) {
             <Route path="/hub/:slug" element={<HubPage />} />
             <Route path="/alternatives/:slug" element={<AlternativePage />} />
             <Route path="/use-cases/:slug" element={<UseCasePage />} />
-            <Route path="/groups/:slug" element={<ToolGroupPage />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

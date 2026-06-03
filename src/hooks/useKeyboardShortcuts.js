@@ -12,7 +12,7 @@ export default function useKeyboardShortcuts({ toggleTheme }) {
 
       if (e.key === "Escape") {
         const toolSwitcherOpen = document.querySelector(
-          ".tool-switcher-overlay",
+          ".tool-switcher-backdrop",
         );
 
         if (toolSwitcherOpen) return;
