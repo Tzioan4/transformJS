@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "@/components/ToolInfo";
 import useCopy from "../../hooks/useCopy";
+import "../../styles/tools/ftl.css";
 
 //tokenizer
 
@@ -565,38 +566,15 @@ const DEFAULT_DATA = `{
 }`;
 //component
 
-//tab button style helper
-function tabStyle(active) {
-  return {
-    background: "transparent",
-    border: "none",
-    borderBottom: active ? "2px solid #F7DF1E" : "2px solid transparent",
-    color: active ? "#F7DF1E" : "#555",
-    padding: "10px 16px",
-    cursor: "pointer",
-    fontFamily: "var(--font-mono)",
-    fontSize: "11px",
-    letterSpacing: "1px",
-    textTransform: "uppercase",
-    transition: "all 0.2s",
-    whiteSpace: "nowrap",
-  };
-}
-
 function TabBar({ tabs, active, onChange }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        borderBottom: "1px solid #333",
-        overflowX: "auto",
-      }}
-    >
+    <div className="ftl-tab-bar">
       {tabs.map(({ key, label }) => (
         <button
           key={key}
+          type="button"
           onClick={() => onChange(key)}
-          style={tabStyle(active === key)}
+          className={`ftl-tab-btn ${active === key ? "active" : ""}`}
         >
           {label}
         </button>
@@ -611,21 +589,19 @@ export default function FtlPreviewer({ tips, category }) {
   const [rendered, setRendered] = useState("");
   const [error, setError] = useState(null);
 
-  //output tabs: preview/html
   const [outputTab, setOutputTab] = useState("preview");
-
-  //mobile input tabs: template/data
   const [inputTab, setInputTab] = useState("template");
 
   const { copied, copy } = useCopy();
 
   const handleRender = useCallback(() => {
     setError(null);
+
     try {
       const data = JSON.parse(mockData);
       const result = processFTL(template, data);
+
       setRendered(result);
-      //switch to output on mobile after render
       setOutputTab("preview");
     } catch (e) {
       setError(e.message);
@@ -646,37 +622,27 @@ export default function FtlPreviewer({ tips, category }) {
       header={
         <div>
           <h1>FTL Previewer</h1>
+
           <p>
             Preview FreeMarker templates with mock JSON data locally, no server
             needed.
           </p>
+
           {rendered && !error && (
-            <div
-              className="status-badge status-pretty"
-              style={{ marginTop: 12, display: "inline-block" }}
-            >
+            <div className="status-badge status-badge-spaced status-pretty">
               STATUS: <strong>RENDERED</strong>
             </div>
           )}
+
           {error && (
-            <div className="error-badge" style={{ marginTop: 12 }}>
-              {error}
-            </div>
+            <div className="error-badge status-badge-spaced">{error}</div>
           )}
+
           {tips && <ToolInfo tips={tips} />}
         </div>
       }
       input={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            padding: 0,
-            overflow: "hidden",
-          }}
-        >
-          {/*mobile tabs for input template / data */}
+        <div className="tool-textarea ftl-panel">
           <TabBar
             tabs={[
               { key: "template", label: "FTL Template" },
@@ -686,71 +652,35 @@ export default function FtlPreviewer({ tips, category }) {
             onChange={setInputTab}
           />
 
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              padding: "12px",
-              gap: "8px",
-              overflowY: "auto",
-            }}
-          >
+          <div className="ftl-panel-body">
             {inputTab === "template" && (
-              <>
-                <textarea
-                  className="tool-textarea"
-                  style={{
-                    flex: 1,
-                    minHeight: "350px",
-                    fontSize: "12px",
-                    resize: "vertical",
-                    border: "none",
-                  }}
-                  value={template}
-                  onChange={(e) => setTemplate(e.target.value)}
-                  placeholder="Paste your FTL template here..."
-                  spellCheck={false}
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                />
-              </>
+              <textarea
+                className="tool-textarea ftl-editor"
+                value={template}
+                onChange={(e) => setTemplate(e.target.value)}
+                placeholder="Paste your FTL template here..."
+                spellCheck={false}
+                autoCapitalize="none"
+                autoCorrect="off"
+              />
             )}
 
             {inputTab === "data" && (
-              <>
-                <textarea
-                  className="tool-textarea"
-                  style={{
-                    flex: 1,
-                    minHeight: "350px",
-                    fontSize: "12px",
-                    resize: "vertical",
-                    border: "none",
-                  }}
-                  value={mockData}
-                  onChange={(e) => setMockData(e.target.value)}
-                  placeholder='{ "variable": "value" }'
-                  spellCheck={false}
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                />
-              </>
+              <textarea
+                className="tool-textarea ftl-editor"
+                value={mockData}
+                onChange={(e) => setMockData(e.target.value)}
+                placeholder='{ "variable": "value" }'
+                spellCheck={false}
+                autoCapitalize="none"
+                autoCorrect="off"
+              />
             )}
           </div>
         </div>
       }
       output={
-        <div
-          className="tool-textarea"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            padding: 0,
-            overflow: "hidden",
-          }}
-        >
-          {/*output tabs preview / html source */}
+        <div className="tool-textarea ftl-panel">
           <TabBar
             tabs={[
               { key: "preview", label: "Preview" },
@@ -760,22 +690,9 @@ export default function FtlPreviewer({ tips, category }) {
             onChange={setOutputTab}
           />
 
-          <div style={{ flex: 1, overflow: "auto", position: "relative" }}>
+          <div className="ftl-output-body">
             {!rendered && !error && (
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#333",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "13px",
-                  textAlign: "center",
-                  padding: "20px",
-                }}
-              >
+              <div className="ftl-empty-state">
                 Press "Render" to preview your template
               </div>
             )}
@@ -784,43 +701,29 @@ export default function FtlPreviewer({ tips, category }) {
               <iframe
                 srcDoc={rendered}
                 sandbox="allow-scripts"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  minHeight: "350px",
-                  border: "none",
-                  background: "#ffffff",
-                }}
+                className="ftl-preview-frame"
                 title="FTL Preview"
               />
             )}
 
             {rendered && outputTab === "html" && (
-              <pre
-                style={{
-                  margin: 0,
-                  padding: "16px",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "12px",
-                  lineHeight: "1.6",
-                  whiteSpace: "pre-wrap",
-                  wordBreak: "break-all",
-                  overflowY: "auto",
-                }}
-              >
-                {rendered}
-              </pre>
+              <pre className="ftl-source-view">{rendered}</pre>
             )}
           </div>
         </div>
       }
       actions={
         <>
-          <button onClick={handleRender} className="btn btn-primary">
+          <button
+            type="button"
+            onClick={handleRender}
+            className="btn btn-primary"
+          >
             Render
           </button>
+
           <button
+            type="button"
             onClick={() => copy(rendered)}
             className={`btn ${copied ? "btn-success" : "btn-copy"}`}
             disabled={!rendered}
@@ -828,7 +731,12 @@ export default function FtlPreviewer({ tips, category }) {
             {copied ? "Copied" : "Copy HTML"}
             <span className="btn-hint">Ctrl+Shift+C</span>
           </button>
-          <button onClick={handleClear} className="btn btn-danger">
+
+          <button
+            type="button"
+            onClick={handleClear}
+            className="btn btn-danger"
+          >
             Clear <span className="btn-hint">Esc</span>
           </button>
         </>
