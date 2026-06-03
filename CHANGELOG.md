@@ -2,7 +2,43 @@
 
 All notable changes to TransformJS are documented here.
 
-## [Unreleased]
+### Added
+
+- SmartDetector homepage component
+- Automatic format detection system
+- Confidence-based tool recommendation engine
+- Drag and drop detection workflow
+- Escape shortcut for SmartDetector
+- Homepage tool recommendation flow
+
+### Detection Support
+
+Added automatic detection for:
+
+- JSON
+- JWT
+- URL
+- HTML
+- CSV
+- YAML
+- Markdown
+- SQL
+- UUID
+- Color values (HEX, RGB, HSL)
+- Base64
+
+### UX Improvements
+
+- Added category badges to tool pages
+- Removed example content from JWT Debugger
+- Removed example content from URL Parser
+- Removed example content from FTL Previewer
+- Improved first-time onboarding experience
+- Improved tool discovery workflow
+
+### Fixed
+
+- Fixed Color Converter HEX synchronization issue
 
 ### Added
 
