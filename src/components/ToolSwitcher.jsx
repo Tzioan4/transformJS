@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
 import { tools } from "../tools";
 import "@styles/components/tool-switcher.css";
@@ -22,7 +22,7 @@ export default function ToolSwitcher() {
   const itemRefs = useRef([]);
 
   const location = useLocation();
-  const navigate = useNavigate();
+  
 
   const filteredTools = useMemo(() => {
     const value = search.trim().toLowerCase();
@@ -156,12 +156,7 @@ export default function ToolSwitcher() {
     if (e.key === "Enter") {
       e.preventDefault();
 
-      const selectedTool = visibleTools[activeIndex];
-
-      if (!selectedTool) return;
-
-      handleClose();
-      navigate(selectedTool.path);
+      itemRefs.current[activeIndex]?.click();
     }
   }
 

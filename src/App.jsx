@@ -77,9 +77,8 @@ function ScrollToTop({ setSearchTerm }) {
   return null;
 }
 
-function AppRoutes({ searchTerm }) {
+function AppRoutes() {
   const location = useLocation();
-  
 
   return (
     <AppErrorBoundary resetKey={location.pathname}>
@@ -207,7 +206,7 @@ function AppContent() {
         <ToolSwitcherMount />
 
         <main style={{ flex: 1 }}>
-          <AppRoutes searchTerm={searchTerm} />
+          <AppRoutes />
         </main>
 
         <Footer />

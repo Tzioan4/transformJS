@@ -202,3 +202,10 @@
 [data-theme="light"] .regex-groups-label {
   color: #94a3b8;
 }
+.regex-highlight {
+  background: rgba(247, 223, 30, 0.25);
+  color: #f7df1e;
+  border-bottom: 2px solid #f7df1e;
+  padding: 0 1px;
+  border-radius: 2px;
+}

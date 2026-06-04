@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { tools } from "../tools";
 
 export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
@@ -10,7 +10,6 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
   const itemRefs = useRef([]);
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   const filteredTools = useMemo(() => {
     const value = searchTerm.trim().toLowerCase();
@@ -22,9 +21,7 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
       .slice(0, 8);
   }, [searchTerm]);
 
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [searchTerm]);
+
 
   useEffect(() => {
     itemRefs.current[activeIndex]?.scrollIntoView({
@@ -56,6 +53,7 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
 
   function handleChange(e) {
     setSearchTerm(e.target.value);
+    setActiveIndex(0);
     setOpen(true);
   }
 
@@ -74,6 +72,8 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
       setActiveIndex((current) =>
         current === filteredTools.length - 1 ? 0 : current + 1,
       );
+
+      return;
     }
 
     if (e.key === "ArrowUp") {
@@ -82,17 +82,14 @@ export default function ToolSearchDropdown({ searchTerm, setSearchTerm }) {
       setActiveIndex((current) =>
         current === 0 ? filteredTools.length - 1 : current - 1,
       );
+
+      return;
     }
 
     if (e.key === "Enter") {
       e.preventDefault();
 
-      const selectedTool = filteredTools[activeIndex];
-
-      if (!selectedTool) return;
-
-      handleSelect();
-      navigate(selectedTool.path);
+      itemRefs.current[activeIndex]?.click();
     }
   }
 
