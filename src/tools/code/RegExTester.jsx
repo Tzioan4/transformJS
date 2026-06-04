@@ -1,48 +1,38 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ToolLayout from "../../layouts/ToolLayout";
 import ToolInfo from "../../components/ToolInfo";
 import "../../styles/tools/regex.css";
 
 const TIMEOUT_MS = 2000;
 
-function escapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-function buildHighlightedHtml(text, matches) {
-  if (!matches.length) return escapeHtml(text);
+function buildHighlightedParts(text, matches) {
+  if (!matches.length) return [text];
 
   const parts = [];
   let lastIndex = 0;
 
-  for (const match of matches) {
+  matches.forEach((match, index) => {
     const start = match.index;
     const end = start + match.value.length;
 
-    if (start > lastIndex) parts.push(escapeHtml(text.slice(lastIndex, start)));
+    if (start > lastIndex) {
+      parts.push(text.slice(lastIndex, start));
+    }
 
     parts.push(
-      `<mark style="background:rgba(247,223,30,0.25);color:#F7DF1E;border-bottom:2px solid #F7DF1E;padding:0 1px;border-radius:2px;">${escapeHtml(match.value)}</mark>`,
+      <mark className="regex-highlight" key={`${start}-${index}`}>
+        {match.value}
+      </mark>,
     );
 
     lastIndex = end;
+  });
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
   }
 
-  if (lastIndex < text.length) parts.push(escapeHtml(text.slice(lastIndex)));
-
-  return parts.join("");
-}
-
-function getRegexError(pattern, flags) {
-  if (!pattern) return null;
-
-  try {
-    const safeFlags = flags.includes("g") ? flags : flags + "g";
-    new RegExp(pattern, safeFlags);
-    return null;
-  } catch (err) {
-    return err.message;
-  }
+  return parts;
 }
 
 export default function RegexTester({ tips, category }) {
@@ -60,15 +50,10 @@ export default function RegexTester({ tips, category }) {
   const workerRef = useRef(null);
   const timeoutRef = useRef(null);
 
-  const validationError = getRegexError(pattern, flags);
-  const error = validationError || runtimeError;
-
-  useEffect(() => {
-    return () => {
-      if (workerRef.current) workerRef.current.terminate();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, []);
+  const highlightedParts = useMemo(
+    () => buildHighlightedParts(text, matches),
+    [text, matches],
+  );
 
   useEffect(() => {
     if (workerRef.current) {
@@ -81,50 +66,85 @@ export default function RegexTester({ tips, category }) {
       timeoutRef.current = null;
     }
 
-    if (!pattern || !text || validationError) return;
+    if (!pattern || !text) return;
 
     const worker = new Worker("/regexWorker.js");
     workerRef.current = worker;
 
     timeoutRef.current = setTimeout(() => {
       worker.terminate();
-      workerRef.current = null;
+
+      if (workerRef.current === worker) {
+        workerRef.current = null;
+      }
+
+      timeoutRef.current = null;
+
       setIsRunning(false);
       setMatches([]);
       setRuntimeError(
-        "Regex execution timeout! possible catastrophic backtracking detected. Simplify your pattern.",
+        "Regex execution timeout! Possible catastrophic backtracking detected. Simplify your pattern.",
       );
     }, TIMEOUT_MS);
 
     worker.onmessage = (e) => {
-      clearTimeout(timeoutRef.current);
-      workerRef.current = null;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+
+      worker.terminate();
+
+      if (workerRef.current === worker) {
+        workerRef.current = null;
+      }
+
       setIsRunning(false);
 
       if (e.data.type === "success") {
         setMatches(e.data.matches);
         setRuntimeError(null);
-      } else {
-        setRuntimeError(e.data.message);
-        setMatches([]);
+        return;
       }
+
+      setMatches([]);
+      setRuntimeError(e.data.message);
     };
 
     worker.onerror = (e) => {
-      clearTimeout(timeoutRef.current);
-      workerRef.current = null;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+
+      worker.terminate();
+
+      if (workerRef.current === worker) {
+        workerRef.current = null;
+      }
+
       setIsRunning(false);
-      setRuntimeError(e.message || "Unknown error in regex worker");
       setMatches([]);
+      setRuntimeError(e.message || "Unknown error in regex worker.");
     };
 
     worker.postMessage({ pattern, flags, text });
-  }, [pattern, flags, text, validationError]);
 
-  const prepareNextRun = (nextPattern, nextFlags, nextText) => {
-    const nextError = getRegexError(nextPattern, nextFlags);
+    return () => {
+      worker.terminate();
 
-    if (!nextPattern || !nextText || nextError) {
+      if (workerRef.current === worker) {
+        workerRef.current = null;
+      }
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [pattern, flags, text]);
+  function prepareRun(nextPattern, nextText) {
+    if (!nextPattern || !nextText) {
       setMatches([]);
       setRuntimeError(null);
       setIsRunning(false);
@@ -133,37 +153,32 @@ export default function RegexTester({ tips, category }) {
 
     setRuntimeError(null);
     setIsRunning(true);
-  };
-
-  const handlePatternChange = (e) => {
+  }
+  function handlePatternChange(e) {
     const nextPattern = e.target.value;
-    prepareNextRun(nextPattern, flags, text);
+
+    prepareRun(nextPattern, text);
     setPattern(nextPattern);
-  };
+  }
 
-  const handleFlagsChange = (e) => {
-    const nextFlags = e.target.value;
-    prepareNextRun(pattern, nextFlags, text);
-    setFlags(nextFlags);
-  };
+  function handleFlagsChange(e) {
+    prepareRun(pattern, text);
+    setFlags(e.target.value);
+  }
 
-  const handleTextChange = (e) => {
+  function handleTextChange(e) {
     const nextText = e.target.value;
-    prepareNextRun(pattern, flags, nextText);
-    setText(nextText);
-  };
 
-  const handleClear = () => {
+    prepareRun(pattern, nextText);
+    setText(nextText);
+  }
+
+  function handleClear() {
     setText("");
     setMatches([]);
     setRuntimeError(null);
     setIsRunning(false);
-  };
-
-  const highlightedHtml = useMemo(
-    () => buildHighlightedHtml(text, matches),
-    [text, matches],
-  );
+  }
 
   return (
     <ToolLayout
@@ -171,6 +186,7 @@ export default function RegexTester({ tips, category }) {
       header={
         <div>
           <h1>RegEx Tester</h1>
+
           <p>
             Test regular expressions with real time match highlighting and flag
             support.
@@ -180,7 +196,7 @@ export default function RegexTester({ tips, category }) {
             <div className="status-badge status-badge-running">RUNNING...</div>
           )}
 
-          {matches.length > 0 && !error && !isRunning && (
+          {matches.length > 0 && !runtimeError && !isRunning && (
             <div className="status-badge status-badge-spaced status-pretty">
               MATCHES FOUND: <strong>{matches.length}</strong>
             </div>
@@ -192,12 +208,16 @@ export default function RegexTester({ tips, category }) {
       input={
         <div className="tool-textarea regex-panel">
           <div>
-            <label className="regex-label">Regex Pattern & Flags</label>
+            <label className="regex-label" htmlFor="regex-pattern">
+              Regex Pattern & Flags
+            </label>
 
             <div className="regex-pattern-bar">
               <span className="regex-slash">/</span>
 
               <input
+                id="regex-pattern"
+                name="regex-pattern"
                 type="text"
                 autoCapitalize="none"
                 autoCorrect="off"
@@ -211,7 +231,10 @@ export default function RegexTester({ tips, category }) {
               <span className="regex-slash">/</span>
 
               <input
+                id="regex-flags"
+                name="regex-flags"
                 type="text"
+                aria-label="Regex flags"
                 autoCapitalize="none"
                 autoCorrect="off"
                 spellCheck={false}
@@ -224,9 +247,13 @@ export default function RegexTester({ tips, category }) {
           </div>
 
           <div className="regex-test-area">
-            <label className="regex-label">Test String</label>
+            <label className="regex-label" htmlFor="regex-test-string">
+              Test String
+            </label>
 
             <textarea
+              id="regex-test-string"
+              name="regex-test-string"
               className="regex-test-input"
               placeholder="Type text to test against regex..."
               value={text}
@@ -234,30 +261,33 @@ export default function RegexTester({ tips, category }) {
             />
           </div>
 
-          {error && <div className="error-badge">{error}</div>}
+          {runtimeError && <div className="error-badge">{runtimeError}</div>}
         </div>
       }
       output={
         <div className="tool-textarea regex-panel">
           <div>
-            <label className="regex-label">Highlighted Preview</label>
+            <div className="regex-label">Highlighted Preview</div>
 
             <div className="regex-highlight-box">
-              <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+              <div>{highlightedParts}</div>
             </div>
           </div>
 
           <div className="regex-matches-list">
-            <label className="regex-label">Match Details</label>
+            <div className="regex-label">Match Details</div>
 
             {isRunning ? (
               <p className="regex-no-match">Running...</p>
             ) : matches.length === 0 ? (
               <p className="regex-no-match">No matches found.</p>
             ) : (
-              matches.map((match, i) => (
-                <div key={i} className="regex-match-card">
-                  <div className="regex-match-title">Match {i + 1}</div>
+              matches.map((match, index) => (
+                <div
+                  key={`${match.index}-${index}`}
+                  className="regex-match-card"
+                >
+                  <div className="regex-match-title">Match {index + 1}</div>
 
                   <div className="regex-match-value">
                     Value: <code>{match.value}</code>

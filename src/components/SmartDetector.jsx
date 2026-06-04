@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { detectTool } from "../utils/detectTool";
 import { tools } from "../tools";
 import { readTextFile } from "../utils/file";
@@ -32,7 +32,6 @@ export default function SmartDetector() {
   const [isDragging, setIsDragging] = useState(false);
   const [fileError, setFileError] = useState("");
 
-  const navigate = useNavigate();
 
   const detection = useMemo(() => detectTool(input), [input]);
 
@@ -94,10 +93,7 @@ export default function SmartDetector() {
     setIsDragging(false);
   }
 
-  function handleOpenTool() {
-    if (!detectedTool) return;
-    navigate(detectedTool.path);
-  }
+
 
   return (
     <section className="smart-detector">
@@ -147,13 +143,9 @@ export default function SmartDetector() {
               <p>{detectedTool.description}</p>
             </div>
 
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleOpenTool}
-            >
+            <Link className="btn btn-primary" to={detectedTool.path}>
               Open {detectedTool.name}
-            </button>
+            </Link>
           </div>
         )}
       </div>
